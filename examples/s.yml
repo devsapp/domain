@@ -1,0 +1,17 @@
+edition: 1.0.0          #  命令行YAML规范版本，遵循语义化版本（Semantic Versioning）规范
+name: domainApp         #  项目名称
+access: aliyun-release  #  秘钥别名
+
+services:
+  domain-test: #  服务名称
+    component: domain  # 组件名称
+    props: #  组件的属性值
+      type: fc
+      user: 1899690531354629
+      region: cn-shenzhen
+      service: Authing
+      function: Authing
+
+      # type: oss
+      # region: cn-hongkong
+      # bucket: wss-test-domain
