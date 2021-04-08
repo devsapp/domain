@@ -2,7 +2,7 @@ Type: Component
 Name: domain
 Provider:
   - 阿里云
-Version: 0.0.1
+Version: 0.0.2
 Description: 下发Serverless Devs默认域名
 HomePage: https://github.com/devsapp/domain
 Tags: #标签详情
