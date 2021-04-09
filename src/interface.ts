@@ -1,4 +1,13 @@
+export interface IInputs {
+  props: IFCTOKEN | IOSSTOKEN;
+  credentials: ICredentials;
+  appName: string;
+  args: string;
+  path: any;
+}
+
 export interface ICredentials {
+  Alias: string;
   AccountID: string;
   AccessKeyID: string;
   AccessKeySecret: string;
@@ -21,4 +30,8 @@ export interface IOSSTOKEN {
 
 export function isFcToken(args: any): args is IFCTOKEN {
   return args.type === 'fc' && args.service !== undefined;
+}
+
+export function isOssToken(args: any): args is IOSSTOKEN {
+  return args.type === 'oss' && args.bucket !== undefined;
 }
