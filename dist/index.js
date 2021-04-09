@@ -57,24 +57,33 @@ var Compoent = /** @class */ (function () {
     function Compoent() {
     }
     Compoent.prototype.get = function (inputs) {
+        var _a, _b;
         return __awaiter(this, void 0, void 0, function () {
-            var _a, projectName, provider, accessAlias, params, credential, addOssDomain;
-            return __generator(this, function (_b) {
-                switch (_b.label) {
+            var apts, commandData, params, credential, addOssDomain;
+            return __generator(this, function (_c) {
+                switch (_c.label) {
                     case 0:
-                        _a = inputs.Project, projectName = _a.ProjectName, provider = _a.Provider, accessAlias = _a.AccessAlias;
-                        this.logger.debug("[" + projectName + "] inputs params: " + JSON.stringify(inputs));
-                        params = inputs.Properties;
-                        return [4 /*yield*/, core_1.getCredential(provider, accessAlias)];
+                        this.logger.debug("inputs params: " + JSON.stringify(inputs));
+                        apts = { boolean: ['help'], alias: { help: 'h' } };
+                        commandData = core_1.commandParse({ args: inputs.args }, apts);
+                        this.logger.debug("Command data is: " + JSON.stringify(commandData));
+                        if ((_a = commandData.data) === null || _a === void 0 ? void 0 : _a.help) {
+                            core_1.help(constant_1.default.HELP);
+                            return [2 /*return*/];
+                        }
+                        params = inputs.props;
+                        return [4 /*yield*/, core_1.getCredential((_b = inputs.credentials) === null || _b === void 0 ? void 0 : _b.Alias)];
                     case 1:
-                        credential = _b.sent();
+                        credential = _c.sent();
                         if (!interface_1.isFcToken(params)) return [3 /*break*/, 3];
                         return [4 /*yield*/, addFcDomain_1.default.domain(params, credential)];
-                    case 2: return [2 /*return*/, _b.sent()];
+                    case 2: return [2 /*return*/, _c.sent()];
                     case 3:
+                        if (!interface_1.isOssToken(params)) return [3 /*break*/, 5];
                         addOssDomain = new addOssDomain_1.default();
                         return [4 /*yield*/, addOssDomain.domain(params, credential)];
-                    case 4: return [2 /*return*/, _b.sent()];
+                    case 4: return [2 /*return*/, _c.sent()];
+                    case 5: throw new Error('Domain configuration error, please refer to https://github.com/devsapp/domain');
                 }
             });
         });
@@ -86,4 +95,4 @@ var Compoent = /** @class */ (function () {
     return Compoent;
 }());
 exports.default = Compoent;
-//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiaW5kZXguanMiLCJzb3VyY2VSb290IjoiIiwic291cmNlcyI6WyIuLi9zcmMvaW5kZXgudHMiXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6Ijs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7QUFBQSw4Q0FBd0U7QUFFeEUsd0RBQWtDO0FBQ2xDLG9FQUE4QztBQUM5QyxzRUFBZ0Q7QUFDaEQseUNBQTZEO0FBRTdEO0lBQUE7SUFrQkEsQ0FBQztJQWZPLHNCQUFHLEdBQVQsVUFBVSxNQUFNOzs7Ozs7d0JBQ1IsS0FBNkUsTUFBTSxDQUFDLE9BQU8sRUFBNUUsV0FBVyxpQkFBQSxFQUFZLFFBQVEsY0FBQSxFQUFlLFdBQVcsaUJBQUEsQ0FBb0I7d0JBQ2xHLElBQUksQ0FBQyxNQUFNLENBQUMsS0FBSyxDQUFDLE1BQUksV0FBVyx5QkFBb0IsSUFBSSxDQUFDLFNBQVMsQ0FBQyxNQUFNLENBQUcsQ0FBQyxDQUFDO3dCQUV6RSxNQUFNLEdBQXlCLE1BQU0sQ0FBQyxVQUFVLENBQUM7d0JBRXBDLHFCQUFNLG9CQUFhLENBQUMsUUFBUSxFQUFFLFdBQVcsQ0FBQyxFQUFBOzt3QkFBdkQsVUFBVSxHQUFHLFNBQTBDOzZCQUV6RCxxQkFBUyxDQUFDLE1BQU0sQ0FBQyxFQUFqQix3QkFBaUI7d0JBQ1oscUJBQU0scUJBQVcsQ0FBQyxNQUFNLENBQUMsTUFBTSxFQUFFLFVBQVUsQ0FBQyxFQUFBOzRCQUFuRCxzQkFBTyxTQUE0QyxFQUFDOzt3QkFHaEQsWUFBWSxHQUFHLElBQUksc0JBQVksRUFBRSxDQUFDO3dCQUNqQyxxQkFBTSxZQUFZLENBQUMsTUFBTSxDQUFDLE1BQU0sRUFBRSxVQUFVLENBQUMsRUFBQTs0QkFBcEQsc0JBQU8sU0FBNkMsRUFBQzs7OztLQUN0RDtJQWhCMEI7UUFBMUIsY0FBTyxDQUFDLGtCQUFRLENBQUMsT0FBTyxDQUFDOzs0Q0FBaUI7SUFpQjdDLGVBQUM7Q0FBQSxBQWxCRCxJQWtCQztrQkFsQm9CLFFBQVEifQ==
+//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiaW5kZXguanMiLCJzb3VyY2VSb290IjoiIiwic291cmNlcyI6WyIuLi9zcmMvaW5kZXgudHMiXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6Ijs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7QUFBQSw4Q0FBNEY7QUFFNUYsd0RBQWtDO0FBQ2xDLG9FQUE4QztBQUM5QyxzRUFBZ0Q7QUFDaEQseUNBQTZEO0FBRTdEO0lBQUE7SUE2QkEsQ0FBQztJQTFCTyxzQkFBRyxHQUFULFVBQVUsTUFBZTs7Ozs7Ozt3QkFDdkIsSUFBSSxDQUFDLE1BQU0sQ0FBQyxLQUFLLENBQUMsb0JBQWtCLElBQUksQ0FBQyxTQUFTLENBQUMsTUFBTSxDQUFHLENBQUMsQ0FBQzt3QkFFeEQsSUFBSSxHQUFHLEVBQUUsT0FBTyxFQUFFLENBQUMsTUFBTSxDQUFDLEVBQUUsS0FBSyxFQUFFLEVBQUUsSUFBSSxFQUFFLEdBQUcsRUFBRSxFQUFFLENBQUM7d0JBQ25ELFdBQVcsR0FBUSxtQkFBWSxDQUFDLEVBQUUsSUFBSSxFQUFFLE1BQU0sQ0FBQyxJQUFJLEVBQUUsRUFBRSxJQUFJLENBQUMsQ0FBQzt3QkFDbkUsSUFBSSxDQUFDLE1BQU0sQ0FBQyxLQUFLLENBQUMsc0JBQW9CLElBQUksQ0FBQyxTQUFTLENBQUMsV0FBVyxDQUFHLENBQUMsQ0FBQzt3QkFDckUsVUFBSSxXQUFXLENBQUMsSUFBSSwwQ0FBRSxJQUFJLEVBQUU7NEJBQzFCLFdBQUksQ0FBQyxrQkFBUSxDQUFDLElBQUksQ0FBQyxDQUFDOzRCQUNwQixzQkFBTzt5QkFDUjt3QkFFSyxNQUFNLEdBQUcsTUFBTSxDQUFDLEtBQUssQ0FBQzt3QkFFVCxxQkFBTSxvQkFBYSxPQUFDLE1BQU0sQ0FBQyxXQUFXLDBDQUFFLEtBQUssQ0FBQyxFQUFBOzt3QkFBM0QsVUFBVSxHQUFHLFNBQThDOzZCQUU3RCxxQkFBUyxDQUFDLE1BQU0sQ0FBQyxFQUFqQix3QkFBaUI7d0JBQ1oscUJBQU0scUJBQVcsQ0FBQyxNQUFNLENBQUMsTUFBTSxFQUFFLFVBQVUsQ0FBQyxFQUFBOzRCQUFuRCxzQkFBTyxTQUE0QyxFQUFDOzs2QkFHbEQsc0JBQVUsQ0FBQyxNQUFNLENBQUMsRUFBbEIsd0JBQWtCO3dCQUNkLFlBQVksR0FBRyxJQUFJLHNCQUFZLEVBQUUsQ0FBQzt3QkFDakMscUJBQU0sWUFBWSxDQUFDLE1BQU0sQ0FBQyxNQUFNLEVBQUUsVUFBVSxDQUFDLEVBQUE7NEJBQXBELHNCQUFPLFNBQTZDLEVBQUM7NEJBR3ZELE1BQU0sSUFBSSxLQUFLLENBQUMsK0VBQStFLENBQUMsQ0FBQzs7OztLQUNsRztJQTNCMEI7UUFBMUIsY0FBTyxDQUFDLGtCQUFRLENBQUMsT0FBTyxDQUFDOzs0Q0FBaUI7SUE0QjdDLGVBQUM7Q0FBQSxBQTdCRCxJQTZCQztrQkE3Qm9CLFFBQVEifQ==

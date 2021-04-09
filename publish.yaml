@@ -57,22 +57,22 @@ Properties:
           - us-east-1
           - ap-south-1
   user:
-    Description: 阿里云UID
-    Required: true
+    Description: 阿里云UID，type为fc时必填
+    Required: false
     Type:
       - Number
   service:
-    Description: 函数计算服务名
+    Description: 函数计算服务名，type为fc时必填
     Required: false
     Type:
       - String
   function:
-    Description: 函数计算函数名
+    Description: 函数计算函数名，type为fc时必填
     Required: false
     Type:
       - String
   bucket:
-    Description: 对象存储存储桶
+    Description: 对象存储存储桶，type为oss时必填
     Required: false
     Type:
       - String

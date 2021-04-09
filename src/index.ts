@@ -1,26 +1,37 @@
-import { HLogger, ILogger, getCredential } from '@serverless-devs/core';
+import { HLogger, ILogger, getCredential, commandParse, help } from '@serverless-devs/core';
 import _ from 'lodash';
 import constant from './constant';
 import AddFcDomain from './utils/addFcDomain';
 import AddOssDomain from './utils/addOssDomain';
-import { IFCTOKEN, IOSSTOKEN, isFcToken } from './interface';
+import { IInputs, isFcToken, isOssToken } from './interface';
 
 export default class Compoent {
   @HLogger(constant.CONTEXT) logger: ILogger;
 
-  async get(inputs) {
-    const { ProjectName: projectName, Provider: provider, AccessAlias: accessAlias } = inputs.Project;
-    this.logger.debug(`[${projectName}] inputs params: ${JSON.stringify(inputs)}`);
+  async get(inputs: IInputs) {
+    this.logger.debug(`inputs params: ${JSON.stringify(inputs)}`);
 
-    const params: IFCTOKEN | IOSSTOKEN = inputs.Properties;
+    const apts = { boolean: ['help'], alias: { help: 'h' } };
+    const commandData: any = commandParse({ args: inputs.args }, apts);
+    this.logger.debug(`Command data is: ${JSON.stringify(commandData)}`);
+    if (commandData.data?.help) {
+      help(constant.HELP);
+      return;
+    }
 
-    const credential = await getCredential(provider, accessAlias);
+    const params = inputs.props;
+
+    const credential = await getCredential(inputs.credentials?.Alias);
 
     if (isFcToken(params)) {
       return await AddFcDomain.domain(params, credential);
     }
 
-    const addOssDomain = new AddOssDomain();
-    return await addOssDomain.domain(params, credential);
+    if (isOssToken(params)) {
+      const addOssDomain = new AddOssDomain();
+      return await addOssDomain.domain(params, credential);
+    }
+
+    throw new Error('Domain configuration error, please refer to https://github.com/devsapp/domain');
   }
 }
