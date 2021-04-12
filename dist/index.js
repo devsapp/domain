@@ -57,11 +57,11 @@ var Compoent = /** @class */ (function () {
     function Compoent() {
     }
     Compoent.prototype.get = function (inputs) {
-        var _a, _b;
+        var _a;
         return __awaiter(this, void 0, void 0, function () {
             var apts, commandData, params, credential, addOssDomain;
-            return __generator(this, function (_c) {
-                switch (_c.label) {
+            return __generator(this, function (_b) {
+                switch (_b.label) {
                     case 0:
                         this.logger.debug("inputs params: " + JSON.stringify(inputs));
                         apts = { boolean: ['help'], alias: { help: 'h' } };
@@ -72,17 +72,21 @@ var Compoent = /** @class */ (function () {
                             return [2 /*return*/];
                         }
                         params = inputs.props;
-                        return [4 /*yield*/, core_1.getCredential((_b = inputs.credentials) === null || _b === void 0 ? void 0 : _b.Alias)];
+                        return [4 /*yield*/, core_1.getCredential(inputs.project.access)];
                     case 1:
-                        credential = _c.sent();
+                        credential = _b.sent();
                         if (!interface_1.isFcToken(params)) return [3 /*break*/, 3];
                         return [4 /*yield*/, addFcDomain_1.default.domain(params, credential)];
-                    case 2: return [2 /*return*/, _c.sent()];
+                    case 2: 
+                    // @ts-ignore
+                    return [2 /*return*/, _b.sent()];
                     case 3:
                         if (!interface_1.isOssToken(params)) return [3 /*break*/, 5];
                         addOssDomain = new addOssDomain_1.default();
                         return [4 /*yield*/, addOssDomain.domain(params, credential)];
-                    case 4: return [2 /*return*/, _c.sent()];
+                    case 4: 
+                    // @ts-ignore
+                    return [2 /*return*/, _b.sent()];
                     case 5: throw new Error('Domain configuration error, please refer to https://github.com/devsapp/domain');
                 }
             });
@@ -95,4 +99,4 @@ var Compoent = /** @class */ (function () {
     return Compoent;
 }());
 exports.default = Compoent;
-//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiaW5kZXguanMiLCJzb3VyY2VSb290IjoiIiwic291cmNlcyI6WyIuLi9zcmMvaW5kZXgudHMiXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6Ijs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7QUFBQSw4Q0FBNEY7QUFFNUYsd0RBQWtDO0FBQ2xDLG9FQUE4QztBQUM5QyxzRUFBZ0Q7QUFDaEQseUNBQTZEO0FBRTdEO0lBQUE7SUE2QkEsQ0FBQztJQTFCTyxzQkFBRyxHQUFULFVBQVUsTUFBZTs7Ozs7Ozt3QkFDdkIsSUFBSSxDQUFDLE1BQU0sQ0FBQyxLQUFLLENBQUMsb0JBQWtCLElBQUksQ0FBQyxTQUFTLENBQUMsTUFBTSxDQUFHLENBQUMsQ0FBQzt3QkFFeEQsSUFBSSxHQUFHLEVBQUUsT0FBTyxFQUFFLENBQUMsTUFBTSxDQUFDLEVBQUUsS0FBSyxFQUFFLEVBQUUsSUFBSSxFQUFFLEdBQUcsRUFBRSxFQUFFLENBQUM7d0JBQ25ELFdBQVcsR0FBUSxtQkFBWSxDQUFDLEVBQUUsSUFBSSxFQUFFLE1BQU0sQ0FBQyxJQUFJLEVBQUUsRUFBRSxJQUFJLENBQUMsQ0FBQzt3QkFDbkUsSUFBSSxDQUFDLE1BQU0sQ0FBQyxLQUFLLENBQUMsc0JBQW9CLElBQUksQ0FBQyxTQUFTLENBQUMsV0FBVyxDQUFHLENBQUMsQ0FBQzt3QkFDckUsVUFBSSxXQUFXLENBQUMsSUFBSSwwQ0FBRSxJQUFJLEVBQUU7NEJBQzFCLFdBQUksQ0FBQyxrQkFBUSxDQUFDLElBQUksQ0FBQyxDQUFDOzRCQUNwQixzQkFBTzt5QkFDUjt3QkFFSyxNQUFNLEdBQUcsTUFBTSxDQUFDLEtBQUssQ0FBQzt3QkFFVCxxQkFBTSxvQkFBYSxPQUFDLE1BQU0sQ0FBQyxXQUFXLDBDQUFFLEtBQUssQ0FBQyxFQUFBOzt3QkFBM0QsVUFBVSxHQUFHLFNBQThDOzZCQUU3RCxxQkFBUyxDQUFDLE1BQU0sQ0FBQyxFQUFqQix3QkFBaUI7d0JBQ1oscUJBQU0scUJBQVcsQ0FBQyxNQUFNLENBQUMsTUFBTSxFQUFFLFVBQVUsQ0FBQyxFQUFBOzRCQUFuRCxzQkFBTyxTQUE0QyxFQUFDOzs2QkFHbEQsc0JBQVUsQ0FBQyxNQUFNLENBQUMsRUFBbEIsd0JBQWtCO3dCQUNkLFlBQVksR0FBRyxJQUFJLHNCQUFZLEVBQUUsQ0FBQzt3QkFDakMscUJBQU0sWUFBWSxDQUFDLE1BQU0sQ0FBQyxNQUFNLEVBQUUsVUFBVSxDQUFDLEVBQUE7NEJBQXBELHNCQUFPLFNBQTZDLEVBQUM7NEJBR3ZELE1BQU0sSUFBSSxLQUFLLENBQUMsK0VBQStFLENBQUMsQ0FBQzs7OztLQUNsRztJQTNCMEI7UUFBMUIsY0FBTyxDQUFDLGtCQUFRLENBQUMsT0FBTyxDQUFDOzs0Q0FBaUI7SUE0QjdDLGVBQUM7Q0FBQSxBQTdCRCxJQTZCQztrQkE3Qm9CLFFBQVEifQ==
+//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiaW5kZXguanMiLCJzb3VyY2VSb290IjoiIiwic291cmNlcyI6WyIuLi9zcmMvaW5kZXgudHMiXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6Ijs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7QUFBQSw4Q0FBNEY7QUFFNUYsd0RBQWtDO0FBQ2xDLG9FQUE4QztBQUM5QyxzRUFBZ0Q7QUFDaEQseUNBQTZEO0FBRTdEO0lBQUE7SUErQkEsQ0FBQztJQTVCTyxzQkFBRyxHQUFULFVBQVUsTUFBZTs7Ozs7Ozt3QkFDdkIsSUFBSSxDQUFDLE1BQU0sQ0FBQyxLQUFLLENBQUMsb0JBQWtCLElBQUksQ0FBQyxTQUFTLENBQUMsTUFBTSxDQUFHLENBQUMsQ0FBQzt3QkFFeEQsSUFBSSxHQUFHLEVBQUUsT0FBTyxFQUFFLENBQUMsTUFBTSxDQUFDLEVBQUUsS0FBSyxFQUFFLEVBQUUsSUFBSSxFQUFFLEdBQUcsRUFBRSxFQUFFLENBQUM7d0JBQ25ELFdBQVcsR0FBUSxtQkFBWSxDQUFDLEVBQUUsSUFBSSxFQUFFLE1BQU0sQ0FBQyxJQUFJLEVBQUUsRUFBRSxJQUFJLENBQUMsQ0FBQzt3QkFDbkUsSUFBSSxDQUFDLE1BQU0sQ0FBQyxLQUFLLENBQUMsc0JBQW9CLElBQUksQ0FBQyxTQUFTLENBQUMsV0FBVyxDQUFHLENBQUMsQ0FBQzt3QkFDckUsVUFBSSxXQUFXLENBQUMsSUFBSSwwQ0FBRSxJQUFJLEVBQUU7NEJBQzFCLFdBQUksQ0FBQyxrQkFBUSxDQUFDLElBQUksQ0FBQyxDQUFDOzRCQUNwQixzQkFBTzt5QkFDUjt3QkFFSyxNQUFNLEdBQUcsTUFBTSxDQUFDLEtBQUssQ0FBQzt3QkFFVCxxQkFBTSxvQkFBYSxDQUFDLE1BQU0sQ0FBQyxPQUFPLENBQUMsTUFBTSxDQUFDLEVBQUE7O3dCQUF2RCxVQUFVLEdBQUcsU0FBMEM7NkJBRXpELHFCQUFTLENBQUMsTUFBTSxDQUFDLEVBQWpCLHdCQUFpQjt3QkFFWixxQkFBTSxxQkFBVyxDQUFDLE1BQU0sQ0FBQyxNQUFNLEVBQUUsVUFBVSxDQUFDLEVBQUE7O29CQURuRCxhQUFhO29CQUNiLHNCQUFPLFNBQTRDLEVBQUM7OzZCQUdsRCxzQkFBVSxDQUFDLE1BQU0sQ0FBQyxFQUFsQix3QkFBa0I7d0JBQ2QsWUFBWSxHQUFHLElBQUksc0JBQVksRUFBRSxDQUFDO3dCQUVqQyxxQkFBTSxZQUFZLENBQUMsTUFBTSxDQUFDLE1BQU0sRUFBRSxVQUFVLENBQUMsRUFBQTs7b0JBRHBELGFBQWE7b0JBQ2Isc0JBQU8sU0FBNkMsRUFBQzs0QkFHdkQsTUFBTSxJQUFJLEtBQUssQ0FBQywrRUFBK0UsQ0FBQyxDQUFDOzs7O0tBQ2xHO0lBN0IwQjtRQUExQixjQUFPLENBQUMsa0JBQVEsQ0FBQyxPQUFPLENBQUM7OzRDQUFpQjtJQThCN0MsZUFBQztDQUFBLEFBL0JELElBK0JDO2tCQS9Cb0IsUUFBUSJ9

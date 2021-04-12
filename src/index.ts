@@ -21,14 +21,16 @@ export default class Compoent {
 
     const params = inputs.props;
 
-    const credential = await getCredential(inputs.credentials?.Alias);
+    const credential = await getCredential(inputs.project.access);
 
     if (isFcToken(params)) {
+      // @ts-ignore
       return await AddFcDomain.domain(params, credential);
     }
 
     if (isOssToken(params)) {
       const addOssDomain = new AddOssDomain();
+      // @ts-ignore
       return await addOssDomain.domain(params, credential);
     }
 
