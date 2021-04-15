@@ -7,5 +7,5 @@ export default class Cdn {
     makeOwner(bucket: string, region: string, token: string): Promise<void>;
     verifyDomainOwner(domainName: string): Promise<boolean>;
     describeVerifyContent(domainName: string): Promise<string>;
-    addCdnDomain(domainName: string, bucket: string, region: string): Promise<any>;
+    addCdnDomain(domainName: string, bucket: string, region: string): Promise<string>;
 }

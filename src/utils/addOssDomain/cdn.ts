@@ -110,15 +110,27 @@ export default class Cdn {
       }
     }
 
-    const describeCdnDomainDetail = await this.cdnClient.request(
-      'DescribeCdnDomainDetail',
-      {
-        DomainName: domainName,
-      },
-      POST,
-    );
-    this.logger.debug(`DescribeCdnDomainDetail respones is: ${JSON.stringify(describeCdnDomainDetail)}`);
-    
-    return describeCdnDomainDetail.GetDomainDetailModel.Cname;
+    let i = 0;
+    let cname = '';
+
+    do {
+      await sleep(1000);
+      const describeCdnDomainDetail = await this.cdnClient.request(
+        'DescribeCdnDomainDetail',
+        {
+          DomainName: domainName,
+        },
+        POST,
+      );
+      this.logger.debug(`DescribeCdnDomainDetail respones is: ${JSON.stringify(describeCdnDomainDetail)}`);
+      i = i + 1;
+      cname = describeCdnDomainDetail.GetDomainDetailModel.Cname;
+    } while(!(cname || i > 5));
+
+    if (!cname) {
+      throw new Error('Not fount cdn cname, please retry.')
+    }
+
+    return cname;
   }
 }
