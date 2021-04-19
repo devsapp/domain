@@ -1,4 +1,4 @@
-import { HLogger, ILogger, getCredential, commandParse, help } from '@serverless-devs/core';
+import { HLogger, ILogger, getCredential, reportComponent, commandParse, help } from '@serverless-devs/core';
 import _ from 'lodash';
 import constant from './constant';
 import AddFcDomain from './utils/addFcDomain';
@@ -22,6 +22,10 @@ export default class Compoent {
     const params = inputs.props;
 
     const credential = await getCredential(inputs.project.access);
+    reportComponent('domain', {
+      uid: credential.AccountID,
+      command: 'get',
+    })
 
     if (isFcToken(params)) {
       // @ts-ignore

@@ -13,9 +13,5 @@ download
 lib
 .vscode
 .cache
-*/test
-*/src
-!fc/src
-!s-zip/src
 package-lock.json
 examples/**/.s

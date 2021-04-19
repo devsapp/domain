@@ -28,9 +28,14 @@ export default class AddFcDomain {
     const token: string = tokenRs.Body.Token;
 
     const vm = spinner('Deploy helper function.');
-    await Fc.deploy(credential, params.region, token);
-    await sleep(1500);
-    vm.succeed('Deployed.');
+    try {
+      await Fc.deploy(credential, params.region, token);
+      await sleep(1500);
+      vm.succeed('Deployed.');
+    } catch(ex) {
+      vm.fail('Failed to deploy helper function.');
+      throw ex;
+    }
 
     this.logger.debug(
       `The request ${constant.DOMAIN}/domain parameter is: \n ${JSON.stringify(
