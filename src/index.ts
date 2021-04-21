@@ -9,6 +9,10 @@ export default class Compoent {
   @HLogger(constant.CONTEXT) logger: ILogger;
 
   async get(inputs: IInputs) {
+    // @ts-ignore
+    delete inputs.Credentials;
+    // @ts-ignore
+    delete inputs.credentials;
     this.logger.debug(`inputs params: ${JSON.stringify(inputs)}`);
 
     const apts = { boolean: ['help'], alias: { help: 'h' } };
