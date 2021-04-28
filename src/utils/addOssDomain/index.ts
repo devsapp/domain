@@ -35,7 +35,7 @@ export default class AddOssDomain {
 
     const { bucket, region } = params;
     const token = tokenRs.Body.Token;
-    const domain = `${bucket}.oss.devsapp.cn`;
+    const domain = `${bucket}.oss.devsapp.net`;
     const savePath = path.join(process.cwd(), '.s', `${bucket}-token`);
 
     this.logger.debug(`Save file path is: ${savePath}, token is: ${token}.`);

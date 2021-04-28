@@ -1,7 +1,7 @@
 
 export default {
   CONTEXT: 'FC-DOMAIN',
-  DOMAIN: 'http://domain.devsapp.cn',
+  DOMAIN: 'http://domain.devsapp.net',
   HINT: {
     loading: 'Get token....',
     success: 'End of request',

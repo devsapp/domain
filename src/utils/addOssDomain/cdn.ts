@@ -5,7 +5,7 @@ import { sleep, checkRs, getPopClient } from '../utils';
 import { ICredentials } from '../../interface';
 
 const POST = { method: 'POST' };
-const DOMAIN = 'devsapp.cn';
+const DOMAIN = 'devsapp.net';
 
 export default class Cdn {
   @HLogger(constant.CONTEXT) logger: ILogger;
