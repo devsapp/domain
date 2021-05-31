@@ -1,5 +1,4 @@
 import Pop from '@alicloud/pop-core';
-import _ from 'lodash';
 
 export const sleep = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
 
@@ -11,10 +10,12 @@ export function checkRs(rs: any) {
 
 export const getPopClient = (credentials, endpoint, apiVersion) => {
   return new Pop({
-    endpoint: endpoint,
-    apiVersion: apiVersion,
+    endpoint,
+    apiVersion,
     accessKeyId: credentials.AccessKeyID,
     accessKeySecret: credentials.AccessKeySecret,
+    // @ts-ignore
+    securityToken: credentials.SecurityToken,
     opts: {
       timeout: 10 * 1000,
     },

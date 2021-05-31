@@ -1,5 +1,4 @@
 import { HLogger, ILogger, request } from '@serverless-devs/core';
-import _ from 'lodash';
 import fs from 'fs-extra';
 import path from 'path';
 import constant from '../../constant';
@@ -47,6 +46,7 @@ export default class AddOssDomain {
       bucket,
       accessKeyId: credential.AccessKeyID,
       accessKeySecret: credential.AccessKeySecret,
+      stsToken: credential.SecurityToken,
     };
     await Oss.put(ossCredential, savePath);
     this.logger.debug('Put file to oss end.');

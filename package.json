@@ -1,19 +1,17 @@
 {
   "name": "domain",
   "main": "./dist/index.js",
-  "version": "0.0.2",
+  "version": "0.0.9",
   "dependencies": {
     "@alicloud/fc2": "^2.2.2",
     "@alicloud/pop-core": "^1.7.10",
     "@serverless-devs/core": "^0.0.x",
     "ali-oss": "^6.13.2",
     "fs-extra": "^9.1.0",
-    "lodash": "^4.17.20",
     "promise-retry": "^2.0.1"
   },
   "devDependencies": {
     "@types/eslint": "^7.2.6",
-    "@types/lodash": "^4.14.168",
     "@types/jest": "^26.0.10",
     "@types/ali-oss": "^6.0.7",
     "@types/fs-extra": "^9.0.8",
@@ -28,9 +26,10 @@
     "webpack-cli": "^4.4.0"
   },
   "scripts": {
+    "start": "npm run dev",
     "dev": "npx tsc -w -p tsconfig.json",
     "prebuild": "rimraf dist",
-    "build:ts": "npx tsc -p tsconfig.json",
+    "build": "npx tsc -p tsconfig.json",
     "test": "jest",
     "test:cov": "jest --coverage",
     "lint": "f2elint scan",

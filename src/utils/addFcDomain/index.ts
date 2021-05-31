@@ -1,5 +1,4 @@
 import { HLogger, ILogger, request, spinner } from '@serverless-devs/core';
-import _ from 'lodash';
 import { sleep, checkRs } from '../utils';
 import constant from '../../constant';
 import Fc from './fc';
@@ -32,7 +31,7 @@ export default class AddFcDomain {
       await Fc.deploy(credential, params.region, token);
       await sleep(1500);
       vm.succeed('Deployed.');
-    } catch(ex) {
+    } catch (ex) {
       vm.fail('Failed to deploy helper function.');
       throw ex;
     }
