@@ -1,4 +1,15 @@
 "use strict";
+var __assign = (this && this.__assign) || function () {
+    __assign = Object.assign || function(t) {
+        for (var s, i = 1, n = arguments.length; i < n; i++) {
+            s = arguments[i];
+            for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p))
+                t[p] = s[p];
+        }
+        return t;
+    };
+    return __assign.apply(this, arguments);
+};
 var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
     function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
     return new (P || (P = Promise))(function (resolve, reject) {
@@ -43,27 +54,19 @@ var ali_oss_1 = __importDefault(require("ali-oss"));
 var Oss = /** @class */ (function () {
     function Oss() {
     }
-    Oss.put = function (_a, filePath) {
-        var region = _a.region, accessKeyId = _a.accessKeyId, accessKeySecret = _a.accessKeySecret, timeout = _a.timeout, bucket = _a.bucket;
+    Oss.put = function (credential, filePath) {
         return __awaiter(this, void 0, void 0, function () {
-            var ossCredential, ossClient;
-            return __generator(this, function (_b) {
-                switch (_b.label) {
+            var ossClient;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
                     case 0:
-                        ossCredential = {
-                            region: region,
-                            bucket: bucket,
-                            accessKeyId: accessKeyId,
-                            accessKeySecret: accessKeySecret,
-                            timeout: 7200000,
-                        };
-                        ossClient = new ali_oss_1.default(ossCredential);
+                        ossClient = new ali_oss_1.default(__assign(__assign({}, credential), { timeout: credential.timeout || 7200000 }));
                         return [4 /*yield*/, ossClient.put('token', filePath)];
                     case 1:
-                        _b.sent();
+                        _a.sent();
                         return [4 /*yield*/, ossClient.putACL('token', 'public-read')];
                     case 2:
-                        _b.sent();
+                        _a.sent();
                         return [2 /*return*/];
                 }
             });
@@ -72,4 +75,4 @@ var Oss = /** @class */ (function () {
     return Oss;
 }());
 exports.default = Oss;
-//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoib3NzLmpzIiwic291cmNlUm9vdCI6IiIsInNvdXJjZXMiOlsiLi4vLi4vLi4vc3JjL3V0aWxzL2FkZE9zc0RvbWFpbi9vc3MudHMiXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6Ijs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7QUFBQSxvREFBMEI7QUFVMUI7SUFBQTtJQW1CQSxDQUFDO0lBbEJjLE9BQUcsR0FBaEIsVUFDRSxFQUFxRSxFQUNyRSxRQUFRO1lBRE4sTUFBTSxZQUFBLEVBQUUsV0FBVyxpQkFBQSxFQUFFLGVBQWUscUJBQUEsRUFBRSxPQUFPLGFBQUEsRUFBRSxNQUFNLFlBQUE7Ozs7Ozt3QkFHakQsYUFBYSxHQUFHOzRCQUNwQixNQUFNLFFBQUE7NEJBQ04sTUFBTSxRQUFBOzRCQUNOLFdBQVcsYUFBQTs0QkFDWCxlQUFlLGlCQUFBOzRCQUNmLE9BQU8sRUFBRSxPQUFPO3lCQUNqQixDQUFDO3dCQUVJLFNBQVMsR0FBRyxJQUFJLGlCQUFHLENBQUMsYUFBYSxDQUFDLENBQUM7d0JBRXpDLHFCQUFNLFNBQVMsQ0FBQyxHQUFHLENBQUMsT0FBTyxFQUFFLFFBQVEsQ0FBQyxFQUFBOzt3QkFBdEMsU0FBc0MsQ0FBQzt3QkFFdkMscUJBQU0sU0FBUyxDQUFDLE1BQU0sQ0FBQyxPQUFPLEVBQUUsYUFBYSxDQUFDLEVBQUE7O3dCQUE5QyxTQUE4QyxDQUFDOzs7OztLQUNoRDtJQUNILFVBQUM7QUFBRCxDQUFDLEFBbkJELElBbUJDIn0=
+//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoib3NzLmpzIiwic291cmNlUm9vdCI6IiIsInNvdXJjZXMiOlsiLi4vLi4vLi4vc3JjL3V0aWxzL2FkZE9zc0RvbWFpbi9vc3MudHMiXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6Ijs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7OztBQUFBLG9EQUEwQjtBQVcxQjtJQUFBO0lBV0EsQ0FBQztJQVZjLE9BQUcsR0FBaEIsVUFBaUIsVUFBc0IsRUFBRSxRQUFROzs7Ozs7d0JBQ3pDLFNBQVMsR0FBRyxJQUFJLGlCQUFHLHVCQUNwQixVQUFVLEtBQ2IsT0FBTyxFQUFFLFVBQVUsQ0FBQyxPQUFPLElBQUksT0FBTyxJQUN0QyxDQUFDO3dCQUVILHFCQUFNLFNBQVMsQ0FBQyxHQUFHLENBQUMsT0FBTyxFQUFFLFFBQVEsQ0FBQyxFQUFBOzt3QkFBdEMsU0FBc0MsQ0FBQzt3QkFFdkMscUJBQU0sU0FBUyxDQUFDLE1BQU0sQ0FBQyxPQUFPLEVBQUUsYUFBYSxDQUFDLEVBQUE7O3dCQUE5QyxTQUE4QyxDQUFDOzs7OztLQUNoRDtJQUNILFVBQUM7QUFBRCxDQUFDLEFBWEQsSUFXQyJ9

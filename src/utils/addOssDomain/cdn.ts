@@ -1,5 +1,4 @@
 import { HLogger, ILogger, request } from '@serverless-devs/core';
-import _ from 'lodash';
 import constant from '../../constant';
 import { sleep, checkRs, getPopClient } from '../utils';
 import { ICredentials } from '../../interface';
@@ -123,12 +122,12 @@ export default class Cdn {
         POST,
       );
       this.logger.debug(`DescribeCdnDomainDetail respones is: ${JSON.stringify(describeCdnDomainDetail)}`);
-      i = i + 1;
+      i += 1;
       cname = describeCdnDomainDetail.GetDomainDetailModel.Cname;
-    } while(!(cname || i > 5));
+    } while (!(cname || i > 5));
 
     if (!cname) {
-      throw new Error('Not fount cdn cname, please retry.')
+      throw new Error('Not fount cdn cname, please retry.');
     }
 
     return cname;

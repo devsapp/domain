@@ -14,6 +14,7 @@ export default class Component {
     const client = new FC(profile.AccountID, {
       accessKeyID: profile.AccessKeyID,
       accessKeySecret: profile.AccessKeySecret,
+      securityToken: profile.SecurityToken,
       region: regionId,
       timeout: 600 * 1000,
     });
@@ -21,21 +22,21 @@ export default class Component {
     try {
       this.logger.debug('Delete trigger...');
       await client.deleteTrigger(serviceName, functionName, triggerName);
-    } catch(ex) {
+    } catch (ex) {
       this.logger.debug(`ex code: ${ex.code}, ex: ${ex.message}`);
     }
 
     try {
       this.logger.debug('Delete function...');
       await client.deleteFunction(serviceName, functionName);
-    } catch(ex) {
+    } catch (ex) {
       this.logger.debug(`ex code: ${ex.code}, ex: ${ex.message}`);
     }
 
     try {
       this.logger.debug('Delete service...');
       await client.deleteService(serviceName);
-    } catch(ex) {
+    } catch (ex) {
       this.logger.debug(`ex code: ${ex.code}, ex: ${ex.message}`);
     }
   }
@@ -71,7 +72,7 @@ export default class Component {
     try {
       this.logger.debug('Create service...');
       await this.client.createService(serviceName, serviceConfig);
-    } catch(ex) {
+    } catch (ex) {
       if (ex.code !== 'ServiceAlreadyExists') {
         this.logger.debug(`ex code: ${ex.code}, ex: ${ex.message}`);
         throw ex;
@@ -83,7 +84,7 @@ export default class Component {
     try {
       this.logger.debug('Create function...');
       await this.client.updateFunction(serviceName, functionName, functionConfig);
-    } catch(ex) {
+    } catch (ex) {
       if (ex.code === 'FunctionNotFound') {
         // function code is `exports.handler = (req, resp, context) => resp.send(process.env.token || '');`;
         const zipFile = 'UEsDBAoAAAAIABULiFLOAhlFSQAAAE0AAAAIAAAAaW5kZXguanMdyMEJwCAMBdBVclNBskCxuxT9UGiJNgnFg8MX+o4Pc3R14/OQdkOpUFQ8mRQ2MtUujumJyv4PG6TFob3CjCEve78gtBaFkLYPUEsBAh4DCgAAAAgAFQuIUs4CGUVJAAAATQAAAAgAAAAAAAAAAAAAALSBAAAAAGluZGV4LmpzUEsFBgAAAAABAAEANgAAAG8AAAAAAA==';
@@ -100,7 +101,7 @@ export default class Component {
     try {
       this.logger.debug('Create trigger...');
       await this.client.createTrigger(serviceName, functionName, triggerConfig);
-    } catch(ex) {
+    } catch (ex) {
       if (ex.code !== 'TriggerAlreadyExists') {
         this.logger.debug(`ex code: ${ex.code}, ex: ${ex.message}`);
         throw ex;
