@@ -53,6 +53,6 @@ export default class AddFcDomain {
     this.logger.debug(`Get token response is: \n ${JSON.stringify(domainRs, null, '  ')}`);
     await Fc.remove(credential, params.region);
     checkRs(domainRs);
-    return `${params.function}.${params.service}.${params.region}.${params.user}.fc.devsapp.net`.toLocaleLowerCase();
+    return `${params.function}.${params.service}.${params.user}.${params.region}.fc.devsapp.net`.toLocaleLowerCase();
   }
 }
