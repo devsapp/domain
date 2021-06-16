@@ -194,7 +194,7 @@ var Cdn = /** @class */ (function () {
                             }, POST)];
                     case 6:
                         describeCdnDomainDetail = _a.sent();
-                        this.logger.debug("DescribeCdnDomainDetail respones is: " + JSON.stringify(describeCdnDomainDetail));
+                        this.logger.debug("DescribeCdnDomainDetail response is: " + JSON.stringify(describeCdnDomainDetail));
                         i += 1;
                         cname = describeCdnDomainDetail.GetDomainDetailModel.Cname;
                         _a.label = 7;
@@ -203,7 +203,7 @@ var Cdn = /** @class */ (function () {
                         _a.label = 8;
                     case 8:
                         if (!cname) {
-                            throw new Error('Not fount cdn cname, please retry.');
+                            throw new Error('Not found cdn cname, please retry.');
                         }
                         return [2 /*return*/, cname];
                 }

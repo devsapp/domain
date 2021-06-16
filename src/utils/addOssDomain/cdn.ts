@@ -121,13 +121,13 @@ export default class Cdn {
         },
         POST,
       );
-      this.logger.debug(`DescribeCdnDomainDetail respones is: ${JSON.stringify(describeCdnDomainDetail)}`);
+      this.logger.debug(`DescribeCdnDomainDetail response is: ${JSON.stringify(describeCdnDomainDetail)}`);
       i += 1;
       cname = describeCdnDomainDetail.GetDomainDetailModel.Cname;
     } while (!(cname || i > 5));
 
     if (!cname) {
-      throw new Error('Not fount cdn cname, please retry.');
+      throw new Error('Not found cdn cname, please retry.');
     }
 
     return cname;
