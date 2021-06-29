@@ -1,6 +1,5 @@
 import FC from '@alicloud/fc2';
-import { HLogger, ILogger } from '@serverless-devs/core';
-import constant from '../../constant';
+import logger from '../../common/logger';
 
 const serviceName = 'serverless-devs-check';
 const functionName = 'get-domain';
@@ -8,7 +7,6 @@ const triggerName = 'httpTrigger';
 
 export default class Component {
   static client: any;
-  @HLogger(constant.CONTEXT) static logger: ILogger;
 
   static async remove(profile, regionId: string) {
     const client = new FC(profile.AccountID, {
@@ -20,24 +18,24 @@ export default class Component {
     });
 
     try {
-      this.logger.debug('Delete trigger...');
+      logger.debug('Delete trigger...');
       await client.deleteTrigger(serviceName, functionName, triggerName);
     } catch (ex) {
-      this.logger.debug(`ex code: ${ex.code}, ex: ${ex.message}`);
+      logger.debug(`ex code: ${ex.code}, ex: ${ex.message}`);
     }
 
     try {
-      this.logger.debug('Delete function...');
+      logger.debug('Delete function...');
       await client.deleteFunction(serviceName, functionName);
     } catch (ex) {
-      this.logger.debug(`ex code: ${ex.code}, ex: ${ex.message}`);
+      logger.debug(`ex code: ${ex.code}, ex: ${ex.message}`);
     }
 
     try {
-      this.logger.debug('Delete service...');
+      logger.debug('Delete service...');
       await client.deleteService(serviceName);
     } catch (ex) {
-      this.logger.debug(`ex code: ${ex.code}, ex: ${ex.message}`);
+      logger.debug(`ex code: ${ex.code}, ex: ${ex.message}`);
     }
   }
 
@@ -70,11 +68,11 @@ export default class Component {
 
   static async makeService(serviceConfig) {
     try {
-      this.logger.debug('Create service...');
+      logger.debug('Create service...');
       await this.client.createService(serviceName, serviceConfig);
     } catch (ex) {
       if (ex.code !== 'ServiceAlreadyExists') {
-        this.logger.debug(`ex code: ${ex.code}, ex: ${ex.message}`);
+        logger.debug(`ex code: ${ex.code}, ex: ${ex.message}`);
         throw ex;
       }
     }
@@ -82,7 +80,7 @@ export default class Component {
 
   static async makeFunction(functionConfig) {
     try {
-      this.logger.debug('Create function...');
+      logger.debug('Create function...');
       await this.client.updateFunction(serviceName, functionName, functionConfig);
     } catch (ex) {
       if (ex.code === 'FunctionNotFound') {
@@ -92,18 +90,18 @@ export default class Component {
         await this.client.createFunction(serviceName, functionConfig);
         return;
       }
-      this.logger.debug(`ex code: ${ex.code}, ex: ${ex.message}`);
+      logger.debug(`ex code: ${ex.code}, ex: ${ex.message}`);
       throw ex;
     }
   }
 
   static async makeTrigger(triggerConfig) {
     try {
-      this.logger.debug('Create trigger...');
+      logger.debug('Create trigger...');
       await this.client.createTrigger(serviceName, functionName, triggerConfig);
     } catch (ex) {
       if (ex.code !== 'TriggerAlreadyExists') {
-        this.logger.debug(`ex code: ${ex.code}, ex: ${ex.message}`);
+        logger.debug(`ex code: ${ex.code}, ex: ${ex.message}`);
         throw ex;
       }
     }

@@ -1,12 +1,6 @@
 
 export default {
   CONTEXT: 'FC-DOMAIN',
-  DOMAIN: 'http://domain.devsapp.net',
-  HINT: {
-    loading: 'Get token....',
-    success: 'End of request',
-    error: 'Request failed',
-  },
   RETRYOPTIONS: {
     retries: 5,
     factor: 2,

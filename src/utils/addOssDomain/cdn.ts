@@ -1,13 +1,13 @@
-import { HLogger, ILogger, request } from '@serverless-devs/core';
-import constant from '../../constant';
-import { sleep, checkRs, getPopClient } from '../utils';
+/* eslint-disable no-await-in-loop */
+import logger from '../../common/logger';
+import { sleep, getPopClient } from '../utils';
 import { ICredentials } from '../../interface';
+import * as api from '../api';
 
 const POST = { method: 'POST' };
 const DOMAIN = 'devsapp.net';
 
 export default class Cdn {
-  @HLogger(constant.CONTEXT) logger: ILogger;
   cdnClient: any;
 
   constructor(credentials: ICredentials) {
@@ -15,42 +15,17 @@ export default class Cdn {
   }
 
   async makeOwner(bucket: string, region: string, token: string) {
-    this.logger.debug('Check verify domain owner start...');
+    logger.debug('Check verify domain owner start...');
     const isDomainOwner = await this.verifyDomainOwner(DOMAIN);
-    this.logger.debug(`Check verify domain owner end, response is: ${isDomainOwner}`);
+    logger.debug(`Check verify domain owner end, response is: ${isDomainOwner}`);
 
     if (!isDomainOwner) {
-      this.logger.debug('Get describe verify content start...');
+      logger.debug('Get describe verify content start...');
       const verify = await this.describeVerifyContent(DOMAIN);
-      this.logger.debug(`Get describe verify content end, response is: ${verify}`);
+      logger.debug(`Get describe verify content end, response is: ${verify}`);
 
-      this.logger.debug(
-        `The request ${constant.DOMAIN}/domain parameter is: { bucket: ${bucket}, region: ${region}, token: ${token} }`,
-      );
-      const dRs = await request(`${constant.DOMAIN}/domain`, {
-        method: 'post',
-        body: { bucket, region, token, type: 'oss' },
-        form: true,
-        hint: { ...constant.HINT, loading: 'Get domain....' },
-      });
-      this.logger.debug(
-        `The request ${constant.DOMAIN}/verify response is: \n ${JSON.stringify(dRs, null, '  ')}`,
-      );
-      checkRs(dRs);
-
-      this.logger.debug(
-        `The request ${constant.DOMAIN}/verify parameter is: { bucket: ${bucket}, verify: ${verify} }`,
-      );
-      const rs = await request(`${constant.DOMAIN}/verify`, {
-        method: 'post',
-        body: { bucket, verify },
-        form: true,
-        hint: { ...constant.HINT, loading: 'Request verify....' },
-      });
-      this.logger.debug(
-        `The request ${constant.DOMAIN}/verify response is: \n ${JSON.stringify(rs, null, '  ')}`,
-      );
-      checkRs(rs);
+      await api.domain({ bucket, region, token, type: 'oss' });
+      await api.verify({ bucket, verify });
 
       await sleep(1000);
       await this.makeOwner(bucket, region, token);
@@ -70,7 +45,7 @@ export default class Cdn {
 
       return true;
     } catch (ex) {
-      this.logger.debug(`VerifyDomainOwner domain name is ${domainName}, error is: \n ${ex}`);
+      logger.debug(`VerifyDomainOwner domain name is ${domainName}, error is: \n ${ex}`);
       if (ex.code !== 'DomainOwnerVerifyFail') {
         throw ex;
       }
@@ -121,7 +96,7 @@ export default class Cdn {
         },
         POST,
       );
-      this.logger.debug(`DescribeCdnDomainDetail response is: ${JSON.stringify(describeCdnDomainDetail)}`);
+      logger.debug(`DescribeCdnDomainDetail response is: ${JSON.stringify(describeCdnDomainDetail)}`);
       i += 1;
       cname = describeCdnDomainDetail.GetDomainDetailModel.Cname;
     } while (!(cname || i > 5));
