@@ -63,8 +63,25 @@ export default class Compoent {
       command,
     });
 
+    const { props = {} } = inputs;
+    if (props?.service && /_/.test(props.service)) {
+      const s = props.service.replace(/_/g, '-');
+      logger.warning(`props.service has _, transfrom to ${s}`);
+      props.service = s;
+    }
+    if (props?.function && /_/.test(props.function)) {
+      const f = props.function.replace(/_/g, '-');
+      logger.warning(`props.function has _, transfrom to ${f}`);
+      props.function = f;
+    }
+    if (props?.project && /_/.test(props.project)) {
+      const p = props.project.replace(/_/g, '-');
+      logger.warning(`props.project has _, transfrom to ${p}`);
+      props.project = p;
+    }
+
     return {
-      props: inputs.props,
+      props,
       credential,
     };
   }
