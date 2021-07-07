@@ -1,10 +1,11 @@
 export interface IInputs {
-  props: IFCTOKEN | IOSSTOKEN;
+  props: any; // IFCTOKEN | IOSSTOKEN | IJamstack;
   project: {
     component: string;
     access: string;
     projectName: string;
   };
+  credential?: ICredentials;
   appName: string;
   args: string;
   path: any;
@@ -29,6 +30,17 @@ export interface IOSSTOKEN {
   type: string;
   bucket: string;
   region: string;
+}
+
+export interface IJamstack {
+  type: 'jamstack-fc' | 'jamstack-oss';
+  project: string;
+  region: string;
+  bucket?: string;
+  user?: number;
+  service?: string;
+  function?: string;
+  customDomain?: string;
 }
 
 export function isFcToken(args: any): args is IFCTOKEN {

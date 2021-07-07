@@ -4,7 +4,8 @@ access: default  #  秘钥别名
 
 services:
   domain-test: #  服务名称
-    component: ${path(../..)}  # 组件名称
+    # component: ${path(../..)}  # 组件名称
+    component: devsapp/domain
     props: #  组件的属性值
       type: fc
       user: 1899690531354629

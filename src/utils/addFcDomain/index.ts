@@ -1,28 +1,12 @@
-import { HLogger, ILogger, request, spinner } from '@serverless-devs/core';
-import { sleep, checkRs } from '../utils';
-import constant from '../../constant';
-import Fc from './fc';
+import { spinner } from '@serverless-devs/core';
+import { sleep } from '../utils';
+import Fc from '../fc';
+import * as api from '../api';
 import { IFCTOKEN } from '../../interface';
 
 export default class AddFcDomain {
-  @HLogger(constant.CONTEXT) static logger: ILogger;
-
   static async domain(params: IFCTOKEN, credential): Promise<string> {
-    this.logger.debug(
-      `The request ${constant.DOMAIN}/token parameter is: \n ${JSON.stringify(
-        params,
-        null,
-        '  ',
-      )} `,
-    );
-    const tokenRs = await request(`${constant.DOMAIN}/token`, {
-      method: 'post',
-      body: params,
-      form: true,
-      hint: constant.HINT,
-    });
-    this.logger.debug(`Get token response is: \n ${JSON.stringify(tokenRs, null, '  ')}`);
-    checkRs(tokenRs);
+    const tokenRs = await api.token(params);
 
     const token: string = tokenRs.Body.Token;
 
@@ -36,23 +20,9 @@ export default class AddFcDomain {
       throw ex;
     }
 
-    this.logger.debug(
-      `The request ${constant.DOMAIN}/domain parameter is: \n ${JSON.stringify(
-        { ...params, token },
-        null,
-        '  ',
-      )} `,
-    );
-    const domainRs = await request(`${constant.DOMAIN}/domain`, {
-      method: 'post',
-      body: { ...params, token },
-      form: true,
-      hint: { ...constant.HINT, loading: 'Get domain....' },
-    });
+    await api.domain({ ...params, token });
 
-    this.logger.debug(`Get token response is: \n ${JSON.stringify(domainRs, null, '  ')}`);
     await Fc.remove(credential, params.region);
-    checkRs(domainRs);
-    return `${params.function}.${params.service}.${params.user}.${params.region}.fc.devsapp.net`.toLocaleLowerCase();
+    return tokenRs.Body.Domain || `${params.function}.${params.service}.${params.user}.${params.region}.fc.devsapp.net`.toLocaleLowerCase();
   }
 }

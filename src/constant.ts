@@ -1,12 +1,6 @@
 
 export default {
   CONTEXT: 'FC-DOMAIN',
-  DOMAIN: 'http://domain.devsapp.net',
-  HINT: {
-    loading: 'Get token....',
-    success: 'End of request',
-    error: 'Request failed',
-  },
   RETRYOPTIONS: {
     retries: 5,
     factor: 2,
@@ -14,6 +8,28 @@ export default {
     randomize: true,
   },
   HELP: [
+    {
+      header: 'Options',
+      optionList: [
+        {
+          name: 'help',
+          description: '使用引导',
+          alias: 'h',
+          type: Boolean,
+        },
+      ],
+    },
+    {
+      header: 'Examples',
+      content: [
+        {
+          // desc: 's exec -- get',
+          example: '$ s exec -- get',
+        },
+      ],
+    },
+  ],
+  JAM_STACK_HELP: [
     {
       header: 'Options',
       optionList: [
