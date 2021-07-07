@@ -1,5 +1,5 @@
 import { request } from '@serverless-devs/core';
-import { IOSSTOKEN, IFCTOKEN } from '../interface';
+import { IOSSTOKEN, IFCTOKEN, IJamstack } from '../interface';
 import logger from '../common/logger';
 
 const DOMAIN = 'http://domain.devsapp.net';
@@ -14,7 +14,7 @@ function checkRs(rs: any) {
   }
 }
 
-export async function token(params: IOSSTOKEN | IFCTOKEN) {
+export async function token(params: IOSSTOKEN | IFCTOKEN | IJamstack) {
   logger.debug(`The request **/token parameter is: ${JSON.stringify(params)}`);
   const tokenRs = await request(`${DOMAIN}/token`, {
     method: 'post',
@@ -22,7 +22,7 @@ export async function token(params: IOSSTOKEN | IFCTOKEN) {
     form: true,
     hint: HINT,
   });
-  logger.debug(`Get token response is: \n ${JSON.stringify(tokenRs, null, '  ')}`);
+  logger.debug(`Get token response is: ${JSON.stringify(tokenRs)}`);
   checkRs(tokenRs);
   return tokenRs;
 }
@@ -35,7 +35,7 @@ export async function domain(params: any) {
     form: true,
     hint: { ...HINT, loading: 'Get domain....' },
   });
-  logger.debug(`The request **/verify response is: ${JSON.stringify(dRs)}`);
+  logger.debug(`The request **/domain response is: ${JSON.stringify(dRs)}`);
   checkRs(dRs);
 
   return dRs;

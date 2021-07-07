@@ -1,5 +1,5 @@
 import FC from '@alicloud/fc2';
-import logger from '../../common/logger';
+import logger from '../common/logger';
 
 const serviceName = 'serverless-devs-check';
 const functionName = 'get-domain';

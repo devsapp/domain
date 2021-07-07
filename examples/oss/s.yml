@@ -7,5 +7,5 @@ services:
     component: ${path(../..)}  # 组件名称
     props: #  组件的属性值
       type: oss
-      region: cn-hongkong
-      bucket: wss-test-domain
+      region: cn-shenzhen
+      bucket: cn-shenzhen-images

@@ -1,6 +1,6 @@
 import { spinner } from '@serverless-devs/core';
 import { sleep } from '../utils';
-import Fc from './fc';
+import Fc from '../fc';
 import * as api from '../api';
 import { IFCTOKEN } from '../../interface';
 
@@ -23,6 +23,6 @@ export default class AddFcDomain {
     await api.domain({ ...params, token });
 
     await Fc.remove(credential, params.region);
-    return `${params.function}.${params.service}.${params.user}.${params.region}.fc.devsapp.net`.toLocaleLowerCase();
+    return tokenRs.Body.Domain || `${params.function}.${params.service}.${params.user}.${params.region}.fc.devsapp.net`.toLocaleLowerCase();
   }
 }

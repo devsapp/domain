@@ -1,0 +1,21 @@
+edition: 1.0.0          #  命令行YAML规范版本，遵循语义化版本（Semantic Versioning）规范
+name: domainApp         #  项目名称
+access: default  #  秘钥别名
+
+services:
+  domain-test: #  服务名称
+    component: ${path(../..)}  # 组件名称
+    props: #  组件的属性值
+      # type: jamstack-oss
+      # region: cn-shenzhen
+      # bucket: cn-shenzhen-images
+      # customDomain: django.serverless-devs-django.1899690531354629.cn-shenzhen.fc.devsapp.net
+      # project: wss-test
+
+      type: jamstack-fc
+      user: 1899690531354629
+      region: cn-shenzhen
+      service: authing
+      function: test
+      customDomain: django.serverless-devs-django.1899690531354629.cn-shenzhen.fc.devsapp.net
+      project: wss-test

@@ -24,8 +24,7 @@ export default class Compoent {
     }
 
     if (isOssToken(props)) {
-      const addOssDomain = new AddOssDomain();
-      return await addOssDomain.domain(props, credential);
+      return await AddOssDomain.domain(props, credential);
     }
 
     throw new Error('Domain configuration error, please refer to https://github.com/devsapp/domain');
@@ -39,12 +38,11 @@ export default class Compoent {
     } = await this.hanlderInputs(inputs, 'jamstack');
 
     if (help) {
-      // core.help(constant.HELP);
+      core.help(constant.JAM_STACK_HELP);
       return;
     }
 
-    const addJamstack = new AddJamstack();
-    await addJamstack.domain(props, credential);
+    return await AddJamstack.domain(props, credential);
   }
 
   private async hanlderInputs(inputs: IInputs, command: string) {
