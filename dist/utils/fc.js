@@ -1,13 +1,4 @@
 "use strict";
-var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
-    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
-    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
-    return c > 3 && r && Object.defineProperty(target, key, r), r;
-};
-var __metadata = (this && this.__metadata) || function (k, v) {
-    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
-};
 var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
     function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
     return new (P || (P = Promise))(function (resolve, reject) {
@@ -49,8 +40,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 var fc2_1 = __importDefault(require("@alicloud/fc2"));
-var core_1 = require("@serverless-devs/core");
-var constant_1 = __importDefault(require("../../constant"));
+var logger_1 = __importDefault(require("../common/logger"));
 var serviceName = 'serverless-devs-check';
 var functionName = 'get-domain';
 var triggerName = 'httpTrigger';
@@ -73,36 +63,36 @@ var Component = /** @class */ (function () {
                         _a.label = 1;
                     case 1:
                         _a.trys.push([1, 3, , 4]);
-                        this.logger.debug('Delete trigger...');
+                        logger_1.default.debug('Delete trigger...');
                         return [4 /*yield*/, client.deleteTrigger(serviceName, functionName, triggerName)];
                     case 2:
                         _a.sent();
                         return [3 /*break*/, 4];
                     case 3:
                         ex_1 = _a.sent();
-                        this.logger.debug("ex code: " + ex_1.code + ", ex: " + ex_1.message);
+                        logger_1.default.debug("ex code: " + ex_1.code + ", ex: " + ex_1.message);
                         return [3 /*break*/, 4];
                     case 4:
                         _a.trys.push([4, 6, , 7]);
-                        this.logger.debug('Delete function...');
+                        logger_1.default.debug('Delete function...');
                         return [4 /*yield*/, client.deleteFunction(serviceName, functionName)];
                     case 5:
                         _a.sent();
                         return [3 /*break*/, 7];
                     case 6:
                         ex_2 = _a.sent();
-                        this.logger.debug("ex code: " + ex_2.code + ", ex: " + ex_2.message);
+                        logger_1.default.debug("ex code: " + ex_2.code + ", ex: " + ex_2.message);
                         return [3 /*break*/, 7];
                     case 7:
                         _a.trys.push([7, 9, , 10]);
-                        this.logger.debug('Delete service...');
+                        logger_1.default.debug('Delete service...');
                         return [4 /*yield*/, client.deleteService(serviceName)];
                     case 8:
                         _a.sent();
                         return [3 /*break*/, 10];
                     case 9:
                         ex_3 = _a.sent();
-                        this.logger.debug("ex code: " + ex_3.code + ", ex: " + ex_3.message);
+                        logger_1.default.debug("ex code: " + ex_3.code + ", ex: " + ex_3.message);
                         return [3 /*break*/, 10];
                     case 10: return [2 /*return*/];
                 }
@@ -153,7 +143,7 @@ var Component = /** @class */ (function () {
                 switch (_a.label) {
                     case 0:
                         _a.trys.push([0, 2, , 3]);
-                        this.logger.debug('Create service...');
+                        logger_1.default.debug('Create service...');
                         return [4 /*yield*/, this.client.createService(serviceName, serviceConfig)];
                     case 1:
                         _a.sent();
@@ -161,7 +151,7 @@ var Component = /** @class */ (function () {
                     case 2:
                         ex_4 = _a.sent();
                         if (ex_4.code !== 'ServiceAlreadyExists') {
-                            this.logger.debug("ex code: " + ex_4.code + ", ex: " + ex_4.message);
+                            logger_1.default.debug("ex code: " + ex_4.code + ", ex: " + ex_4.message);
                             throw ex_4;
                         }
                         return [3 /*break*/, 3];
@@ -177,7 +167,7 @@ var Component = /** @class */ (function () {
                 switch (_a.label) {
                     case 0:
                         _a.trys.push([0, 2, , 5]);
-                        this.logger.debug('Create function...');
+                        logger_1.default.debug('Create function...');
                         return [4 /*yield*/, this.client.updateFunction(serviceName, functionName, functionConfig)];
                     case 1:
                         _a.sent();
@@ -192,7 +182,7 @@ var Component = /** @class */ (function () {
                         _a.sent();
                         return [2 /*return*/];
                     case 4:
-                        this.logger.debug("ex code: " + ex_5.code + ", ex: " + ex_5.message);
+                        logger_1.default.debug("ex code: " + ex_5.code + ", ex: " + ex_5.message);
                         throw ex_5;
                     case 5: return [2 /*return*/];
                 }
@@ -206,7 +196,7 @@ var Component = /** @class */ (function () {
                 switch (_a.label) {
                     case 0:
                         _a.trys.push([0, 2, , 3]);
-                        this.logger.debug('Create trigger...');
+                        logger_1.default.debug('Create trigger...');
                         return [4 /*yield*/, this.client.createTrigger(serviceName, functionName, triggerConfig)];
                     case 1:
                         _a.sent();
@@ -214,7 +204,7 @@ var Component = /** @class */ (function () {
                     case 2:
                         ex_6 = _a.sent();
                         if (ex_6.code !== 'TriggerAlreadyExists') {
-                            this.logger.debug("ex code: " + ex_6.code + ", ex: " + ex_6.message);
+                            logger_1.default.debug("ex code: " + ex_6.code + ", ex: " + ex_6.message);
                             throw ex_6;
                         }
                         return [3 /*break*/, 3];
@@ -223,11 +213,7 @@ var Component = /** @class */ (function () {
             });
         });
     };
-    __decorate([
-        core_1.HLogger(constant_1.default.CONTEXT),
-        __metadata("design:type", Object)
-    ], Component, "logger", void 0);
     return Component;
 }());
 exports.default = Component;
-//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiZmMuanMiLCJzb3VyY2VSb290IjoiIiwic291cmNlcyI6WyIuLi8uLi8uLi9zcmMvdXRpbHMvYWRkRmNEb21haW4vZmMudHMiXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6Ijs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7QUFBQSxzREFBK0I7QUFDL0IsOENBQXlEO0FBQ3pELDREQUFzQztBQUV0QyxJQUFNLFdBQVcsR0FBRyx1QkFBdUIsQ0FBQztBQUM1QyxJQUFNLFlBQVksR0FBRyxZQUFZLENBQUM7QUFDbEMsSUFBTSxXQUFXLEdBQUcsYUFBYSxDQUFDO0FBRWxDO0lBQUE7SUFzR0EsQ0FBQztJQWxHYyxnQkFBTSxHQUFuQixVQUFvQixPQUFPLEVBQUUsUUFBZ0I7Ozs7Ozt3QkFDckMsTUFBTSxHQUFHLElBQUksYUFBRSxDQUFDLE9BQU8sQ0FBQyxTQUFTLEVBQUU7NEJBQ3ZDLFdBQVcsRUFBRSxPQUFPLENBQUMsV0FBVzs0QkFDaEMsZUFBZSxFQUFFLE9BQU8sQ0FBQyxlQUFlOzRCQUN4QyxhQUFhLEVBQUUsT0FBTyxDQUFDLGFBQWE7NEJBQ3BDLE1BQU0sRUFBRSxRQUFROzRCQUNoQixPQUFPLEVBQUUsR0FBRyxHQUFHLElBQUk7eUJBQ3BCLENBQUMsQ0FBQzs7Ozt3QkFHRCxJQUFJLENBQUMsTUFBTSxDQUFDLEtBQUssQ0FBQyxtQkFBbUIsQ0FBQyxDQUFDO3dCQUN2QyxxQkFBTSxNQUFNLENBQUMsYUFBYSxDQUFDLFdBQVcsRUFBRSxZQUFZLEVBQUUsV0FBVyxDQUFDLEVBQUE7O3dCQUFsRSxTQUFrRSxDQUFDOzs7O3dCQUVuRSxJQUFJLENBQUMsTUFBTSxDQUFDLEtBQUssQ0FBQyxjQUFZLElBQUUsQ0FBQyxJQUFJLGNBQVMsSUFBRSxDQUFDLE9BQVMsQ0FBQyxDQUFDOzs7O3dCQUk1RCxJQUFJLENBQUMsTUFBTSxDQUFDLEtBQUssQ0FBQyxvQkFBb0IsQ0FBQyxDQUFDO3dCQUN4QyxxQkFBTSxNQUFNLENBQUMs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
+//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiZmMuanMiLCJzb3VyY2VSb290IjoiIiwic291cmNlcyI6WyIuLi8uLi9zcmMvdXRpbHMvZmMudHMiXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6Ijs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7QUFBQSxzREFBK0I7QUFDL0IsNERBQXNDO0FBRXRDLElBQU0sV0FBVyxHQUFHLHVCQUF1QixDQUFDO0FBQzVDLElBQU0sWUFBWSxHQUFHLFlBQVksQ0FBQztBQUNsQyxJQUFNLFdBQVcsR0FBRyxhQUFhLENBQUM7QUFFbEM7SUFBQTtJQXFHQSxDQUFDO0lBbEdjLGdCQUFNLEdBQW5CLFVBQW9CLE9BQU8sRUFBRSxRQUFnQjs7Ozs7O3dCQUNyQyxNQUFNLEdBQUcsSUFBSSxhQUFFLENBQUMsT0FBTyxDQUFDLFNBQVMsRUFBRTs0QkFDdkMsV0FBVyxFQUFFLE9BQU8sQ0FBQyxXQUFXOzRCQUNoQyxlQUFlLEVBQUUsT0FBTyxDQUFDLGVBQWU7NEJBQ3hDLGFBQWEsRUFBRSxPQUFPLENBQUMsYUFBYTs0QkFDcEMsTUFBTSxFQUFFLFFBQVE7NEJBQ2hCLE9BQU8sRUFBRSxHQUFHLEdBQUcsSUFBSTt5QkFDcEIsQ0FBQyxDQUFDOzs7O3dCQUdELGdCQUFNLENBQUMsS0FBSyxDQUFDLG1CQUFtQixDQUFDLENBQUM7d0JBQ2xDLHFCQUFNLE1BQU0sQ0FBQyxhQUFhLENBQUMsV0FBVyxFQUFFLFlBQVksRUFBRSxXQUFXLENBQUMsRUFBQTs7d0JBQWxFLFNBQWtFLENBQUM7Ozs7d0JBRW5FLGdCQUFNLENBQUMsS0FBSyxDQUFDLGNBQVksSUFBRSxDQUFDLElBQUksY0FBUyxJQUFFLENBQUMsT0FBUyxDQUFDLENBQUM7Ozs7d0JBSXZELGdCQUFNLENBQUMsS0FBSyxDQUFDLG9CQUFvQixDQUFDLENBQUM7d0JBQ25DLHFCQUFNLE1BQU0sQ0FBQyxjQUFjLENBQUMsV0FBVyxFQUFFLFlBQVksQ0FBQyxFQUFBOzt3QkFBdEQsU0FBc0QsQ0FBQzs7Ozt3QkFFdkQs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

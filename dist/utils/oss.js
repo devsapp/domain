@@ -1,15 +1,4 @@
 "use strict";
-var __assign = (this && this.__assign) || function () {
-    __assign = Object.assign || function(t) {
-        for (var s, i = 1, n = arguments.length; i < n; i++) {
-            s = arguments[i];
-            for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p))
-                t[p] = s[p];
-        }
-        return t;
-    };
-    return __assign.apply(this, arguments);
-};
 var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
     function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
     return new (P || (P = Promise))(function (resolve, reject) {
@@ -51,16 +40,42 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 var ali_oss_1 = __importDefault(require("ali-oss"));
+var fs_extra_1 = __importDefault(require("fs-extra"));
+var path_1 = __importDefault(require("path"));
+var logger_1 = __importDefault(require("../common/logger"));
 var Oss = /** @class */ (function () {
     function Oss() {
     }
-    Oss.put = function (credential, filePath) {
+    Oss.saveFile = function (bucket, token) {
+        return __awaiter(this, void 0, void 0, function () {
+            var savePath;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0:
+                        savePath = path_1.default.join(process.cwd(), '.s', bucket + "-token");
+                        logger_1.default.debug("Save file path is: " + savePath + ", token is: " + token + ".");
+                        return [4 /*yield*/, fs_extra_1.default.outputFile(savePath, token)];
+                    case 1:
+                        _a.sent();
+                        return [2 /*return*/, savePath];
+                }
+            });
+        });
+    };
+    Oss.put = function (region, bucket, credential, filePath) {
         return __awaiter(this, void 0, void 0, function () {
             var ossClient;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
-                        ossClient = new ali_oss_1.default(__assign(__assign({}, credential), { timeout: credential.timeout || 7200000 }));
+                        ossClient = new ali_oss_1.default({
+                            region: "oss-" + region,
+                            bucket: bucket,
+                            accessKeyId: credential.AccessKeyID,
+                            accessKeySecret: credential.AccessKeySecret,
+                            stsToken: credential.SecurityToken,
+                            timeout: credential.timeout || 7200000,
+                        });
                         return [4 /*yield*/, ossClient.put('token', filePath)];
                     case 1:
                         _a.sent();
@@ -75,4 +90,4 @@ var Oss = /** @class */ (function () {
     return Oss;
 }());
 exports.default = Oss;
-//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoib3NzLmpzIiwic291cmNlUm9vdCI6IiIsInNvdXJjZXMiOlsiLi4vLi4vLi4vc3JjL3V0aWxzL2FkZE9zc0RvbWFpbi9vc3MudHMiXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6Ijs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7OztBQUFBLG9EQUEwQjtBQVcxQjtJQUFBO0lBV0EsQ0FBQztJQVZjLE9BQUcsR0FBaEIsVUFBaUIsVUFBc0IsRUFBRSxRQUFROzs7Ozs7d0JBQ3pDLFNBQVMsR0FBRyxJQUFJLGlCQUFHLHVCQUNwQixVQUFVLEtBQ2IsT0FBTyxFQUFFLFVBQVUsQ0FBQyxPQUFPLElBQUksT0FBTyxJQUN0QyxDQUFDO3dCQUVILHFCQUFNLFNBQVMsQ0FBQyxHQUFHLENBQUMsT0FBTyxFQUFFLFFBQVEsQ0FBQyxFQUFBOzt3QkFBdEMsU0FBc0MsQ0FBQzt3QkFFdkMscUJBQU0sU0FBUyxDQUFDLE1BQU0sQ0FBQyxPQUFPLEVBQUUsYUFBYSxDQUFDLEVBQUE7O3dCQUE5QyxTQUE4QyxDQUFDOzs7OztLQUNoRDtJQUNILFVBQUM7QUFBRCxDQUFDLEFBWEQsSUFXQyJ9
+//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoib3NzLmpzIiwic291cmNlUm9vdCI6IiIsInNvdXJjZXMiOlsiLi4vLi4vc3JjL3V0aWxzL29zcy50cyJdLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiOzs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7OztBQUFBLG9EQUEwQjtBQUMxQixzREFBMEI7QUFDMUIsOENBQXdCO0FBQ3hCLDREQUFzQztBQUV0QztJQUFBO0lBdUJBLENBQUM7SUF0QmMsWUFBUSxHQUFyQixVQUFzQixNQUFNLEVBQUUsS0FBSzs7Ozs7O3dCQUMzQixRQUFRLEdBQUcsY0FBSSxDQUFDLElBQUksQ0FBQyxPQUFPLENBQUMsR0FBRyxFQUFFLEVBQUUsSUFBSSxFQUFLLE1BQU0sV0FBUSxDQUFDLENBQUM7d0JBRW5FLGdCQUFNLENBQUMsS0FBSyxDQUFDLHdCQUFzQixRQUFRLG9CQUFlLEtBQUssTUFBRyxDQUFDLENBQUM7d0JBQ3BFLHFCQUFNLGtCQUFFLENBQUMsVUFBVSxDQUFDLFFBQVEsRUFBRSxLQUFLLENBQUMsRUFBQTs7d0JBQXBDLFNBQW9DLENBQUM7d0JBQ3JDLHNCQUFPLFFBQVEsRUFBQzs7OztLQUNqQjtJQUVZLE9BQUcsR0FBaEIsVUFBaUIsTUFBTSxFQUFFLE1BQU0sRUFBRSxVQUFVLEVBQUUsUUFBUTs7Ozs7O3dCQUM3QyxTQUFTLEdBQUcsSUFBSSxpQkFBRyxDQUFDOzRCQUN4QixNQUFNLEVBQUUsU0FBTyxNQUFROzRCQUN2QixNQUFNLFFBQUE7NEJBQ04sV0FBVyxFQUFFLFVBQVUsQ0FBQyxXQUFXOzRCQUNuQyxlQUFlLEVBQUUsVUFBVSxDQUFDLGVBQWU7NEJBQzNDLFFBQVEsRUFBRSxVQUFVLENBQUMsYUFBYTs0QkFDbEMsT0FBTyxFQUFFLFVBQVUsQ0FBQyxPQUFPLElBQUksT0FBTzt5QkFDdkMsQ0FBQyxDQUFDO3dCQUVILHFCQUFNLFNBQVMsQ0FBQyxHQUFHLENBQUMsT0FBTyxFQUFFLFFBQVEsQ0FBQyxFQUFBOzt3QkFBdEMsU0FBc0MsQ0FBQzt3QkFFdkMscUJBQU0sU0FBUyxDQUFDLE1BQU0sQ0FBQyxPQUFPLEVBQUUsYUFBYSxDQUFDLEVBQUE7O3dCQUE5QyxTQUE4QyxDQUFDOzs7OztLQUNoRDtJQUNILFVBQUM7QUFBRCxDQUFDLEFBdkJELElBdUJDIn0=

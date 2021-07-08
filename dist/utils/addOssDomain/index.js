@@ -1,23 +1,22 @@
 "use strict";
-var __assign = (this && this.__assign) || function () {
-    __assign = Object.assign || function(t) {
-        for (var s, i = 1, n = arguments.length; i < n; i++) {
-            s = arguments[i];
-            for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p))
-                t[p] = s[p];
-        }
-        return t;
-    };
-    return __assign.apply(this, arguments);
-};
-var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
-    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
-    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
-    return c > 3 && r && Object.defineProperty(target, key, r), r;
-};
-var __metadata = (this && this.__metadata) || function (k, v) {
-    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    Object.defineProperty(o, k2, { enumerable: true, get: function() { return m[k]; } });
+}) : (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    o[k2] = m[k];
+}));
+var __setModuleDefault = (this && this.__setModuleDefault) || (Object.create ? (function(o, v) {
+    Object.defineProperty(o, "default", { enumerable: true, value: v });
+}) : function(o, v) {
+    o["default"] = v;
+});
+var __importStar = (this && this.__importStar) || function (mod) {
+    if (mod && mod.__esModule) return mod;
+    var result = {};
+    if (mod != null) for (var k in mod) if (k !== "default" && Object.hasOwnProperty.call(mod, k)) __createBinding(result, mod, k);
+    __setModuleDefault(result, mod);
+    return result;
 };
 var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
     function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
@@ -59,13 +58,11 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-var core_1 = require("@serverless-devs/core");
 var fs_extra_1 = __importDefault(require("fs-extra"));
-var path_1 = __importDefault(require("path"));
-var constant_1 = __importDefault(require("../../constant"));
-var oss_1 = __importDefault(require("./oss"));
-var cdn_1 = __importDefault(require("./cdn"));
-var utils_1 = require("../utils");
+var logger_1 = __importDefault(require("../../common/logger"));
+var oss_1 = __importDefault(require("../oss"));
+var cdn_1 = __importDefault(require("../cdn"));
+var api = __importStar(require("../api"));
 /**
  * VerifyDomainOwner  验证域名归属权
  * DescribeVerifyContent   异常获取Content值
@@ -74,62 +71,40 @@ var utils_1 = require("../utils");
 var AddOssDomain = /** @class */ (function () {
     function AddOssDomain() {
     }
-    AddOssDomain.prototype.domain = function (params, credential) {
+    AddOssDomain.domain = function (params, credential) {
         return __awaiter(this, void 0, void 0, function () {
-            var tokenRs, bucket, region, token, domain, savePath, ossCredential, cdn, cname, dRs;
+            var tokenRs, bucket, region, token, domain, savePath, cdn, sources, cname;
             return __generator(this, function (_a) {
                 switch (_a.label) {
-                    case 0:
-                        this.logger.debug("The request " + constant_1.default.DOMAIN + "/token parameter is: \n " + JSON.stringify(params, null, '  ') + " ");
-                        return [4 /*yield*/, core_1.request(constant_1.default.DOMAIN + "/token", {
-                                method: 'post',
-                                body: params,
-                                form: true,
-                                hint: constant_1.default.HINT,
-                            })];
+                    case 0: return [4 /*yield*/, api.token(params)];
                     case 1:
                         tokenRs = _a.sent();
-                        this.logger.debug("Get token response is: \n " + JSON.stringify(tokenRs, null, '  '));
-                        utils_1.checkRs(tokenRs);
                         bucket = params.bucket, region = params.region;
                         token = tokenRs.Body.Token;
                         domain = bucket + ".oss.devsapp.net";
-                        savePath = path_1.default.join(process.cwd(), '.s', bucket + "-token");
-                        this.logger.debug("Save file path is: " + savePath + ", token is: " + token + ".");
-                        return [4 /*yield*/, fs_extra_1.default.outputFile(savePath, token)];
+                        return [4 /*yield*/, oss_1.default.saveFile(bucket, token)];
                     case 2:
-                        _a.sent();
-                        this.logger.debug('Put file to oss start...');
-                        ossCredential = {
-                            region: "oss-" + region,
-                            bucket: bucket,
-                            accessKeyId: credential.AccessKeyID,
-                            accessKeySecret: credential.AccessKeySecret,
-                            stsToken: credential.SecurityToken,
-                        };
-                        return [4 /*yield*/, oss_1.default.put(ossCredential, savePath)];
+                        savePath = _a.sent();
+                        logger_1.default.debug('Put file to oss start...');
+                        return [4 /*yield*/, oss_1.default.put(region, bucket, credential, savePath)];
                     case 3:
                         _a.sent();
-                        this.logger.debug('Put file to oss end.');
+                        logger_1.default.debug('Put file to oss end.');
                         cdn = new cdn_1.default(credential);
-                        return [4 /*yield*/, cdn.makeOwner(bucket, region, token)];
+                        return [4 /*yield*/, cdn.makeOwner({ bucket: bucket, region: region, token: token, type: 'oss' }, { bucket: bucket })];
                     case 4:
                         _a.sent();
-                        this.logger.debug("Add cdn domain start, domain is: " + domain);
-                        return [4 /*yield*/, cdn.addCdnDomain(domain, bucket, "oss-" + region)];
+                        logger_1.default.debug("Add cdn domain start, domain is: " + domain);
+                        sources = [
+                            { type: 'oss', port: 80, content: bucket + ".oss-" + region + ".aliyuncs.com" },
+                        ];
+                        return [4 /*yield*/, cdn.mackCdnDomain(domain, sources)];
                     case 5:
                         cname = _a.sent();
-                        this.logger.debug('Add cdn domain end.');
-                        this.logger.debug("The request " + constant_1.default.DOMAIN + "/domain parameter is: { bucket: " + bucket + ", region: " + region + ", cname: " + cname + ", token: " + token + " }");
-                        return [4 /*yield*/, core_1.request(constant_1.default.DOMAIN + "/domain", {
-                                method: 'post',
-                                body: { bucket: bucket, region: region, token: token, type: 'oss', cname: cname },
-                                form: true,
-                                hint: __assign(__assign({}, constant_1.default.HINT), { loading: 'Get domain....' }),
-                            })];
+                        logger_1.default.debug('Add cdn domain end.');
+                        return [4 /*yield*/, api.domain({ bucket: bucket, region: region, token: token, type: 'oss', cname: cname })];
                     case 6:
-                        dRs = _a.sent();
-                        this.logger.debug("The request " + constant_1.default.DOMAIN + "/verify response is: \n " + JSON.stringify(dRs, null, '  '));
+                        _a.sent();
                         return [4 /*yield*/, fs_extra_1.default.remove(savePath)];
                     case 7:
                         _a.sent();
@@ -138,11 +113,7 @@ var AddOssDomain = /** @class */ (function () {
             });
         });
     };
-    __decorate([
-        core_1.HLogger(constant_1.default.CONTEXT),
-        __metadata("design:type", Object)
-    ], AddOssDomain.prototype, "logger", void 0);
     return AddOssDomain;
 }());
 exports.default = AddOssDomain;
-//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiaW5kZXguanMiLCJzb3VyY2VSb290IjoiIiwic291cmNlcyI6WyIuLi8uLi8uLi9zcmMvdXRpbHMvYWRkT3NzRG9tYWluL2luZGV4LnRzIl0sIm5hbWVzIjpbXSwibWFwcGluZ3MiOiI7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7QUFBQSw4Q0FBa0U7QUFDbEUsc0RBQTBCO0FBQzFCLDhDQUF3QjtBQUN4Qiw0REFBc0M7QUFDdEMsOENBQXdCO0FBQ3hCLDhDQUF3QjtBQUN4QixrQ0FBbUM7QUFFbkM7Ozs7R0FJRztBQUVIO0lBQUE7SUE4REEsQ0FBQztJQTNETyw2QkFBTSxHQUFaLFVBQWEsTUFBaUIsRUFBRSxVQUFlOzs7Ozs7d0JBQzdDLElBQUksQ0FBQyxNQUFNLENBQUMsS0FBSyxDQUNmLGlCQUFlLGtCQUFRLENBQUMsTUFBTSxnQ0FBMkIsSUFBSSxDQUFDLFNBQVMsQ0FDckUsTUFBTSxFQUNOLElBQUksRUFDSixJQUFJLENBQ0wsTUFBRyxDQUNMLENBQUM7d0JBQ2MscUJBQU0sY0FBTyxDQUFJLGtCQUFRLENBQUMsTUFBTSxXQUFRLEVBQUU7Z0NBQ3hELE1BQU0sRUFBRSxNQUFNO2dDQUNkLElBQUksRUFBRSxNQUFNO2dDQUNaLElBQUksRUFBRSxJQUFJO2dDQUNWLElBQUksRUFBRSxrQkFBUSxDQUFDLElBQUk7NkJBQ3BCLENBQUMsRUFBQTs7d0JBTEksT0FBTyxHQUFHLFNBS2Q7d0JBQ0YsSUFBSSxDQUFDLE1BQU0sQ0FBQyxLQUFLLENBQUMsK0JBQTZCLElBQUksQ0FBQyxTQUFTLENBQUMsT0FBTyxFQUFFLElBQUksRUFBRSxJQUFJLENBQUcsQ0FBQyxDQUFDO3dCQUN0RixlQUFPLENBQUMsT0FBTyxDQUFDLENBQUM7d0JBRVQsTUFBTSxHQUFhLE1BQU0sT0FBbkIsRUFBRSxNQUFNLEdBQUssTUFBTSxPQUFYLENBQVk7d0JBQzVCLEtBQUssR0FBRyxPQUFPLENBQUMsSUFBSSxDQUFDLEtB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
+//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiaW5kZXguanMiLCJzb3VyY2VSb290IjoiIiwic291cmNlcyI6WyIuLi8uLi8uLi9zcmMvdXRpbHMvYWRkT3NzRG9tYWluL2luZGV4LnRzIl0sIm5hbWVzIjpbXSwibWFwcGluZ3MiOiI7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7OztBQUFBLHNEQUEwQjtBQUMxQiwrREFBeUM7QUFDekMsK0NBQXlCO0FBQ3pCLCtDQUF5QjtBQUN6QiwwQ0FBOEI7QUFFOUI7Ozs7R0FJRztBQUVIO0lBQUE7SUE0QkEsQ0FBQztJQTNCYyxtQkFBTSxHQUFuQixVQUFvQixNQUFpQixFQUFFLFVBQWU7Ozs7OzRCQUNwQyxxQkFBTSxHQUFHLENBQUMsS0FBSyxDQUFDLE1BQU0sQ0FBQyxFQUFBOzt3QkFBakMsT0FBTyxHQUFHLFNBQXVCO3dCQUUvQixNQUFNLEdBQWEsTUFBTSxPQUFuQixFQUFFLE1BQU0sR0FBSyxNQUFNLE9BQVgsQ0FBWTt3QkFDNUIsS0FBSyxHQUFHLE9BQU8sQ0FBQyxJQUFJLENBQUMsS0FBSyxDQUFDO3dCQUMzQixNQUFNLEdBQU0sTUFBTSxxQkFBa0IsQ0FBQzt3QkFDMUIscUJBQU0sYUFBRyxDQUFDLFFBQVEsQ0FBQyxNQUFNLEVBQUUsS0FBSyxDQUFDLEVBQUE7O3dCQUE1QyxRQUFRLEdBQUcsU0FBaUM7d0JBRWxELGdCQUFNLENBQUMsS0FBSyxDQUFDLDBCQUEwQixDQUFDLENBQUM7d0JBQ3pDLHFCQUFNLGFBQUcsQ0FBQyxHQUFHLENBQUMsTUFBTSxFQUFFLE1BQU0sRUFBRSxVQUFVLEVBQUUsUUFBUSxDQUFDLEVBQUE7O3dCQUFuRCxTQUFtRCxDQUFDO3dCQUNwRCxnQkFBTSxDQUFDLEtBQUssQ0FBQyxzQkFBc0IsQ0FBQyxDQUFDO3dCQUUvQixHQUFHLEdBQUcsSUFBSSxhQUFHLENBQUMsVUFBVSxDQUFDLENBQUM7d0JBQ2hDLHFCQUFNLEdBQUcsQ0FBQyxTQUFTLENBQUMsRUFBRSxNQUFNLFFBQUEsRUFBRSxNQUFNLFFBQUEsRUFBRSxLQUFLLE9BQUEsRUFBRSxJQUFJLEVBQUUsS0FBSyxFQUFFLEVBQUUsRUFBRSxNQUFNLFFBQUEsRUFBRSxDQUFDLEVBQUE7O3dCQUF2RSxTQUF1RSxDQUFDO3dCQUN4RSxnQkFBTSxDQUFDLEtBQUssQ0FBQyxzQ0FBb0MsTUFBUSxDQUFDLENBQUM7d0JBQ3JELE9BQU8sR0FBRzs0QkFDZCxFQUFFLElBQUksRUFBRSxLQUFLLEVBQUUsSUFBSSxFQUFFLEVBQUUsRUFBRSxPQUFPLEVBQUssTUFBTSxhQUFRLE1BQU0sa0JBQWUsRUFBRTt5QkFDM0UsQ0FBQzt3QkFDWSxxQkFBTSxHQUFHLENBQUMsYUFBYSxDQUFDLE1BQU0sRUFBRSxPQUFPLENBQUMsRUFBQTs7d0JBQWhELEtBQUssR0FBRyxTQUF3Qzt3QkFDdEQsZ0JBQU0sQ0FBQyxLQUFLLENBQUMscUJBQXFCLENBQUMsQ0FBQzt3QkFFcEMscUJBQU0sR0FBRyxDQUFDLE1BQU0sQ0FBQyxFQUFFLE1BQU0sUUFBQSxFQUFFLE1BQU0sUUFBQSxFQUFFLEtBQUssT0FBQSxFQUFFLElBQUksRUFBRSxLQUFLLEVBQUUsS0FBSyxPQUFBLEVBQUUsQ0FBQyxFQUFBOzt3QkFBL0QsU0FBK0QsQ0FBQzt3QkFFaEUscUJBQU0sa0JBQUUsQ0FBQyxNQUFNLENBQUMsUUFBUSxDQUFDLEVBQUE7O3dCQUF6QixTQUF5QixDQUFDO3dCQUUxQixzQkFBTyxNQUFNLEVBQUM7Ozs7S0FDZjtJQUNILG1CQUFDO0FBQUQsQ0FBQyxBQTVCRCxJQTRCQyJ9

@@ -10,14 +10,24 @@ var __assign = (this && this.__assign) || function () {
     };
     return __assign.apply(this, arguments);
 };
-var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
-    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
-    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
-    return c > 3 && r && Object.defineProperty(target, key, r), r;
-};
-var __metadata = (this && this.__metadata) || function (k, v) {
-    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    Object.defineProperty(o, k2, { enumerable: true, get: function() { return m[k]; } });
+}) : (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    o[k2] = m[k];
+}));
+var __setModuleDefault = (this && this.__setModuleDefault) || (Object.create ? (function(o, v) {
+    Object.defineProperty(o, "default", { enumerable: true, value: v });
+}) : function(o, v) {
+    o["default"] = v;
+});
+var __importStar = (this && this.__importStar) || function (mod) {
+    if (mod && mod.__esModule) return mod;
+    var result = {};
+    if (mod != null) for (var k in mod) if (k !== "default" && Object.hasOwnProperty.call(mod, k)) __createBinding(result, mod, k);
+    __setModuleDefault(result, mod);
+    return result;
 };
 var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
     function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
@@ -61,28 +71,19 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 var core_1 = require("@serverless-devs/core");
 var utils_1 = require("../utils");
-var constant_1 = __importDefault(require("../../constant"));
-var fc_1 = __importDefault(require("./fc"));
+var fc_1 = __importDefault(require("../fc"));
+var api = __importStar(require("../api"));
 var AddFcDomain = /** @class */ (function () {
     function AddFcDomain() {
     }
     AddFcDomain.domain = function (params, credential) {
         return __awaiter(this, void 0, void 0, function () {
-            var tokenRs, token, vm, ex_1, domainRs;
+            var tokenRs, token, vm, ex_1;
             return __generator(this, function (_a) {
                 switch (_a.label) {
-                    case 0:
-                        this.logger.debug("The request " + constant_1.default.DOMAIN + "/token parameter is: \n " + JSON.stringify(params, null, '  ') + " ");
-                        return [4 /*yield*/, core_1.request(constant_1.default.DOMAIN + "/token", {
-                                method: 'post',
-                                body: params,
-                                form: true,
-                                hint: constant_1.default.HINT,
-                            })];
+                    case 0: return [4 /*yield*/, api.token(params)];
                     case 1:
                         tokenRs = _a.sent();
-                        this.logger.debug("Get token response is: \n " + JSON.stringify(tokenRs, null, '  '));
-                        utils_1.checkRs(tokenRs);
                         token = tokenRs.Body.Token;
                         vm = core_1.spinner('Deploy helper function.');
                         _a.label = 2;
@@ -100,31 +101,18 @@ var AddFcDomain = /** @class */ (function () {
                         ex_1 = _a.sent();
                         vm.fail('Failed to deploy helper function.');
                         throw ex_1;
-                    case 6:
-                        this.logger.debug("The request " + constant_1.default.DOMAIN + "/domain parameter is: \n " + JSON.stringify(__assign(__assign({}, params), { token: token }), null, '  ') + " ");
-                        return [4 /*yield*/, core_1.request(constant_1.default.DOMAIN + "/domain", {
-                                method: 'post',
-                                body: __assign(__assign({}, params), { token: token }),
-                                form: true,
-                                hint: __assign(__assign({}, constant_1.default.HINT), { loading: 'Get domain....' }),
-                            })];
+                    case 6: return [4 /*yield*/, api.domain(__assign(__assign({}, params), { token: token }))];
                     case 7:
-                        domainRs = _a.sent();
-                        this.logger.debug("Get token response is: \n " + JSON.stringify(domainRs, null, '  '));
+                        _a.sent();
                         return [4 /*yield*/, fc_1.default.remove(credential, params.region)];
                     case 8:
                         _a.sent();
-                        utils_1.checkRs(domainRs);
-                        return [2 /*return*/, (params.function + "." + params.service + "." + params.user + "." + params.region + ".fc.devsapp.net").toLocaleLowerCase()];
+                        return [2 /*return*/, tokenRs.Body.Domain || (params.function + "." + params.service + "." + params.user + "." + params.region + ".fc.devsapp.net").toLocaleLowerCase()];
                 }
             });
         });
     };
-    __decorate([
-        core_1.HLogger(constant_1.default.CONTEXT),
-        __metadata("design:type", Object)
-    ], AddFcDomain, "logger", void 0);
     return AddFcDomain;
 }());
 exports.default = AddFcDomain;
-//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiaW5kZXguanMiLCJzb3VyY2VSb290IjoiIiwic291cmNlcyI6WyIuLi8uLi8uLi9zcmMvdXRpbHMvYWRkRmNEb21haW4vaW5kZXgudHMiXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6Ijs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7OztBQUFBLDhDQUEyRTtBQUMzRSxrQ0FBMEM7QUFDMUMsNERBQXNDO0FBQ3RDLDRDQUFzQjtBQUd0QjtJQUFBO0lBbURBLENBQUM7SUFoRGMsa0JBQU0sR0FBbkIsVUFBb0IsTUFBZ0IsRUFBRSxVQUFVOzs7Ozs7d0JBQzlDLElBQUksQ0FBQyxNQUFNLENBQUMsS0FBSyxDQUNmLGlCQUFlLGtCQUFRLENBQUMsTUFBTSxnQ0FBMkIsSUFBSSxDQUFDLFNBQVMsQ0FDckUsTUFBTSxFQUNOLElBQUksRUFDSixJQUFJLENBQ0wsTUFBRyxDQUNMLENBQUM7d0JBQ2MscUJBQU0sY0FBTyxDQUFJLGtCQUFRLENBQUMsTUFBTSxXQUFRLEVBQUU7Z0NBQ3hELE1BQU0sRUFBRSxNQUFNO2dDQUNkLElBQUksRUFBRSxNQUFNO2dDQUNaLElBQUksRUFBRSxJQUFJO2dDQUNWLElBQUksRUFBRSxrQkFBUSxDQUFDLElBQUk7NkJBQ3BCLENBQUMsRUFBQTs7d0JBTEksT0FBTyxHQUFHLFNBS2Q7d0JBQ0YsSUFBSSxDQUFDLE1BQU0sQ0FBQyxLQUFLLENBQUMsK0JBQTZCLElBQUksQ0FBQyxTQUFTLENBQUMsT0FBTyxFQUFFLElBQUksRUFBRSxJQUFJLENBQUcsQ0FBQyxDQUFDO3dCQUN0RixlQUFPLENBQUMsT0FBTyxDQUFDLENBQUM7d0JBRVgsS0FBSyxHQUFXLE9BQU8sQ0FBQyxJQUFJLENBQUMsS0FBSyxDQUFDO3dCQUVuQyxFQUFFLEdBQUcsY0FBTyxDQUFDLHlCQUF5QixDQUFDLENBQUM7Ozs7d0JBRTVDLHFCQUFNLFlBQUUsQ0FBQyxNQUFNLENBQUMsVUFBVSxFQUFFLE1BQU0sQ0FBQyxNQUFNLEVBQUUsS0FBSyxDQUFDLEVBQUE7O3dCQUFqRCxTQUFpRCxDQUFDO3dCQUNsRCxxQkFBTSxhQUFLLENBQUMsSUFBSSxDQUFDLEVBQUE7O3dCQUFqQixTQUFpQixDQUFDO3dCQUNsQixFQUFFLENBQUMsT0FBTyxDQUFDLFdBQVcsQ0FBQyxDQUFDOzs7O3dCQUV4QixFQUFFLENBQUMsSUFBSSxDQUFDLG1DQUFtQyxDQUFDLENBQUM7d0JBQzdDLE1BQU0sSUFBRSxDQUFDOzt3QkFHWCxJQUFJLENBQUMsTUFBTSxDQUFDLEtBQUssQ0FDZixpQkFBZSxrQkFBUSxDQUFDLE1BQU0saUNBQTRCLElBQUksQ0FBQyxTQUFTLHVCQUNqRSxNQUFNLEtBQUUsS0FBSyxPQUFBLEtBQ2xCLElBQUksRUFDSixJQUFJLENBQ0wsTUFBRyxDQUNMLENBQUM7d0JBQ2UscUJBQU0sY0FBTyxDQUFJLGtCQUFRLENBQUMsTUFBTSxZQUFTLEVBQUU7Z0NBQzFELE1BQU0sRUFBRSxNQUFNO2dDQUNkLElBQUksd0JBQU8sTUFBTSxLQUFFLEtBQUssT0FBQSxHQUFFO2dDQUMxQixJQUFJLEVBQUUsSUFBSTtnQ0FDVixJQUFJLHdCQUFPLGtCQUFRLENBQUMsSUFBSSxLQUFFLE9BQU8sRUFBRSxnQkFBZ0IsR0FBRTs2QkFDdEQsQ0FBQyxFQUFBOzt3QkFMSSxRQUFRLEdBQUcsU0FLZjt3QkFFRixJQUFJLENBQUMsTUFBTSxDQUFDLEtBQUssQ0FBQywrQkFBNkIsSUFBSSxDQUFDLFNBQVMsQ0FBQyxRQUFRLEVBQUUsSUFBSSxFQUFFLElBQUksQ0FBRyxDQUFDLENBQUM7d0JBQ3ZGLHFCQUFNLFlBQUUsQ0FBQyxNQUFNLENBQUMsVUFBVSxFQUFFLE1BQU0sQ0FBQyxNQUFNLENBQUMsRUFBQTs7d0JBQTFDLFNBQTBDLENBQUM7d0JBQzNDLGVBQU8sQ0FBQyxRQUFRLENBQUMsQ0FBQzt3QkFDbEIsc0JBQU8sQ0FBRyxNQUFNLENBQUMsUUFBUSxTQUFJLE1BQU0sQ0FBQyxPQUFPLFNBQUksTUFBTSxDQUFDLElBQUksU0FBSSxNQUFNLENBQUMsTUFBTSxvQkFBaUIsQ0FBQSxDQUFDLGlCQUFpQixFQUFFLEVBQUM7Ozs7S0FDbEg7SUFqRDBCO1FBQTFCLGNBQU8sQ0FBQyxrQkFBUSxDQUFDLE9BQU8sQ0FBQzs7cUNBQXdCO0lBa0RwRCxrQkFBQztDQUFBLEFBbkRELElBbURDO2tCQW5Eb0IsV0FBVyJ9
+//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiaW5kZXguanMiLCJzb3VyY2VSb290IjoiIiwic291cmNlcyI6WyIuLi8uLi8uLi9zcmMvdXRpbHMvYWRkRmNEb21haW4vaW5kZXgudHMiXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6Ijs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7QUFBQSw4Q0FBZ0Q7QUFDaEQsa0NBQWlDO0FBQ2pDLDZDQUF1QjtBQUN2QiwwQ0FBOEI7QUFHOUI7SUFBQTtJQXFCQSxDQUFDO0lBcEJjLGtCQUFNLEdBQW5CLFVBQW9CLE1BQWdCLEVBQUUsVUFBVTs7Ozs7NEJBQzlCLHFCQUFNLEdBQUcsQ0FBQyxLQUFLLENBQUMsTUFBTSxDQUFDLEVBQUE7O3dCQUFqQyxPQUFPLEdBQUcsU0FBdUI7d0JBRWpDLEtBQUssR0FBVyxPQUFPLENBQUMsSUFBSSxDQUFDLEtBQUssQ0FBQzt3QkFFbkMsRUFBRSxHQUFHLGNBQU8sQ0FBQyx5QkFBeUIsQ0FBQyxDQUFDOzs7O3dCQUU1QyxxQkFBTSxZQUFFLENBQUMsTUFBTSxDQUFDLFVBQVUsRUFBRSxNQUFNLENBQUMsTUFBTSxFQUFFLEtBQUssQ0FBQyxFQUFBOzt3QkFBakQsU0FBaUQsQ0FBQzt3QkFDbEQscUJBQU0sYUFBSyxDQUFDLElBQUksQ0FBQyxFQUFBOzt3QkFBakIsU0FBaUIsQ0FBQzt3QkFDbEIsRUFBRSxDQUFDLE9BQU8sQ0FBQyxXQUFXLENBQUMsQ0FBQzs7Ozt3QkFFeEIsRUFBRSxDQUFDLElBQUksQ0FBQyxtQ0FBbUMsQ0FBQyxDQUFDO3dCQUM3QyxNQUFNLElBQUUsQ0FBQzs0QkFHWCxxQkFBTSxHQUFHLENBQUMsTUFBTSx1QkFBTSxNQUFNLEtBQUUsS0FBSyxPQUFBLElBQUcsRUFBQTs7d0JBQXRDLFNBQXNDLENBQUM7d0JBRXZDLHFCQUFNLFlBQUUsQ0FBQyxNQUFNLENBQUMsVUFBVSxFQUFFLE1BQU0sQ0FBQyxNQUFNLENBQUMsRUFBQTs7d0JBQTFDLFNBQTBDLENBQUM7d0JBQzNDLHNCQUFPLE9BQU8sQ0FBQyxJQUFJLENBQUMsTUFBTSxJQUFJLENBQUcsTUFBTSxDQUFDLFFBQVEsU0FBSSxNQUFNLENBQUMsT0FBTyxTQUFJLE1BQU0sQ0FBQyxJQUFJLFNBQUksTUFBTSxDQUFDLE1BQU0sb0JBQWlCLENBQUEsQ0FBQyxpQkFBaUIsRUFBRSxFQUFDOzs7O0tBQ3pJO0lBQ0gsa0JBQUM7QUFBRCxDQUFDLEFBckJELElBcUJDIn0=

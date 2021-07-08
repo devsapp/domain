@@ -1,12 +1,22 @@
 "use strict";
-var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
-    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
-    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
-    return c > 3 && r && Object.defineProperty(target, key, r), r;
-};
-var __metadata = (this && this.__metadata) || function (k, v) {
-    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    Object.defineProperty(o, k2, { enumerable: true, get: function() { return m[k]; } });
+}) : (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    o[k2] = m[k];
+}));
+var __setModuleDefault = (this && this.__setModuleDefault) || (Object.create ? (function(o, v) {
+    Object.defineProperty(o, "default", { enumerable: true, value: v });
+}) : function(o, v) {
+    o["default"] = v;
+});
+var __importStar = (this && this.__importStar) || function (mod) {
+    if (mod && mod.__esModule) return mod;
+    var result = {};
+    if (mod != null) for (var k in mod) if (k !== "default" && Object.hasOwnProperty.call(mod, k)) __createBinding(result, mod, k);
+    __setModuleDefault(result, mod);
+    return result;
 };
 var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
     function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
@@ -48,63 +58,95 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-var core_1 = require("@serverless-devs/core");
+var core = __importStar(require("@serverless-devs/core"));
 var constant_1 = __importDefault(require("./constant"));
 var addFcDomain_1 = __importDefault(require("./utils/addFcDomain"));
 var addOssDomain_1 = __importDefault(require("./utils/addOssDomain"));
+var addJamstack_1 = __importDefault(require("./utils/addJamstack"));
 var interface_1 = require("./interface");
+var logger_1 = __importDefault(require("./common/logger"));
 var Compoent = /** @class */ (function () {
     function Compoent() {
     }
     Compoent.prototype.get = function (inputs) {
-        var _a;
         return __awaiter(this, void 0, void 0, function () {
-            var apts, commandData, params, credential, addOssDomain;
+            var _a, props, credential, help;
             return __generator(this, function (_b) {
                 switch (_b.label) {
-                    case 0:
-                        // @ts-ignore
-                        delete inputs.Credentials;
-                        // @ts-ignore
-                        delete inputs.credentials;
-                        this.logger.debug("inputs params: " + JSON.stringify(inputs));
-                        apts = { boolean: ['help'], alias: { help: 'h' } };
-                        commandData = core_1.commandParse({ args: inputs.args }, apts);
-                        this.logger.debug("Command data is: " + JSON.stringify(commandData));
-                        if ((_a = commandData.data) === null || _a === void 0 ? void 0 : _a.help) {
-                            core_1.help(constant_1.default.HELP);
+                    case 0: return [4 /*yield*/, this.hanlderInputs(inputs, 'get')];
+                    case 1:
+                        _a = _b.sent(), props = _a.props, credential = _a.credential, help = _a.help;
+                        if (help) {
+                            core.help(constant_1.default.HELP);
                             return [2 /*return*/];
                         }
-                        params = inputs.props;
-                        return [4 /*yield*/, core_1.getCredential(inputs.project.access)];
-                    case 1:
-                        credential = _b.sent();
-                        core_1.reportComponent('domain', {
-                            uid: credential.AccountID,
-                            command: 'get',
-                        });
-                        if (!interface_1.isFcToken(params)) return [3 /*break*/, 3];
-                        return [4 /*yield*/, addFcDomain_1.default.domain(params, credential)];
-                    case 2: 
-                    // @ts-ignore
-                    return [2 /*return*/, _b.sent()];
+                        if (!interface_1.isFcToken(props)) return [3 /*break*/, 3];
+                        return [4 /*yield*/, addFcDomain_1.default.domain(props, credential)];
+                    case 2: return [2 /*return*/, _b.sent()];
                     case 3:
-                        if (!interface_1.isOssToken(params)) return [3 /*break*/, 5];
-                        addOssDomain = new addOssDomain_1.default();
-                        return [4 /*yield*/, addOssDomain.domain(params, credential)];
-                    case 4: 
-                    // @ts-ignore
-                    return [2 /*return*/, _b.sent()];
+                        if (!interface_1.isOssToken(props)) return [3 /*break*/, 5];
+                        return [4 /*yield*/, addOssDomain_1.default.domain(props, credential)];
+                    case 4: return [2 /*return*/, _b.sent()];
                     case 5: throw new Error('Domain configuration error, please refer to https://github.com/devsapp/domain');
                 }
             });
         });
     };
-    __decorate([
-        core_1.HLogger(constant_1.default.CONTEXT),
-        __metadata("design:type", Object)
-    ], Compoent.prototype, "logger", void 0);
+    Compoent.prototype.jamstack = function (inputs) {
+        return __awaiter(this, void 0, void 0, function () {
+            var _a, props, credential, help;
+            return __generator(this, function (_b) {
+                switch (_b.label) {
+                    case 0: return [4 /*yield*/, this.hanlderInputs(inputs, 'jamstack')];
+                    case 1:
+                        _a = _b.sent(), props = _a.props, credential = _a.credential, help = _a.help;
+                        if (help) {
+                            core.help(constant_1.default.JAM_STACK_HELP);
+                            return [2 /*return*/];
+                        }
+                        return [4 /*yield*/, addJamstack_1.default.domain(props, credential)];
+                    case 2: return [2 /*return*/, _b.sent()];
+                }
+            });
+        });
+    };
+    Compoent.prototype.hanlderInputs = function (inputs, command) {
+        var _a;
+        return __awaiter(this, void 0, void 0, function () {
+            var apts, commandData, credential, _b;
+            return __generator(this, function (_c) {
+                switch (_c.label) {
+                    case 0:
+                        logger_1.default.setContent(constant_1.default.CONTEXT);
+                        logger_1.default.debug("inputs params: " + JSON.stringify(inputs.props));
+                        apts = { boolean: ['help'], alias: { help: 'h' } };
+                        commandData = core.commandParse(inputs, apts);
+                        logger_1.default.debug("Command data is: " + JSON.stringify(commandData));
+                        if ((_a = commandData.data) === null || _a === void 0 ? void 0 : _a.help) {
+                            core.reportComponent('domain', { uid: '', command: command });
+                            return [2 /*return*/, { help: true }];
+                        }
+                        _b = inputs.credential;
+                        if (_b) return [3 /*break*/, 2];
+                        return [4 /*yield*/, core.getCredential(inputs.project.access)];
+                    case 1:
+                        _b = (_c.sent());
+                        _c.label = 2;
+                    case 2:
+                        credential = _b;
+                        core.reportComponent('domain', {
+                            uid: credential.AccountID,
+                            command: command,
+                        });
+                        return [2 /*return*/, {
+                                props: inputs.props,
+                                credential: credential,
+                            }];
+                }
+            });
+        });
+    };
     return Compoent;
 }());
 exports.default = Compoent;
-//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiaW5kZXguanMiLCJzb3VyY2VSb290IjoiIiwic291cmNlcyI6WyIuLi9zcmMvaW5kZXgudHMiXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6Ijs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7QUFBQSw4Q0FBNkc7QUFDN0csd0RBQWtDO0FBQ2xDLG9FQUE4QztBQUM5QyxzRUFBZ0Q7QUFDaEQseUNBQTZEO0FBRTdEO0lBQUE7SUF1Q0EsQ0FBQztJQXBDTyxzQkFBRyxHQUFULFVBQVUsTUFBZTs7Ozs7Ozt3QkFDdkIsYUFBYTt3QkFDYixPQUFPLE1BQU0sQ0FBQyxXQUFXLENBQUM7d0JBQzFCLGFBQWE7d0JBQ2IsT0FBTyxNQUFNLENBQUMsV0FBVyxDQUFDO3dCQUMxQixJQUFJLENBQUMsTUFBTSxDQUFDLEtBQUssQ0FBQyxvQkFBa0IsSUFBSSxDQUFDLFNBQVMsQ0FBQyxNQUFNLENBQUcsQ0FBQyxDQUFDO3dCQUV4RCxJQUFJLEdBQUcsRUFBRSxPQUFPLEVBQUUsQ0FBQyxNQUFNLENBQUMsRUFBRSxLQUFLLEVBQUUsRUFBRSxJQUFJLEVBQUUsR0FBRyxFQUFFLEVBQUUsQ0FBQzt3QkFDbkQsV0FBVyxHQUFRLG1CQUFZLENBQUMsRUFBRSxJQUFJLEVBQUUsTUFBTSxDQUFDLElBQUksRUFBRSxFQUFFLElBQUksQ0FBQyxDQUFDO3dCQUNuRSxJQUFJLENBQUMsTUFBTSxDQUFDLEtBQUssQ0FBQyxzQkFBb0IsSUFBSSxDQUFDLFNBQVMsQ0FBQyxXQUFXLENBQUcsQ0FBQyxDQUFDO3dCQUNyRSxVQUFJLFdBQVcsQ0FBQyxJQUFJLDBDQUFFLElBQUksRUFBRTs0QkFDMUIsV0FBSSxDQUFDLGtCQUFRLENBQUMsSUFBSSxDQUFDLENBQUM7NEJBQ3BCLHNCQUFPO3lCQUNSO3dCQUVLLE1BQU0sR0FBRyxNQUFNLENBQUMsS0FBSyxDQUFDO3dCQUVULHFCQUFNLG9CQUFhLENBQUMsTUFBTSxDQUFDLE9BQU8sQ0FBQyxNQUFNLENBQUMsRUFBQTs7d0JBQXZELFVBQVUsR0FBRyxTQUEwQzt3QkFDN0Qsc0JBQWUsQ0FBQyxRQUFRLEVBQUU7NEJBQ3hCLEdBQUcsRUFBRSxVQUFVLENBQUMsU0FBUzs0QkFDekIsT0FBTyxFQUFFLEtBQUs7eUJBQ2YsQ0FBQyxDQUFDOzZCQUVDLHFCQUFTLENBQUMsTUFBTSxDQUFDLEVBQWpCLHdCQUFpQjt3QkFFWixxQkFBTSxxQkFBVyxDQUFDLE1BQU0sQ0FBQyxNQUFNLEVBQUUsVUFBVSxDQUFDLEVBQUE7O29CQURuRCxhQUFhO29CQUNiLHNCQUFPLFNBQTRDLEVBQUM7OzZCQUdsRCxzQkFBVSxDQUFDLE1BQU0sQ0FBQyxFQUFsQix3QkFBa0I7d0JBQ2QsWUFBWSxHQUFHLElBQUksc0JBQVksRUFBRSxDQUFDO3dCQUVqQyxxQkFBTSxZQUFZLENBQUMsTUFBTSxDQUFDLE1BQU0sRUFBRSxVQUFVLENBQUMsRUFBQTs7b0JBRHBELGFBQWE7b0JBQ2Isc0JBQU8sU0FBNkMsRUFBQzs0QkFHdkQsTUFBTSxJQUFJLEtBQUssQ0FBQywrRUFBK0UsQ0FBQyxDQUFDOzs7O0tBQ2xHO0lBckMwQjtRQUExQixjQUFPLENBQUMsa0JBQVEsQ0FBQyxPQUFPLENBQUM7OzRDQUFpQjtJQXNDN0MsZUFBQztDQUFBLEFBdkNELElBdUNDO2tCQXZDb0IsUUFBUSJ9
+//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiaW5kZXguanMiLCJzb3VyY2VSb290IjoiIiwic291cmNlcyI6WyIuLi9zcmMvaW5kZXgudHMiXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6Ijs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7O0FBQUEsMERBQThDO0FBQzlDLHdEQUFrQztBQUNsQyxvRUFBOEM7QUFDOUMsc0VBQWdEO0FBQ2hELG9FQUE4QztBQUM5Qyx5Q0FBNkQ7QUFDN0QsMkRBQXFDO0FBRXJDO0lBQUE7SUE4REEsQ0FBQztJQTdETyxzQkFBRyxHQUFULFVBQVUsTUFBZTs7Ozs7NEJBS25CLHFCQUFNLElBQUksQ0FBQyxhQUFhLENBQUMsTUFBTSxFQUFFLEtBQUssQ0FBQyxFQUFBOzt3QkFKckMsS0FJRixTQUF1QyxFQUh6QyxLQUFLLFdBQUEsRUFDTCxVQUFVLGdCQUFBLEVBQ1YsSUFBSSxVQUFBO3dCQUdOLElBQUksSUFBSSxFQUFFOzRCQUNSLElBQUksQ0FBQyxJQUFJLENBQUMsa0JBQVEsQ0FBQyxJQUFJLENBQUMsQ0FBQzs0QkFDekIsc0JBQU87eUJBQ1I7NkJBRUcscUJBQVMsQ0FBQyxLQUFLLENBQUMsRUFBaEIsd0JBQWdCO3dCQUNYLHFCQUFNLHFCQUFXLENBQUMsTUFBTSxDQUFDLEtBQUssRUFBRSxVQUFVLENBQUMsRUFBQTs0QkFBbEQsc0JBQU8sU0FBMkMsRUFBQzs7NkJBR2pELHNCQUFVLENBQUMsS0FBSyxDQUFDLEVBQWpCLHdCQUFpQjt3QkFDWixxQkFBTSxzQkFBWSxDQUFDLE1BQU0sQ0FBQyxLQUFLLEVBQUUsVUFBVSxDQUFDLEVBQUE7NEJBQW5ELHNCQUFPLFNBQTRDLEVBQUM7NEJBR3RELE1BQU0sSUFBSSxLQUFLLENBQUMsK0VBQStFLENBQUMsQ0FBQzs7OztLQUNsRztJQUVLLDJCQUFRLEdBQWQsVUFBZSxNQUFlOzs7Ozs0QkFLeEIscUJBQU0sSUFBSSxDQUFDLGFBQWEsQ0FBQyxNQUFNLEVBQUUsVUFBVSxDQUFDLEVBQUE7O3dCQUoxQyxLQUlGLFNBQTRDLEVBSDlDLEtBQUssV0FBQSxFQUNMLFVBQVUsZ0JBQUEsRUFDVixJQUFJLFVBQUE7d0JBR04sSUFBSSxJQUFJLEVBQUU7NEJBQ1IsSUFBSSxDQUFDLElBQUksQ0FBQyxrQkFBUSxDQUFDLGNBQWMsQ0FBQyxDQUFDOzRCQUNuQyxzQkFBTzt5QkFDUjt3QkFFTSxxQkFBTSxxQkFBVyxDQUFDLE1BQU0sQ0FBQyxLQUFLLEVBQUUsVUFBVSxDQUFDLEVBQUE7NEJBQWxELHNCQUFPLFNBQTJDLEVBQUM7Ozs7S0FDcEQ7SUFFYSxnQ0FBYSxHQUEzQixVQUE0QixNQUFlLEVBQUUsT0FBZTs7Ozs7Ozt3QkFDMUQsZ0JBQU0sQ0FBQyxVQUFVLENBQUMsa0JBQVEsQ0FBQyxPQUFPLENBQUMsQ0FBQzt3QkFDcEMsZ0JBQU0sQ0FBQyxLQUFLLENBQUMsb0JBQWtCLElBQUksQ0FBQyxTQUFTLENBQUMsTUFBTSxDQUFDLEtBQUssQ0FBRyxDQUFDLENBQUM7d0JBQ3pELElBQUksR0FBRyxFQUFFLE9BQU8sRUFBRSxDQUFDLE1BQU0sQ0FBQyxFQUFFLEtBQUssRUFBRSxFQUFFLElBQUksRUFBRSxHQUFHLEVBQUUsRUFBRSxDQUFDO3dCQUNuRCxXQUFXLEdBQVEsSUFBSSxDQUFDLFlBQVksQ0FBQyxNQUFNLEVBQUUsSUFBSSxDQUFDLENBQUM7d0JBQ3pELGdCQUFNLENBQUMsS0FBSyxDQUFDLHNCQUFvQixJQUFJLENBQUMsU0FBUyxDQUFDLFdBQVcsQ0FBRyxDQUFDLENBQUM7d0JBRWhFLFVBQUksV0FBVyxDQUFDLElBQUksMENBQUUsSUFBSSxFQUFFOzRCQUMxQixJQUFJLENBQUMsZUFBZSxDQUFDLFFBQVEsRUFBRSxFQUFFLEdBQUcsRUFBRSxFQUFFLEVBQUUsT0FBTyxTQUFBLEVBQUUsQ0FBQyxDQUFDOzRCQUNyRCxzQkFBTyxFQUFFLElBQUksRUFBRSxJQUFJLEVBQUUsRUFBQzt5QkFDdkI7d0JBQ2tCLEtBQUEsTUFBTSxDQUFDLFVBQVUsQ0FBQTtnQ0FBakIsd0JBQWlCO3dCQUFJLHFCQUFNLElBQUksQ0FBQyxhQUFhLENBQUMsTUFBTSxDQUFDLE9BQU8sQ0FBQyxNQUFNLENBQUMsRUFBQTs7OEJBQS9DLFNBQStDOzs7d0JBQWpGLFVBQVUsS0FBdUU7d0JBRXZGLElBQUksQ0FBQyxlQUFlLENBQUMsUUFBUSxFQUFFOzRCQUM3QixHQUFHLEVBQUUsVUFBVSxDQUFDLFNBQVM7NEJBQ3pCLE9BQU8sU0FBQTt5QkFDUixDQUFDLENBQUM7d0JBRUgsc0JBQU87Z0NBQ0wsS0FBSyxFQUFFLE1BQU0sQ0FBQyxLQUFLO2dDQUNuQixVQUFVLFlBQUE7NkJBQ1gsRUFBQzs7OztLQUNIO0lBQ0gsZUFBQztBQUFELENBQUMsQUE5REQsSUE4REMifQ==
