@@ -1,7 +1,7 @@
 {
   "name": "domain",
   "main": "./dist/index.js",
-  "version": "0.0.13",
+  "version": "0.0.14",
   "dependencies": {
     "@alicloud/fc2": "^2.2.2",
     "@alicloud/pop-core": "^1.7.10",
@@ -31,7 +31,7 @@
     "start": "npm run dev",
     "dev": "npx tsc -w -p tsconfig.json",
     "prebuild": "rimraf dist",
-    "build": "npx tsc -p tsconfig.json",
+    "build": "npm run doc && npx tsc -p tsconfig.json",
     "test": "jest",
     "test:cov": "jest --coverage",
     "lint": "f2elint scan",
