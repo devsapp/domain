@@ -1,4 +1,5 @@
 import * as core from '@serverless-devs/core';
+import Base from './common/base';
 import constant from './constant';
 import AddFcDomain from './utils/addFcDomain';
 import AddOssDomain from './utils/addOssDomain';
@@ -6,7 +7,14 @@ import AddJamstack from './utils/addJamstack';
 import { IInputs, isFcToken, isOssToken } from './interface';
 import logger from './common/logger';
 
-export default class Compoent {
+const DOMAIN_DB = {
+  name: 'domain',
+  content: {
+    domain: '',
+  },
+};
+
+export default class Compoent extends Base {
   async get(inputs: IInputs) {
     const {
       props,
@@ -20,11 +28,17 @@ export default class Compoent {
     }
 
     if (isFcToken(props)) {
-      return await AddFcDomain.domain(props, credential);
+      const domain = await AddFcDomain.domain(props, credential);
+      DOMAIN_DB.content.domain = domain;
+      super.__report(DOMAIN_DB);
+      return domain;
     }
 
     if (isOssToken(props)) {
-      return await AddOssDomain.domain(props, credential);
+      const domain = await AddOssDomain.domain(props, credential);
+      DOMAIN_DB.content.domain = domain;
+      super.__report(DOMAIN_DB);
+      return domain;
     }
 
     throw new Error('Domain configuration error, please refer to https://github.com/devsapp/domain');
@@ -41,8 +55,10 @@ export default class Compoent {
       core.help(constant.JAM_STACK_HELP);
       return;
     }
-
-    return await AddJamstack.domain(props, credential);
+    const domain = await AddJamstack.domain(props, credential);
+    DOMAIN_DB.content.domain = domain;
+    super.__report(DOMAIN_DB);
+    return domain;
   }
 
   private async hanlderInputs(inputs: IInputs, command: string) {
