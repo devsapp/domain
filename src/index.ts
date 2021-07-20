@@ -9,6 +9,7 @@ import logger from './common/logger';
 
 const DOMAIN_DB = {
   name: 'domain',
+  access: '',
   content: {
     domain: '',
   },
@@ -26,6 +27,7 @@ export default class Compoent extends Base {
       core.help(constant.HELP);
       return;
     }
+    DOMAIN_DB.access = inputs.project?.access;
 
     if (isFcToken(props)) {
       const domain = await AddFcDomain.domain(props, credential);
@@ -57,6 +59,7 @@ export default class Compoent extends Base {
     }
     const domain = await AddJamstack.domain(props, credential);
     DOMAIN_DB.content.domain = domain;
+    DOMAIN_DB.access = inputs.project?.access;
     super.__report(DOMAIN_DB);
     return domain;
   }

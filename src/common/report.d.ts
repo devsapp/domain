@@ -52,6 +52,7 @@ declare namespace ServerlessDevsReport {
   }
   export interface ReportData {
     name: string;
+    access: string;
     content: Domain | Fc | Oss | Ram | Sls | ApiGw | CDN | Vpc | Fnf | Cr | Sae;
   }
 }

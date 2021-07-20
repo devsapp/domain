@@ -8,7 +8,6 @@
     "@serverless-devs/core": "^0.0.x",
     "ali-oss": "^6.13.2",
     "fs-extra": "^9.1.0",
-    "lodash.get": "^4.4.2",
     "promise-retry": "^2.0.1"
   },
   "devDependencies": {
