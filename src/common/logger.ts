@@ -1,7 +1,7 @@
 import { Logger } from '@serverless-devs/core';
 
 export default class ComponentLogger {
-  private static CONTENT = 'FC-DOMAIN';
+  private static CONTENT = 'DOMAIN';
   static setContent(content) {
     ComponentLogger.CONTENT = content;
   }

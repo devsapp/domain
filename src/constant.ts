@@ -1,6 +1,6 @@
 
 export default {
-  CONTEXT: 'FC-DOMAIN',
+  CONTEXT: 'DOMAIN',
   RETRYOPTIONS: {
     retries: 5,
     factor: 2,
