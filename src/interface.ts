@@ -20,7 +20,7 @@ export interface ICredentials {
 
 export interface IFCTOKEN {
   type: string;
-  user: number;
+  user: string;
   region: string;
   service: string;
   function: string;
@@ -37,7 +37,7 @@ export interface IJamstack {
   project: string;
   region: string;
   bucket?: string;
-  user?: number;
+  user?: string;
   service?: string;
   function?: string;
   customDomain?: string;

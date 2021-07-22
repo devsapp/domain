@@ -1,4 +1,5 @@
 import * as core from '@serverless-devs/core';
+import _ from 'lodash';
 import Base from './common/base';
 import constant from './constant';
 import AddFcDomain from './utils/addFcDomain';
@@ -57,6 +58,7 @@ export default class Compoent extends Base {
       core.help(constant.JAM_STACK_HELP);
       return;
     }
+    // @ts-ignore: .
     const domain = await AddJamstack.domain(props, credential);
     DOMAIN_DB.content.domain = domain;
     DOMAIN_DB.access = inputs.project?.access;
@@ -75,7 +77,10 @@ export default class Compoent extends Base {
       core.reportComponent('domain', { uid: '', command });
       return { help: true };
     }
-    const credential = inputs.credential || await core.getCredential(inputs.project.access);
+    let { credential } = inputs;
+    if (_.isEmpty(inputs.credential)) {
+      credential = await core.getCredential(inputs?.project?.access);
+    }
 
     core.reportComponent('domain', {
       uid: credential.AccountID,
@@ -83,7 +88,7 @@ export default class Compoent extends Base {
     });
 
     return {
-      props: inputs.props,
+      props: _.mapValues(inputs.props || {}, (value) => value.toString().replace(/_/g, '-').toLocaleLowerCase()),
       credential,
     };
   }
