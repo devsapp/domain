@@ -13,6 +13,7 @@ const DOMAIN_DB = {
   access: '',
   content: {
     domain: '',
+    weight: 3,
   },
 };
 
@@ -32,14 +33,14 @@ export default class Compoent extends Base {
 
     if (isFcToken(props)) {
       const domain = await AddFcDomain.domain(props, credential);
-      DOMAIN_DB.content.domain = domain;
+      DOMAIN_DB.content.domain = `http://${domain}`;
       super.__report(DOMAIN_DB);
       return domain;
     }
 
     if (isOssToken(props)) {
       const domain = await AddOssDomain.domain(props, credential);
-      DOMAIN_DB.content.domain = domain;
+      DOMAIN_DB.content.domain = `http://${domain}`;
       super.__report(DOMAIN_DB);
       return domain;
     }
@@ -60,7 +61,7 @@ export default class Compoent extends Base {
     }
     // @ts-ignore: .
     const domain = await AddJamstack.domain(props, credential);
-    DOMAIN_DB.content.domain = domain;
+    DOMAIN_DB.content.domain = `http://${domain}`;
     DOMAIN_DB.access = inputs.project?.access;
     super.__report(DOMAIN_DB);
     return domain;
