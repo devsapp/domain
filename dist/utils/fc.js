@@ -1,4 +1,23 @@
 "use strict";
+var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    Object.defineProperty(o, k2, { enumerable: true, get: function() { return m[k]; } });
+}) : (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    o[k2] = m[k];
+}));
+var __setModuleDefault = (this && this.__setModuleDefault) || (Object.create ? (function(o, v) {
+    Object.defineProperty(o, "default", { enumerable: true, value: v });
+}) : function(o, v) {
+    o["default"] = v;
+});
+var __importStar = (this && this.__importStar) || function (mod) {
+    if (mod && mod.__esModule) return mod;
+    var result = {};
+    if (mod != null) for (var k in mod) if (k !== "default" && Object.hasOwnProperty.call(mod, k)) __createBinding(result, mod, k);
+    __setModuleDefault(result, mod);
+    return result;
+};
 var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
     function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
     return new (P || (P = Promise))(function (resolve, reject) {
@@ -40,87 +59,124 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 var fc2_1 = __importDefault(require("@alicloud/fc2"));
+var core = __importStar(require("@serverless-devs/core"));
 var logger_1 = __importDefault(require("../common/logger"));
 var serviceName = 'serverless-devs-check';
 var functionName = 'get-domain';
 var triggerName = 'httpTrigger';
+function getFcEndpoint() {
+    return __awaiter(this, void 0, void 0, function () {
+        var fcDefault, fcEndpoint, enableFcEndpoint;
+        return __generator(this, function (_a) {
+            switch (_a.label) {
+                case 0: return [4 /*yield*/, core.loadComponent('devsapp/fc-default')];
+                case 1:
+                    fcDefault = _a.sent();
+                    return [4 /*yield*/, fcDefault.get({ args: 'fc-endpoint' })];
+                case 2:
+                    fcEndpoint = _a.sent();
+                    if (!fcEndpoint) {
+                        return [2 /*return*/, undefined];
+                    }
+                    return [4 /*yield*/, fcDefault.get({ args: 'enable-fc-endpoint' })];
+                case 3:
+                    enableFcEndpoint = _a.sent();
+                    return [2 /*return*/, (enableFcEndpoint === true || enableFcEndpoint === 'true') ? fcEndpoint : undefined];
+            }
+        });
+    });
+}
 var Component = /** @class */ (function () {
     function Component() {
     }
     Component.remove = function (profile, regionId) {
         return __awaiter(this, void 0, void 0, function () {
-            var client, ex_1, ex_2, ex_3;
-            return __generator(this, function (_a) {
-                switch (_a.label) {
+            var client, _a, _b, _c, ex_1, ex_2, ex_3;
+            return __generator(this, function (_d) {
+                switch (_d.label) {
                     case 0:
-                        client = new fc2_1.default(profile.AccountID, {
+                        _a = fc2_1.default.bind;
+                        _b = [void 0, profile.AccountID];
+                        _c = {
                             accessKeyID: profile.AccessKeyID,
                             accessKeySecret: profile.AccessKeySecret,
                             securityToken: profile.SecurityToken,
-                            region: regionId,
-                            timeout: 600 * 1000,
-                        });
-                        _a.label = 1;
+                            region: regionId
+                        };
+                        return [4 /*yield*/, getFcEndpoint()];
                     case 1:
-                        _a.trys.push([1, 3, , 4]);
+                        client = new (_a.apply(fc2_1.default, _b.concat([(_c.endpoint = _d.sent(),
+                                _c.timeout = 600 * 1000,
+                                _c)])))();
+                        _d.label = 2;
+                    case 2:
+                        _d.trys.push([2, 4, , 5]);
                         logger_1.default.debug('Delete trigger...');
                         return [4 /*yield*/, client.deleteTrigger(serviceName, functionName, triggerName)];
-                    case 2:
-                        _a.sent();
-                        return [3 /*break*/, 4];
                     case 3:
-                        ex_1 = _a.sent();
-                        logger_1.default.debug("ex code: " + ex_1.code + ", ex: " + ex_1.message);
-                        return [3 /*break*/, 4];
+                        _d.sent();
+                        return [3 /*break*/, 5];
                     case 4:
-                        _a.trys.push([4, 6, , 7]);
+                        ex_1 = _d.sent();
+                        logger_1.default.debug("ex code: " + ex_1.code + ", ex: " + ex_1.message);
+                        return [3 /*break*/, 5];
+                    case 5:
+                        _d.trys.push([5, 7, , 8]);
                         logger_1.default.debug('Delete function...');
                         return [4 /*yield*/, client.deleteFunction(serviceName, functionName)];
-                    case 5:
-                        _a.sent();
-                        return [3 /*break*/, 7];
                     case 6:
-                        ex_2 = _a.sent();
-                        logger_1.default.debug("ex code: " + ex_2.code + ", ex: " + ex_2.message);
-                        return [3 /*break*/, 7];
+                        _d.sent();
+                        return [3 /*break*/, 8];
                     case 7:
-                        _a.trys.push([7, 9, , 10]);
+                        ex_2 = _d.sent();
+                        logger_1.default.debug("ex code: " + ex_2.code + ", ex: " + ex_2.message);
+                        return [3 /*break*/, 8];
+                    case 8:
+                        _d.trys.push([8, 10, , 11]);
                         logger_1.default.debug('Delete service...');
                         return [4 /*yield*/, client.deleteService(serviceName)];
-                    case 8:
-                        _a.sent();
-                        return [3 /*break*/, 10];
                     case 9:
-                        ex_3 = _a.sent();
+                        _d.sent();
+                        return [3 /*break*/, 11];
+                    case 10:
+                        ex_3 = _d.sent();
                         logger_1.default.debug("ex code: " + ex_3.code + ", ex: " + ex_3.message);
-                        return [3 /*break*/, 10];
-                    case 10: return [2 /*return*/];
+                        return [3 /*break*/, 11];
+                    case 11: return [2 /*return*/];
                 }
             });
         });
     };
     Component.deploy = function (profile, regionId, token) {
         return __awaiter(this, void 0, void 0, function () {
-            return __generator(this, function (_a) {
-                switch (_a.label) {
+            var _a, _b, _c, _d;
+            return __generator(this, function (_e) {
+                switch (_e.label) {
                     case 0:
-                        this.client = new fc2_1.default(profile.AccountID, {
+                        _a = this;
+                        _b = fc2_1.default.bind;
+                        _c = [void 0, profile.AccountID];
+                        _d = {
                             accessKeyID: profile.AccessKeyID,
                             accessKeySecret: profile.AccessKeySecret,
-                            region: regionId,
-                            timeout: 600 * 1000,
-                        });
-                        return [4 /*yield*/, this.makeService({})];
+                            region: regionId
+                        };
+                        return [4 /*yield*/, getFcEndpoint()];
                     case 1:
-                        _a.sent();
+                        _a.client = new (_b.apply(fc2_1.default, _c.concat([(_d.endpoint = _e.sent(),
+                                _d.timeout = 600 * 1000,
+                                _d)])))();
+                        return [4 /*yield*/, this.makeService({})];
+                    case 2:
+                        _e.sent();
                         return [4 /*yield*/, this.makeFunction({
                                 functionName: functionName,
                                 handler: 'index.handler',
                                 runtime: 'nodejs8',
                                 environmentVariables: { token: token },
                             })];
-                    case 2:
-                        _a.sent();
+                    case 3:
+                        _e.sent();
                         return [4 /*yield*/, this.makeTrigger({
                                 triggerName: triggerName,
                                 triggerType: 'http',
@@ -129,8 +185,8 @@ var Component = /** @class */ (function () {
                                     Methods: ['POST', 'GET'],
                                 },
                             })];
-                    case 3:
-                        _a.sent();
+                    case 4:
+                        _e.sent();
                         return [2 /*return*/];
                 }
             });
@@ -216,4 +272,4 @@ var Component = /** @class */ (function () {
     return Component;
 }());
 exports.default = Component;
-//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiZmMuanMiLCJzb3VyY2VSb290IjoiIiwic291cmNlcyI6WyIuLi8uLi9zcmMvdXRpbHMvZmMudHMiXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6Ijs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7QUFBQSxzREFBK0I7QUFDL0IsNERBQXNDO0FBRXRDLElBQU0sV0FBVyxHQUFHLHVCQUF1QixDQUFDO0FBQzVDLElBQU0sWUFBWSxHQUFHLFlBQVksQ0FBQztBQUNsQyxJQUFNLFdBQVcsR0FBRyxhQUFhLENBQUM7QUFFbEM7SUFBQTtJQXFHQSxDQUFDO0lBbEdjLGdCQUFNLEdBQW5CLFVBQW9CLE9BQU8sRUFBRSxRQUFnQjs7Ozs7O3dCQUNyQyxNQUFNLEdBQUcsSUFBSSxhQUFFLENBQUMsT0FBTyxDQUFDLFNBQVMsRUFBRTs0QkFDdkMsV0FBVyxFQUFFLE9BQU8sQ0FBQyxXQUFXOzRCQUNoQyxlQUFlLEVBQUUsT0FBTyxDQUFDLGVBQWU7NEJBQ3hDLGFBQWEsRUFBRSxPQUFPLENBQUMsYUFBYTs0QkFDcEMsTUFBTSxFQUFFLFFBQVE7NEJBQ2hCLE9BQU8sRUFBRSxHQUFHLEdBQUcsSUFBSTt5QkFDcEIsQ0FBQyxDQUFDOzs7O3dCQUdELGdCQUFNLENBQUMsS0FBSyxDQUFDLG1CQUFtQixDQUFDLENBQUM7d0JBQ2xDLHFCQUFNLE1BQU0sQ0FBQyxhQUFhLENBQUMsV0FBVyxFQUFFLFlBQVksRUFBRSxXQUFXLENBQUMsRUFBQTs7d0JBQWxFLFNBQWtFLENBQUM7Ozs7d0JBRW5FLGdCQUFNLENBQUMsS0FBSyxDQUFDLGNBQVksSUFBRSxDQUFDLElBQUksY0FBUyxJQUFFLENBQUMsT0FBUyxDQUFDLENBQUM7Ozs7d0JBSXZELGdCQUFNLENBQUMsS0FBSyxDQUFDLG9CQUFvQixDQUFDLENBQUM7d0JBQ25DLHFCQUFNLE1BQU0sQ0FBQyxjQUFjLENBQUMsV0FBVyxFQUFFLFlBQVksQ0FBQyxFQUFBOzt3QkFBdEQsU0FBc0QsQ0FBQzs7Ozt3QkFFdkQs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
+//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiZmMuanMiLCJzb3VyY2VSb290IjoiIiwic291cmNlcyI6WyIuLi8uLi9zcmMvdXRpbHMvZmMudHMiXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6Ijs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7O0FBQUEsc0RBQStCO0FBQy9CLDBEQUE4QztBQUM5Qyw0REFBc0M7QUFFdEMsSUFBTSxXQUFXLEdBQUcsdUJBQXVCLENBQUM7QUFDNUMsSUFBTSxZQUFZLEdBQUcsWUFBWSxDQUFDO0FBQ2xDLElBQU0sV0FBVyxHQUFHLGFBQWEsQ0FBQztBQUVsQyxTQUFlLGFBQWE7Ozs7O3dCQUNSLHFCQUFNLElBQUksQ0FBQyxhQUFhLENBQUMsb0JBQW9CLENBQUMsRUFBQTs7b0JBQTFELFNBQVMsR0FBRyxTQUE4QztvQkFDckMscUJBQU0sU0FBUyxDQUFDLEdBQUcsQ0FBQyxFQUFFLElBQUksRUFBRSxhQUFhLEVBQUUsQ0FBQyxFQUFBOztvQkFBakUsVUFBVSxHQUFXLFNBQTRDO29CQUN2RSxJQUFJLENBQUMsVUFBVSxFQUFFO3dCQUFFLHNCQUFPLFNBQVMsRUFBQztxQkFBRTtvQkFDUixxQkFBTSxTQUFTLENBQUMsR0FBRyxDQUFDLEVBQUUsSUFBSSxFQUFFLG9CQUFvQixFQUFFLENBQUMsRUFBQTs7b0JBQTNFLGdCQUFnQixHQUFRLFNBQW1EO29CQUNqRixzQkFBTyxDQUFDLGdCQUFnQixLQUFLLElBQUksSUFBSSxnQkFBZ0IsS0FBSyxNQUFNLENBQUMsQ0FBQyxDQUFDLENBQUMsVUFBVSxDQUFDLENBQUMsQ0FBQyxTQUFTLEVBQUM7Ozs7Q0FDNUY7QUFFRDtJQUFBO0lBdUdBLENBQUM7SUFwR2MsZ0JBQU0sR0FBbkIsVUFBb0IsT0FBTyxFQUFFLFFBQWdCOzs7Ozs7NkJBQ3hCLGFBQUU7c0NBQUMsT0FBTyxDQUFDLFNBQVM7OzRCQUNyQyxXQUFXLEVBQUUsT0FBTyxDQUFDLFdBQVc7NEJBQ2hDLGVBQWUsRUFBRSxPQUFP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
