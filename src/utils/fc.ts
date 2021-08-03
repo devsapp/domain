@@ -1,18 +1,9 @@
 import FC from '@alicloud/fc2';
-import * as core from '@serverless-devs/core';
 import logger from '../common/logger';
 
 const serviceName = 'serverless-devs-check';
 const functionName = 'get-domain';
 const triggerName = 'httpTrigger';
-
-async function getFcEndpoint(): Promise<string | undefined> {
-  const fcDefault = await core.loadComponent('devsapp/fc-default');
-  const fcEndpoint: string = await fcDefault.get({ args: 'fc-endpoint' });
-  if (!fcEndpoint) { return undefined; }
-  const enableFcEndpoint: any = await fcDefault.get({ args: 'enable-fc-endpoint' });
-  return (enableFcEndpoint === true || enableFcEndpoint === 'true') ? fcEndpoint : undefined;
-}
 
 export default class Component {
   static client: any;
@@ -23,7 +14,6 @@ export default class Component {
       accessKeySecret: profile.AccessKeySecret,
       securityToken: profile.SecurityToken,
       region: regionId,
-      endpoint: await getFcEndpoint(),
       timeout: 600 * 1000,
     });
 
@@ -54,7 +44,6 @@ export default class Component {
       accessKeyID: profile.AccessKeyID,
       accessKeySecret: profile.AccessKeySecret,
       region: regionId,
-      endpoint: await getFcEndpoint(),
       timeout: 600 * 1000,
     });
 

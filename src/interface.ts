@@ -24,6 +24,7 @@ export interface IFCTOKEN {
   region: string;
   service: string;
   function: string;
+  endpoint?: string;
 }
 
 export interface IOSSTOKEN {

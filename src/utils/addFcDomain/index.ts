@@ -1,11 +1,16 @@
 import { spinner } from '@serverless-devs/core';
-import { sleep } from '../utils';
+import { sleep, getFcEndpoint } from '../utils';
+import _ from 'lodash';
 import Fc from '../fc';
 import * as api from '../api';
 import { IFCTOKEN } from '../../interface';
 
 export default class AddFcDomain {
   static async domain(params: IFCTOKEN, credential): Promise<string> {
+    const endpoint = await getFcEndpoint();
+    if (!_.isNil(endpoint)) {
+      params.endpoint = endpoint;
+    }
     const tokenRs = await api.token(params);
 
     const token: string = tokenRs.Body.Token;
