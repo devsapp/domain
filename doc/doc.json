@@ -3217,6 +3217,26 @@
 					"flags": {},
 					"children": [
 						{
+							"id": 198,
+							"name": "endpoint",
+							"kind": 1024,
+							"kindString": "Property",
+							"flags": {
+								"isOptional": true
+							},
+							"sources": [
+								{
+									"fileName": "interface.ts",
+									"line": 27,
+									"character": 10
+								}
+							],
+							"type": {
+								"type": "intrinsic",
+								"name": "string"
+							}
+						},
+						{
 							"id": 197,
 							"name": "function",
 							"kind": 1024,
@@ -3312,6 +3332,7 @@
 							"title": "Properties",
 							"kind": 1024,
 							"children": [
+								198,
 								197,
 								195,
 								196,
@@ -3543,20 +3564,96 @@
 					]
 				},
 				{
-					"id": 202,
+					"id": 203,
 					"name": "IJamstack",
 					"kind": 256,
 					"kindString": "Interface",
 					"flags": {},
 					"children": [
 						{
-							"id": 206,
+							"id": 207,
 							"name": "bucket",
 							"kind": 1024,
 							"kindString": "Property",
 							"flags": {
 								"isOptional": true
 							},
+							"sources": [
+								{
+									"fileName": "interface.ts",
+									"line": 40,
+									"character": 8
+								}
+							],
+							"type": {
+								"type": "intrinsic",
+								"name": "string"
+							}
+						},
+						{
+							"id": 211,
+							"name": "customDomain",
+							"kind": 1024,
+							"kindString": "Property",
+							"flags": {
+								"isOptional": true
+							},
+							"sources": [
+								{
+									"fileName": "interface.ts",
+									"line": 44,
+									"character": 14
+								}
+							],
+							"type": {
+								"type": "intrinsic",
+								"name": "string"
+							}
+						},
+						{
+							"id": 210,
+							"name": "function",
+							"kind": 1024,
+							"kindString": "Property",
+							"flags": {
+								"isOptional": true
+							},
+							"sources": [
+								{
+									"fileName": "interface.ts",
+									"line": 43,
+									"character": 10
+								}
+							],
+							"type": {
+								"type": "intrinsic",
+								"name": "string"
+							}
+						},
+						{
+							"id": 205,
+							"name": "project",
+							"kind": 1024,
+							"kindString": "Property",
+							"flags": {},
+							"sources": [
+								{
+									"fileName": "interface.ts",
+									"line": 38,
+									"character": 9
+								}
+							],
+							"type": {
+								"type": "intrinsic",
+								"name": "string"
+							}
+						},
+						{
+							"id": 206,
+							"name": "region",
+							"kind": 1024,
+							"kindString": "Property",
+							"flags": {},
 							"sources": [
 								{
 									"fileName": "interface.ts",
@@ -3570,83 +3667,7 @@
 							}
 						},
 						{
-							"id": 210,
-							"name": "customDomain",
-							"kind": 1024,
-							"kindString": "Property",
-							"flags": {
-								"isOptional": true
-							},
-							"sources": [
-								{
-									"fileName": "interface.ts",
-									"line": 43,
-									"character": 14
-								}
-							],
-							"type": {
-								"type": "intrinsic",
-								"name": "string"
-							}
-						},
-						{
 							"id": 209,
-							"name": "function",
-							"kind": 1024,
-							"kindString": "Property",
-							"flags": {
-								"isOptional": true
-							},
-							"sources": [
-								{
-									"fileName": "interface.ts",
-									"line": 42,
-									"character": 10
-								}
-							],
-							"type": {
-								"type": "intrinsic",
-								"name": "string"
-							}
-						},
-						{
-							"id": 204,
-							"name": "project",
-							"kind": 1024,
-							"kindString": "Property",
-							"flags": {},
-							"sources": [
-								{
-									"fileName": "interface.ts",
-									"line": 37,
-									"character": 9
-								}
-							],
-							"type": {
-								"type": "intrinsic",
-								"name": "string"
-							}
-						},
-						{
-							"id": 205,
-							"name": "region",
-							"kind": 1024,
-							"kindString": "Property",
-							"flags": {},
-							"sources": [
-								{
-									"fileName": "interface.ts",
-									"line": 38,
-									"character": 8
-								}
-							],
-							"type": {
-								"type": "intrinsic",
-								"name": "string"
-							}
-						},
-						{
-							"id": 208,
 							"name": "service",
 							"kind": 1024,
 							"kindString": "Property",
@@ -3656,7 +3677,7 @@
 							"sources": [
 								{
 									"fileName": "interface.ts",
-									"line": 41,
+									"line": 42,
 									"character": 9
 								}
 							],
@@ -3666,7 +3687,7 @@
 							}
 						},
 						{
-							"id": 203,
+							"id": 204,
 							"name": "type",
 							"kind": 1024,
 							"kindString": "Property",
@@ -3674,7 +3695,7 @@
 							"sources": [
 								{
 									"fileName": "interface.ts",
-									"line": 36,
+									"line": 37,
 									"character": 6
 								}
 							],
@@ -3693,7 +3714,7 @@
 							}
 						},
 						{
-							"id": 207,
+							"id": 208,
 							"name": "user",
 							"kind": 1024,
 							"kindString": "Property",
@@ -3703,7 +3724,7 @@
 							"sources": [
 								{
 									"fileName": "interface.ts",
-									"line": 40,
+									"line": 41,
 									"character": 6
 								}
 							],
@@ -3718,53 +3739,35 @@
 							"title": "Properties",
 							"kind": 1024,
 							"children": [
-								206,
+								207,
+								211,
 								210,
+								205,
+								206,
 								209,
 								204,
-								205,
-								208,
-								203,
-								207
+								208
 							]
 						}
 					],
 					"sources": [
 						{
 							"fileName": "interface.ts",
-							"line": 35,
+							"line": 36,
 							"character": 26
 						}
 					]
 				},
 				{
-					"id": 198,
+					"id": 199,
 					"name": "IOSSTOKEN",
 					"kind": 256,
 					"kindString": "Interface",
 					"flags": {},
 					"children": [
 						{
-							"id": 200,
-							"name": "bucket",
-							"kind": 1024,
-							"kindString": "Property",
-							"flags": {},
-							"sources": [
-								{
-									"fileName": "interface.ts",
-									"line": 31,
-									"character": 8
-								}
-							],
-							"type": {
-								"type": "intrinsic",
-								"name": "string"
-							}
-						},
-						{
 							"id": 201,
-							"name": "region",
+							"name": "bucket",
 							"kind": 1024,
 							"kindString": "Property",
 							"flags": {},
@@ -3781,7 +3784,25 @@
 							}
 						},
 						{
-							"id": 199,
+							"id": 202,
+							"name": "region",
+							"kind": 1024,
+							"kindString": "Property",
+							"flags": {},
+							"sources": [
+								{
+									"fileName": "interface.ts",
+									"line": 33,
+									"character": 8
+								}
+							],
+							"type": {
+								"type": "intrinsic",
+								"name": "string"
+							}
+						},
+						{
+							"id": 200,
 							"name": "type",
 							"kind": 1024,
 							"kindString": "Property",
@@ -3789,7 +3810,7 @@
 							"sources": [
 								{
 									"fileName": "interface.ts",
-									"line": 30,
+									"line": 31,
 									"character": 6
 								}
 							],
@@ -3804,16 +3825,16 @@
 							"title": "Properties",
 							"kind": 1024,
 							"children": [
-								200,
 								201,
-								199
+								202,
+								200
 							]
 						}
 					],
 					"sources": [
 						{
 							"fileName": "interface.ts",
-							"line": 29,
+							"line": 30,
 							"character": 26
 						}
 					]
@@ -3827,7 +3848,7 @@
 					"sources": [
 						{
 							"fileName": "interface.ts",
-							"line": 46,
+							"line": 47,
 							"character": 25
 						}
 					],
@@ -3873,7 +3894,7 @@
 					"sources": [
 						{
 							"fileName": "interface.ts",
-							"line": 50,
+							"line": 51,
 							"character": 26
 						}
 					],
@@ -3903,7 +3924,7 @@
 								"asserts": false,
 								"targetType": {
 									"type": "reference",
-									"id": 198,
+									"id": 199,
 									"name": "IOSSTOKEN"
 								}
 							}
@@ -3919,8 +3940,8 @@
 						187,
 						192,
 						176,
-						202,
-						198
+						203,
+						199
 					]
 				},
 				{
@@ -3941,42 +3962,42 @@
 			]
 		},
 		{
-			"id": 211,
+			"id": 212,
 			"name": "utils/addFcDomain",
 			"kind": 1,
 			"kindString": "Module",
 			"flags": {},
 			"children": [
 				{
-					"id": 212,
+					"id": 213,
 					"name": "default",
 					"kind": 128,
 					"kindString": "Class",
 					"flags": {},
 					"children": [
 						{
-							"id": 217,
+							"id": 218,
 							"name": "constructor",
 							"kind": 512,
 							"kindString": "Constructor",
 							"flags": {},
 							"signatures": [
 								{
-									"id": 218,
+									"id": 219,
 									"name": "new default",
 									"kind": 16384,
 									"kindString": "Constructor signature",
 									"flags": {},
 									"type": {
 										"type": "reference",
-										"id": 212,
+										"id": 213,
 										"name": "default"
 									}
 								}
 							]
 						},
 						{
-							"id": 213,
+							"id": 214,
 							"name": "domain",
 							"kind": 2048,
 							"kindString": "Method",
@@ -3986,20 +4007,20 @@
 							"sources": [
 								{
 									"fileName": "utils/addFcDomain/index.ts",
-									"line": 8,
+									"line": 9,
 									"character": 21
 								}
 							],
 							"signatures": [
 								{
-									"id": 214,
+									"id": 215,
 									"name": "domain",
 									"kind": 4096,
 									"kindString": "Call signature",
 									"flags": {},
 									"parameters": [
 										{
-											"id": 215,
+											"id": 216,
 											"name": "params",
 											"kind": 32768,
 											"kindString": "Parameter",
@@ -4011,7 +4032,7 @@
 											}
 										},
 										{
-											"id": 216,
+											"id": 217,
 											"name": "credential",
 											"kind": 32768,
 											"kindString": "Parameter",
@@ -4041,21 +4062,21 @@
 							"title": "Constructors",
 							"kind": 512,
 							"children": [
-								217
+								218
 							]
 						},
 						{
 							"title": "Methods",
 							"kind": 2048,
 							"children": [
-								213
+								214
 							]
 						}
 					],
 					"sources": [
 						{
 							"fileName": "utils/addFcDomain/index.ts",
-							"line": 7,
+							"line": 8,
 							"character": 32
 						}
 					]
@@ -4066,7 +4087,7 @@
 					"title": "Classes",
 					"kind": 128,
 					"children": [
-						212
+						213
 					]
 				}
 			],
@@ -4079,42 +4100,42 @@
 			]
 		},
 		{
-			"id": 219,
+			"id": 220,
 			"name": "utils/addJamstack",
 			"kind": 1,
 			"kindString": "Module",
 			"flags": {},
 			"children": [
 				{
-					"id": 220,
+					"id": 221,
 					"name": "default",
 					"kind": 128,
 					"kindString": "Class",
 					"flags": {},
 					"children": [
 						{
-							"id": 239,
+							"id": 240,
 							"name": "constructor",
 							"kind": 512,
 							"kindString": "Constructor",
 							"flags": {},
 							"signatures": [
 								{
-									"id": 240,
+									"id": 241,
 									"name": "new default",
 									"kind": 16384,
 									"kindString": "Constructor signature",
 									"flags": {},
 									"type": {
 										"type": "reference",
-										"id": 220,
+										"id": 221,
 										"name": "default"
 									}
 								}
 							]
 						},
 						{
-							"id": 233,
+							"id": 234,
 							"name": "addCdnDomain",
 							"kind": 2048,
 							"kindString": "Method",
@@ -4131,14 +4152,14 @@
 							],
 							"signatures": [
 								{
-									"id": 234,
+									"id": 235,
 									"name": "addCdnDomain",
 									"kind": 4096,
 									"kindString": "Call signature",
 									"flags": {},
 									"parameters": [
 										{
-											"id": 235,
+											"id": 236,
 											"name": "credential",
 											"kind": 32768,
 											"kindString": "Parameter",
@@ -4149,7 +4170,7 @@
 											}
 										},
 										{
-											"id": 236,
+											"id": 237,
 											"name": "domainParams",
 											"kind": 32768,
 											"kindString": "Parameter",
@@ -4160,7 +4181,7 @@
 											}
 										},
 										{
-											"id": 237,
+											"id": 238,
 											"name": "domain",
 											"kind": 32768,
 											"kindString": "Parameter",
@@ -4171,7 +4192,7 @@
 											}
 										},
 										{
-											"id": 238,
+											"id": 239,
 											"name": "sources",
 											"kind": 32768,
 											"kindString": "Parameter",
@@ -4196,7 +4217,7 @@
 							]
 						},
 						{
-							"id": 221,
+							"id": 222,
 							"name": "domain",
 							"kind": 2048,
 							"kindString": "Method",
@@ -4212,26 +4233,26 @@
 							],
 							"signatures": [
 								{
-									"id": 222,
+									"id": 223,
 									"name": "domain",
 									"kind": 4096,
 									"kindString": "Call signature",
 									"flags": {},
 									"parameters": [
 										{
-											"id": 223,
+											"id": 224,
 											"name": "params",
 											"kind": 32768,
 											"kindString": "Parameter",
 											"flags": {},
 											"type": {
 												"type": "reference",
-												"id": 202,
+												"id": 203,
 												"name": "IJamstack"
 											}
 										},
 										{
-											"id": 224,
+											"id": 225,
 											"name": "credential",
 											"kind": 32768,
 											"kindString": "Parameter",
@@ -4257,7 +4278,7 @@
 							]
 						},
 						{
-							"id": 225,
+							"id": 226,
 							"name": "jamstackFc",
 							"kind": 2048,
 							"kindString": "Method",
@@ -4273,26 +4294,26 @@
 							],
 							"signatures": [
 								{
-									"id": 226,
+									"id": 227,
 									"name": "jamstackFc",
 									"kind": 4096,
 									"kindString": "Call signature",
 									"flags": {},
 									"parameters": [
 										{
-											"id": 227,
+											"id": 228,
 											"name": "params",
 											"kind": 32768,
 											"kindString": "Parameter",
 											"flags": {},
 											"type": {
 												"type": "reference",
-												"id": 202,
+												"id": 203,
 												"name": "IJamstack"
 											}
 										},
 										{
-											"id": 228,
+											"id": 229,
 											"name": "credential",
 											"kind": 32768,
 											"kindString": "Parameter",
@@ -4318,7 +4339,7 @@
 							]
 						},
 						{
-							"id": 229,
+							"id": 230,
 							"name": "jamstackOss",
 							"kind": 2048,
 							"kindString": "Method",
@@ -4334,26 +4355,26 @@
 							],
 							"signatures": [
 								{
-									"id": 230,
+									"id": 231,
 									"name": "jamstackOss",
 									"kind": 4096,
 									"kindString": "Call signature",
 									"flags": {},
 									"parameters": [
 										{
-											"id": 231,
+											"id": 232,
 											"name": "params",
 											"kind": 32768,
 											"kindString": "Parameter",
 											"flags": {},
 											"type": {
 												"type": "reference",
-												"id": 202,
+												"id": 203,
 												"name": "IJamstack"
 											}
 										},
 										{
-											"id": 232,
+											"id": 233,
 											"name": "credential",
 											"kind": 32768,
 											"kindString": "Parameter",
@@ -4384,17 +4405,17 @@
 							"title": "Constructors",
 							"kind": 512,
 							"children": [
-								239
+								240
 							]
 						},
 						{
 							"title": "Methods",
 							"kind": 2048,
 							"children": [
-								233,
-								221,
-								225,
-								229
+								234,
+								222,
+								226,
+								230
 							]
 						}
 					],
@@ -4412,7 +4433,7 @@
 					"title": "Classes",
 					"kind": 128,
 					"children": [
-						220
+						221
 					]
 				}
 			],
@@ -4425,14 +4446,14 @@
 			]
 		},
 		{
-			"id": 241,
+			"id": 242,
 			"name": "utils/addOssDomain",
 			"kind": 1,
 			"kindString": "Module",
 			"flags": {},
 			"children": [
 				{
-					"id": 242,
+					"id": 243,
 					"name": "default",
 					"kind": 128,
 					"kindString": "Class",
@@ -4442,28 +4463,28 @@
 					},
 					"children": [
 						{
-							"id": 247,
+							"id": 248,
 							"name": "constructor",
 							"kind": 512,
 							"kindString": "Constructor",
 							"flags": {},
 							"signatures": [
 								{
-									"id": 248,
+									"id": 249,
 									"name": "new default",
 									"kind": 16384,
 									"kindString": "Constructor signature",
 									"flags": {},
 									"type": {
 										"type": "reference",
-										"id": 242,
+										"id": 243,
 										"name": "default"
 									}
 								}
 							]
 						},
 						{
-							"id": 243,
+							"id": 244,
 							"name": "domain",
 							"kind": 2048,
 							"kindString": "Method",
@@ -4479,26 +4500,26 @@
 							],
 							"signatures": [
 								{
-									"id": 244,
+									"id": 245,
 									"name": "domain",
 									"kind": 4096,
 									"kindString": "Call signature",
 									"flags": {},
 									"parameters": [
 										{
-											"id": 245,
+											"id": 246,
 											"name": "params",
 											"kind": 32768,
 											"kindString": "Parameter",
 											"flags": {},
 											"type": {
 												"type": "reference",
-												"id": 198,
+												"id": 199,
 												"name": "IOSSTOKEN"
 											}
 										},
 										{
-											"id": 246,
+											"id": 247,
 											"name": "credential",
 											"kind": 32768,
 											"kindString": "Parameter",
@@ -4528,14 +4549,14 @@
 							"title": "Constructors",
 							"kind": 512,
 							"children": [
-								247
+								248
 							]
 						},
 						{
 							"title": "Methods",
 							"kind": 2048,
 							"children": [
-								243
+								244
 							]
 						}
 					],
@@ -4553,7 +4574,7 @@
 					"title": "Classes",
 					"kind": 128,
 					"children": [
-						242
+						243
 					]
 				}
 			],
@@ -4566,14 +4587,14 @@
 			]
 		},
 		{
-			"id": 249,
+			"id": 250,
 			"name": "utils/api",
 			"kind": 1,
 			"kindString": "Module",
 			"flags": {},
 			"children": [
 				{
-					"id": 253,
+					"id": 254,
 					"name": "domain",
 					"kind": 64,
 					"kindString": "Function",
@@ -4587,14 +4608,14 @@
 					],
 					"signatures": [
 						{
-							"id": 254,
+							"id": 255,
 							"name": "domain",
 							"kind": 4096,
 							"kindString": "Call signature",
 							"flags": {},
 							"parameters": [
 								{
-									"id": 255,
+									"id": 256,
 									"name": "params",
 									"kind": 32768,
 									"kindString": "Parameter",
@@ -4619,7 +4640,7 @@
 					]
 				},
 				{
-					"id": 250,
+					"id": 251,
 					"name": "token",
 					"kind": 64,
 					"kindString": "Function",
@@ -4633,14 +4654,14 @@
 					],
 					"signatures": [
 						{
-							"id": 251,
+							"id": 252,
 							"name": "token",
 							"kind": 4096,
 							"kindString": "Call signature",
 							"flags": {},
 							"parameters": [
 								{
-									"id": 252,
+									"id": 253,
 									"name": "params",
 									"kind": 32768,
 									"kindString": "Parameter",
@@ -4650,7 +4671,7 @@
 										"types": [
 											{
 												"type": "reference",
-												"id": 198,
+												"id": 199,
 												"name": "IOSSTOKEN"
 											},
 											{
@@ -4660,7 +4681,7 @@
 											},
 											{
 												"type": "reference",
-												"id": 202,
+												"id": 203,
 												"name": "IJamstack"
 											}
 										]
@@ -4681,7 +4702,7 @@
 					]
 				},
 				{
-					"id": 256,
+					"id": 257,
 					"name": "verify",
 					"kind": 64,
 					"kindString": "Function",
@@ -4695,14 +4716,14 @@
 					],
 					"signatures": [
 						{
-							"id": 257,
+							"id": 258,
 							"name": "verify",
 							"kind": 4096,
 							"kindString": "Call signature",
 							"flags": {},
 							"parameters": [
 								{
-									"id": 258,
+									"id": 259,
 									"name": "params",
 									"kind": 32768,
 									"kindString": "Parameter",
@@ -4732,9 +4753,9 @@
 					"title": "Functions",
 					"kind": 64,
 					"children": [
-						253,
-						250,
-						256
+						254,
+						251,
+						257
 					]
 				}
 			],
@@ -4747,35 +4768,35 @@
 			]
 		},
 		{
-			"id": 259,
+			"id": 260,
 			"name": "utils/cdn",
 			"kind": 1,
 			"kindString": "Module",
 			"flags": {},
 			"children": [
 				{
-					"id": 260,
+					"id": 261,
 					"name": "default",
 					"kind": 128,
 					"kindString": "Class",
 					"flags": {},
 					"children": [
 						{
-							"id": 261,
+							"id": 262,
 							"name": "constructor",
 							"kind": 512,
 							"kindString": "Constructor",
 							"flags": {},
 							"signatures": [
 								{
-									"id": 262,
+									"id": 263,
 									"name": "new default",
 									"kind": 16384,
 									"kindString": "Constructor signature",
 									"flags": {},
 									"parameters": [
 										{
-											"id": 263,
+											"id": 264,
 											"name": "credentials",
 											"kind": 32768,
 											"kindString": "Parameter",
@@ -4789,14 +4810,14 @@
 									],
 									"type": {
 										"type": "reference",
-										"id": 260,
+										"id": 261,
 										"name": "default"
 									}
 								}
 							]
 						},
 						{
-							"id": 264,
+							"id": 265,
 							"name": "cdnClient",
 							"kind": 1024,
 							"kindString": "Property",
@@ -4814,7 +4835,7 @@
 							}
 						},
 						{
-							"id": 286,
+							"id": 287,
 							"name": "addCdnDomain",
 							"kind": 2048,
 							"kindString": "Method",
@@ -4828,14 +4849,14 @@
 							],
 							"signatures": [
 								{
-									"id": 287,
+									"id": 288,
 									"name": "addCdnDomain",
 									"kind": 4096,
 									"kindString": "Call signature",
 									"flags": {},
 									"parameters": [
 										{
-											"id": 288,
+											"id": 289,
 											"name": "domainName",
 											"kind": 32768,
 											"kindString": "Parameter",
@@ -4846,7 +4867,7 @@
 											}
 										},
 										{
-											"id": 289,
+											"id": 290,
 											"name": "sources",
 											"kind": 32768,
 											"kindString": "Parameter",
@@ -4871,7 +4892,7 @@
 							]
 						},
 						{
-							"id": 290,
+							"id": 291,
 							"name": "cdnDomainDetail",
 							"kind": 2048,
 							"kindString": "Method",
@@ -4885,14 +4906,14 @@
 							],
 							"signatures": [
 								{
-									"id": 291,
+									"id": 292,
 									"name": "cdnDomainDetail",
 									"kind": 4096,
 									"kindString": "Call signature",
 									"flags": {},
 									"parameters": [
 										{
-											"id": 292,
+											"id": 293,
 											"name": "domainName",
 											"kind": 32768,
 											"kindString": "Parameter",
@@ -4903,7 +4924,7 @@
 											}
 										},
 										{
-											"id": 293,
+											"id": 294,
 											"name": "i",
 											"kind": 32768,
 											"kindString": "Parameter",
@@ -4922,7 +4943,7 @@
 							]
 						},
 						{
-							"id": 272,
+							"id": 273,
 							"name": "describeVerifyContent",
 							"kind": 2048,
 							"kindString": "Method",
@@ -4936,14 +4957,14 @@
 							],
 							"signatures": [
 								{
-									"id": 273,
+									"id": 274,
 									"name": "describeVerifyContent",
 									"kind": 4096,
 									"kindString": "Call signature",
 									"flags": {},
 									"parameters": [
 										{
-											"id": 274,
+											"id": 275,
 											"name": "domainName",
 											"kind": 32768,
 											"kindString": "Parameter",
@@ -4968,7 +4989,7 @@
 							]
 						},
 						{
-							"id": 279,
+							"id": 280,
 							"name": "hasDomainName",
 							"kind": 2048,
 							"kindString": "Method",
@@ -4982,14 +5003,14 @@
 							],
 							"signatures": [
 								{
-									"id": 280,
+									"id": 281,
 									"name": "hasDomainName",
 									"kind": 4096,
 									"kindString": "Call signature",
 									"flags": {},
 									"parameters": [
 										{
-											"id": 281,
+											"id": 282,
 											"name": "domainName",
 											"kind": 32768,
 											"kindString": "Parameter",
@@ -5014,7 +5035,7 @@
 							]
 						},
 						{
-							"id": 275,
+							"id": 276,
 							"name": "mackCdnDomain",
 							"kind": 2048,
 							"kindString": "Method",
@@ -5028,14 +5049,14 @@
 							],
 							"signatures": [
 								{
-									"id": 276,
+									"id": 277,
 									"name": "mackCdnDomain",
 									"kind": 4096,
 									"kindString": "Call signature",
 									"flags": {},
 									"parameters": [
 										{
-											"id": 277,
+											"id": 278,
 											"name": "domain",
 											"kind": 32768,
 											"kindString": "Parameter",
@@ -5046,7 +5067,7 @@
 											}
 										},
 										{
-											"id": 278,
+											"id": 279,
 											"name": "sources",
 											"kind": 32768,
 											"kindString": "Parameter",
@@ -5071,7 +5092,7 @@
 							]
 						},
 						{
-							"id": 265,
+							"id": 266,
 							"name": "makeOwner",
 							"kind": 2048,
 							"kindString": "Method",
@@ -5085,14 +5106,14 @@
 							],
 							"signatures": [
 								{
-									"id": 266,
+									"id": 267,
 									"name": "makeOwner",
 									"kind": 4096,
 									"kindString": "Call signature",
 									"flags": {},
 									"parameters": [
 										{
-											"id": 267,
+											"id": 268,
 											"name": "domainParams",
 											"kind": 32768,
 											"kindString": "Parameter",
@@ -5103,7 +5124,7 @@
 											}
 										},
 										{
-											"id": 268,
+											"id": 269,
 											"name": "verifyParams",
 											"kind": 32768,
 											"kindString": "Parameter",
@@ -5128,7 +5149,7 @@
 							]
 						},
 						{
-							"id": 282,
+							"id": 283,
 							"name": "modifyCdnDomain",
 							"kind": 2048,
 							"kindString": "Method",
@@ -5142,14 +5163,14 @@
 							],
 							"signatures": [
 								{
-									"id": 283,
+									"id": 284,
 									"name": "modifyCdnDomain",
 									"kind": 4096,
 									"kindString": "Call signature",
 									"flags": {},
 									"parameters": [
 										{
-											"id": 284,
+											"id": 285,
 											"name": "domainName",
 											"kind": 32768,
 											"kindString": "Parameter",
@@ -5160,7 +5181,7 @@
 											}
 										},
 										{
-											"id": 285,
+											"id": 286,
 											"name": "sources",
 											"kind": 32768,
 											"kindString": "Parameter",
@@ -5185,7 +5206,7 @@
 							]
 						},
 						{
-							"id": 269,
+							"id": 270,
 							"name": "verifyDomainOwner",
 							"kind": 2048,
 							"kindString": "Method",
@@ -5199,14 +5220,14 @@
 							],
 							"signatures": [
 								{
-									"id": 270,
+									"id": 271,
 									"name": "verifyDomainOwner",
 									"kind": 4096,
 									"kindString": "Call signature",
 									"flags": {},
 									"parameters": [
 										{
-											"id": 271,
+											"id": 272,
 											"name": "domainName",
 											"kind": 32768,
 											"kindString": "Parameter",
@@ -5236,28 +5257,28 @@
 							"title": "Constructors",
 							"kind": 512,
 							"children": [
-								261
+								262
 							]
 						},
 						{
 							"title": "Properties",
 							"kind": 1024,
 							"children": [
-								264
+								265
 							]
 						},
 						{
 							"title": "Methods",
 							"kind": 2048,
 							"children": [
-								286,
-								290,
-								272,
-								279,
-								275,
-								265,
-								282,
-								269
+								287,
+								291,
+								273,
+								280,
+								276,
+								266,
+								283,
+								270
 							]
 						}
 					],
@@ -5275,7 +5296,7 @@
 					"title": "Classes",
 					"kind": 128,
 					"children": [
-						260
+						261
 					]
 				}
 			],
@@ -5288,42 +5309,42 @@
 			]
 		},
 		{
-			"id": 294,
+			"id": 295,
 			"name": "utils/fc",
 			"kind": 1,
 			"kindString": "Module",
 			"flags": {},
 			"children": [
 				{
-					"id": 295,
+					"id": 296,
 					"name": "default",
 					"kind": 128,
 					"kindString": "Class",
 					"flags": {},
 					"children": [
 						{
-							"id": 315,
+							"id": 316,
 							"name": "constructor",
 							"kind": 512,
 							"kindString": "Constructor",
 							"flags": {},
 							"signatures": [
 								{
-									"id": 316,
+									"id": 317,
 									"name": "new default",
 									"kind": 16384,
 									"kindString": "Constructor signature",
 									"flags": {},
 									"type": {
 										"type": "reference",
-										"id": 295,
+										"id": 296,
 										"name": "default"
 									}
 								}
 							]
 						},
 						{
-							"id": 296,
+							"id": 297,
 							"name": "client",
 							"kind": 1024,
 							"kindString": "Property",
@@ -5333,7 +5354,7 @@
 							"sources": [
 								{
 									"fileName": "utils/fc.ts",
-									"line": 18,
+									"line": 9,
 									"character": 15
 								}
 							],
@@ -5343,7 +5364,7 @@
 							}
 						},
 						{
-							"id": 301,
+							"id": 302,
 							"name": "deploy",
 							"kind": 2048,
 							"kindString": "Method",
@@ -5353,20 +5374,20 @@
 							"sources": [
 								{
 									"fileName": "utils/fc.ts",
-									"line": 52,
+									"line": 42,
 									"character": 21
 								}
 							],
 							"signatures": [
 								{
-									"id": 302,
+									"id": 303,
 									"name": "deploy",
 									"kind": 4096,
 									"kindString": "Call signature",
 									"flags": {},
 									"parameters": [
 										{
-											"id": 303,
+											"id": 304,
 											"name": "profile",
 											"kind": 32768,
 											"kindString": "Parameter",
@@ -5377,7 +5398,7 @@
 											}
 										},
 										{
-											"id": 304,
+											"id": 305,
 											"name": "regionId",
 											"kind": 32768,
 											"kindString": "Parameter",
@@ -5388,7 +5409,7 @@
 											}
 										},
 										{
-											"id": 305,
+											"id": 306,
 											"name": "token",
 											"kind": 32768,
 											"kindString": "Parameter",
@@ -5413,7 +5434,7 @@
 							]
 						},
 						{
-							"id": 309,
+							"id": 310,
 							"name": "makeFunction",
 							"kind": 2048,
 							"kindString": "Method",
@@ -5423,20 +5444,20 @@
 							"sources": [
 								{
 									"fileName": "utils/fc.ts",
-									"line": 92,
+									"line": 81,
 									"character": 27
 								}
 							],
 							"signatures": [
 								{
-									"id": 310,
+									"id": 311,
 									"name": "makeFunction",
 									"kind": 4096,
 									"kindString": "Call signature",
 									"flags": {},
 									"parameters": [
 										{
-											"id": 311,
+											"id": 312,
 											"name": "functionConfig",
 											"kind": 32768,
 											"kindString": "Parameter",
@@ -5461,7 +5482,7 @@
 							]
 						},
 						{
-							"id": 306,
+							"id": 307,
 							"name": "makeService",
 							"kind": 2048,
 							"kindString": "Method",
@@ -5471,20 +5492,20 @@
 							"sources": [
 								{
 									"fileName": "utils/fc.ts",
-									"line": 80,
+									"line": 69,
 									"character": 26
 								}
 							],
 							"signatures": [
 								{
-									"id": 307,
+									"id": 308,
 									"name": "makeService",
 									"kind": 4096,
 									"kindString": "Call signature",
 									"flags": {},
 									"parameters": [
 										{
-											"id": 308,
+											"id": 309,
 											"name": "serviceConfig",
 											"kind": 32768,
 											"kindString": "Parameter",
@@ -5509,7 +5530,7 @@
 							]
 						},
 						{
-							"id": 312,
+							"id": 313,
 							"name": "makeTrigger",
 							"kind": 2048,
 							"kindString": "Method",
@@ -5519,20 +5540,20 @@
 							"sources": [
 								{
 									"fileName": "utils/fc.ts",
-									"line": 109,
+									"line": 98,
 									"character": 26
 								}
 							],
 							"signatures": [
 								{
-									"id": 313,
+									"id": 314,
 									"name": "makeTrigger",
 									"kind": 4096,
 									"kindString": "Call signature",
 									"flags": {},
 									"parameters": [
 										{
-											"id": 314,
+											"id": 315,
 											"name": "triggerConfig",
 											"kind": 32768,
 											"kindString": "Parameter",
@@ -5557,7 +5578,7 @@
 							]
 						},
 						{
-							"id": 297,
+							"id": 298,
 							"name": "remove",
 							"kind": 2048,
 							"kindString": "Method",
@@ -5567,20 +5588,20 @@
 							"sources": [
 								{
 									"fileName": "utils/fc.ts",
-									"line": 20,
+									"line": 11,
 									"character": 21
 								}
 							],
 							"signatures": [
 								{
-									"id": 298,
+									"id": 299,
 									"name": "remove",
 									"kind": 4096,
 									"kindString": "Call signature",
 									"flags": {},
 									"parameters": [
 										{
-											"id": 299,
+											"id": 300,
 											"name": "profile",
 											"kind": 32768,
 											"kindString": "Parameter",
@@ -5591,7 +5612,7 @@
 											}
 										},
 										{
-											"id": 300,
+											"id": 301,
 											"name": "regionId",
 											"kind": 32768,
 											"kindString": "Parameter",
@@ -5621,32 +5642,32 @@
 							"title": "Constructors",
 							"kind": 512,
 							"children": [
-								315
+								316
 							]
 						},
 						{
 							"title": "Properties",
 							"kind": 1024,
 							"children": [
-								296
+								297
 							]
 						},
 						{
 							"title": "Methods",
 							"kind": 2048,
 							"children": [
-								301,
-								309,
-								306,
-								312,
-								297
+								302,
+								310,
+								307,
+								313,
+								298
 							]
 						}
 					],
 					"sources": [
 						{
 							"fileName": "utils/fc.ts",
-							"line": 17,
+							"line": 8,
 							"character": 30
 						}
 					]
@@ -5657,7 +5678,7 @@
 					"title": "Classes",
 					"kind": 128,
 					"children": [
-						295
+						296
 					]
 				}
 			],
@@ -5670,42 +5691,42 @@
 			]
 		},
 		{
-			"id": 317,
+			"id": 318,
 			"name": "utils/oss",
 			"kind": 1,
 			"kindString": "Module",
 			"flags": {},
 			"children": [
 				{
-					"id": 318,
+					"id": 319,
 					"name": "default",
 					"kind": 128,
 					"kindString": "Class",
 					"flags": {},
 					"children": [
 						{
-							"id": 329,
+							"id": 330,
 							"name": "constructor",
 							"kind": 512,
 							"kindString": "Constructor",
 							"flags": {},
 							"signatures": [
 								{
-									"id": 330,
+									"id": 331,
 									"name": "new default",
 									"kind": 16384,
 									"kindString": "Constructor signature",
 									"flags": {},
 									"type": {
 										"type": "reference",
-										"id": 318,
+										"id": 319,
 										"name": "default"
 									}
 								}
 							]
 						},
 						{
-							"id": 323,
+							"id": 324,
 							"name": "put",
 							"kind": 2048,
 							"kindString": "Method",
@@ -5721,14 +5742,14 @@
 							],
 							"signatures": [
 								{
-									"id": 324,
+									"id": 325,
 									"name": "put",
 									"kind": 4096,
 									"kindString": "Call signature",
 									"flags": {},
 									"parameters": [
 										{
-											"id": 325,
+											"id": 326,
 											"name": "region",
 											"kind": 32768,
 											"kindString": "Parameter",
@@ -5739,7 +5760,7 @@
 											}
 										},
 										{
-											"id": 326,
+											"id": 327,
 											"name": "bucket",
 											"kind": 32768,
 											"kindString": "Parameter",
@@ -5750,7 +5771,7 @@
 											}
 										},
 										{
-											"id": 327,
+											"id": 328,
 											"name": "credential",
 											"kind": 32768,
 											"kindString": "Parameter",
@@ -5761,7 +5782,7 @@
 											}
 										},
 										{
-											"id": 328,
+											"id": 329,
 											"name": "filePath",
 											"kind": 32768,
 											"kindString": "Parameter",
@@ -5786,7 +5807,7 @@
 							]
 						},
 						{
-							"id": 319,
+							"id": 320,
 							"name": "saveFile",
 							"kind": 2048,
 							"kindString": "Method",
@@ -5802,14 +5823,14 @@
 							],
 							"signatures": [
 								{
-									"id": 320,
+									"id": 321,
 									"name": "saveFile",
 									"kind": 4096,
 									"kindString": "Call signature",
 									"flags": {},
 									"parameters": [
 										{
-											"id": 321,
+											"id": 322,
 											"name": "bucket",
 											"kind": 32768,
 											"kindString": "Parameter",
@@ -5820,7 +5841,7 @@
 											}
 										},
 										{
-											"id": 322,
+											"id": 323,
 											"name": "token",
 											"kind": 32768,
 											"kindString": "Parameter",
@@ -5850,15 +5871,15 @@
 							"title": "Constructors",
 							"kind": 512,
 							"children": [
-								329
+								330
 							]
 						},
 						{
 							"title": "Methods",
 							"kind": 2048,
 							"children": [
-								323,
-								319
+								324,
+								320
 							]
 						}
 					],
@@ -5876,7 +5897,7 @@
 					"title": "Classes",
 					"kind": 128,
 					"children": [
-						318
+						319
 					]
 				}
 			],
@@ -5889,14 +5910,56 @@
 			]
 		},
 		{
-			"id": 331,
+			"id": 332,
 			"name": "utils/utils",
 			"kind": 1,
 			"kindString": "Module",
 			"flags": {},
 			"children": [
 				{
-					"id": 335,
+					"id": 333,
+					"name": "getFcEndpoint",
+					"kind": 64,
+					"kindString": "Function",
+					"flags": {},
+					"sources": [
+						{
+							"fileName": "utils/utils.ts",
+							"line": 20,
+							"character": 35
+						}
+					],
+					"signatures": [
+						{
+							"id": 334,
+							"name": "getFcEndpoint",
+							"kind": 4096,
+							"kindString": "Call signature",
+							"flags": {},
+							"type": {
+								"type": "reference",
+								"typeArguments": [
+									{
+										"type": "union",
+										"types": [
+											{
+												"type": "intrinsic",
+												"name": "string"
+											},
+											{
+												"type": "intrinsic",
+												"name": "undefined"
+											}
+										]
+									}
+								],
+								"name": "Promise"
+							}
+						}
+					]
+				},
+				{
+					"id": 338,
 					"name": "getPopClient",
 					"kind": 64,
 					"kindString": "Function",
@@ -5906,20 +5969,20 @@
 					"sources": [
 						{
 							"fileName": "utils/utils.ts",
-							"line": 5,
+							"line": 6,
 							"character": 25
 						}
 					],
 					"signatures": [
 						{
-							"id": 336,
+							"id": 339,
 							"name": "getPopClient",
 							"kind": 4096,
 							"kindString": "Call signature",
 							"flags": {},
 							"parameters": [
 								{
-									"id": 337,
+									"id": 340,
 									"name": "credentials",
 									"kind": 32768,
 									"kindString": "Parameter",
@@ -5930,7 +5993,7 @@
 									}
 								},
 								{
-									"id": 338,
+									"id": 341,
 									"name": "endpoint",
 									"kind": 32768,
 									"kindString": "Parameter",
@@ -5941,7 +6004,7 @@
 									}
 								},
 								{
-									"id": 339,
+									"id": 342,
 									"name": "apiVersion",
 									"kind": 32768,
 									"kindString": "Parameter",
@@ -5960,7 +6023,7 @@
 					]
 				},
 				{
-					"id": 332,
+					"id": 335,
 					"name": "sleep",
 					"kind": 64,
 					"kindString": "Function",
@@ -5970,20 +6033,20 @@
 					"sources": [
 						{
 							"fileName": "utils/utils.ts",
-							"line": 3,
+							"line": 4,
 							"character": 18
 						}
 					],
 					"signatures": [
 						{
-							"id": 333,
+							"id": 336,
 							"name": "sleep",
 							"kind": 4096,
 							"kindString": "Call signature",
 							"flags": {},
 							"parameters": [
 								{
-									"id": 334,
+									"id": 337,
 									"name": "ms",
 									"kind": 32768,
 									"kindString": "Parameter",
@@ -6013,8 +6076,9 @@
 					"title": "Functions",
 					"kind": 64,
 					"children": [
-						335,
-						332
+						333,
+						338,
+						335
 					]
 				}
 			],
@@ -6038,14 +6102,14 @@
 				92,
 				134,
 				169,
-				211,
-				219,
-				241,
-				249,
-				259,
-				294,
-				317,
-				331
+				212,
+				220,
+				242,
+				250,
+				260,
+				295,
+				318,
+				332
 			]
 		}
 	]
