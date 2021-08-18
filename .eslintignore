@@ -2,6 +2,7 @@ node_modules/
 build/
 dist/
 test/
+doc/
 **/*.min.js
 **/*-min.js
 **/*.bundle.js
