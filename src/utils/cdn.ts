@@ -85,7 +85,7 @@ export default class Cdn {
     let totalCount = 0;
 
     do {
-      pageNumber = pageNumber + 1;
+      pageNumber += 1;
       const { Domains, TotalCount } = await this.cdnClient.request(
         'DescribeUserDomains',
         {
