@@ -116,6 +116,7 @@ export default class Cdn {
         POST,
       );
     } catch (ex) {
+      logger.debug(`modify cdn domain error: ${ex?.toString()}`);
       if (ex.code !== 'DomainAlreadyExist') {
         throw ex;
       }
@@ -135,6 +136,7 @@ export default class Cdn {
         POST,
       );
     } catch (ex) {
+      logger.debug(`add cdn domain error: ${ex?.toString()}`);
       if (ex.code !== 'DomainAlreadyExist') {
         throw ex;
       }
