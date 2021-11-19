@@ -129,7 +129,7 @@ export default class Cdn {
         'AddCdnDomain',
         {
           DomainName: domainName,
-          Scope: 'global',
+          Scope: process.env.CDN_SCOPE || 'global',
           CdnType: 'web',
           Sources: JSON.stringify(sources),
         },

@@ -1,7 +1,7 @@
 {
   "name": "domain",
   "main": "./dist/index.js",
-  "version": "0.0.22",
+  "version": "0.0.23",
   "autoInstall": false,
   "dependencies": {
     "@alicloud/fc2": "^2.2.2",
