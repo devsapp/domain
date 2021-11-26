@@ -18,11 +18,7 @@ const DOMAIN_DB = {
 
 export default class Compoent extends Base {
   async get(inputs: IInputs) {
-    const {
-      props,
-      credential,
-      help,
-    } = await this.hanlderInputs(inputs, 'get');
+    const { props, credential, help } = await this.hanlderInputs(inputs, 'get');
 
     if (help) {
       core.help(constant.HELP);
@@ -44,15 +40,13 @@ export default class Compoent extends Base {
       return domain;
     }
 
-    throw new Error('Domain configuration error, please refer to https://github.com/devsapp/domain');
+    throw new Error(
+      'Domain configuration error, please refer to https://github.com/devsapp/domain',
+    );
   }
 
   async jamstack(inputs: IInputs) {
-    const {
-      props,
-      credential,
-      help,
-    } = await this.hanlderInputs(inputs, 'jamstack');
+    const { props, credential, help } = await this.hanlderInputs(inputs, 'jamstack');
 
     if (help) {
       core.help(constant.JAM_STACK_HELP);
@@ -67,7 +61,6 @@ export default class Compoent extends Base {
   }
 
   private async hanlderInputs(inputs: IInputs, command: string) {
-    logger.setContent(constant.CONTEXT);
     logger.debug(`inputs params: ${JSON.stringify(inputs.props)}`);
     const apts = { boolean: ['help'], alias: { help: 'h' } };
     const commandData: any = core.commandParse(inputs, apts);
@@ -88,7 +81,9 @@ export default class Compoent extends Base {
     });
 
     return {
-      props: _.mapValues(inputs.props || {}, (value) => value.toString().replace(/_/g, '-').toLocaleLowerCase()),
+      props: _.mapValues(inputs.props || {}, (value) =>
+        value.toString().replace(/_/g, '-').toLocaleLowerCase(),
+      ),
       credential,
     };
   }
