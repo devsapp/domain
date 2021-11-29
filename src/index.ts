@@ -82,8 +82,7 @@ export default class Compoent extends Base {
 
     return {
       props: _.mapValues(inputs.props || {}, (value) =>
-        value.toString().replace(/_/g, '-').toLocaleLowerCase(),
-      ),
+        value.toString().replace(/_/g, '-').toLocaleLowerCase()),
       credential,
     };
   }

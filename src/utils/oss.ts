@@ -1,7 +1,9 @@
 import OSS from 'ali-oss';
-import fs from 'fs-extra';
 import path from 'path';
 import logger from '../common/logger';
+import * as core from '@serverless-devs/core';
+
+const { fse: fs } = core;
 
 export default class Oss {
   static async saveFile(bucket, token) {
