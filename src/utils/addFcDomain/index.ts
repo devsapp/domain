@@ -24,11 +24,7 @@ export default class AddFcDomain {
       {
         title: 'Deploy helper function...',
         task: async () => {
-          try {
-            await Fc.deploy(credential, params.region, token);
-          } catch (ex) {
-            throw ex;
-          }
+          await Fc.deploy(credential, params.region, token);
         },
       },
       {
