@@ -1,9 +1,11 @@
-import fs from 'fs-extra';
 import logger from '../../common/logger';
 import Oss from '../oss';
 import Cdn from '../cdn';
 import * as api from '../api';
 import { IOSSTOKEN } from '../../interface';
+import * as core from '@serverless-devs/core';
+
+const { fse: fs } = core;
 /**
  * VerifyDomainOwner  验证域名归属权
  * DescribeVerifyContent   异常获取Content值

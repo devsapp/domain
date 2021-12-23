@@ -20,7 +20,6 @@ export async function token(params: IOSSTOKEN | IFCTOKEN | IJamstack) {
     method: 'post',
     body: params,
     form: true,
-    hint: HINT,
   });
   logger.debug(`Get token response is: ${JSON.stringify(tokenRs)}`);
   checkRs(tokenRs);
@@ -33,7 +32,6 @@ export async function domain(params: any) {
     method: 'post',
     body: params,
     form: true,
-    hint: { ...HINT, loading: 'Get domain....' },
   });
   logger.debug(`The request **/domain response is: ${JSON.stringify(dRs)}`);
   checkRs(dRs);

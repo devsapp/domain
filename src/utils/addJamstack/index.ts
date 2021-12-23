@@ -1,5 +1,4 @@
-import fs from 'fs-extra';
-import { spinner } from '@serverless-devs/core';
+import * as core from '@serverless-devs/core';
 import logger from '../../common/logger';
 import * as api from '../api';
 import { IJamstack, ICredentials } from '../../interface';
@@ -8,6 +7,7 @@ import Oss from '../oss';
 import Cdn from '../cdn';
 import Fc from '../fc';
 
+const { spinner, fse: fs } = core;
 const JAMSTACK_OSS = 'jamstack-oss';
 const JAMSTACK_FC = 'jamstack-fc';
 
