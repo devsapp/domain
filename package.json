@@ -6,7 +6,7 @@
   "dependencies": {
     "@alicloud/fc2": "^2.2.2",
     "@alicloud/pop-core": "^1.7.10",
-    "@serverless-devs/core": "beta",
+    "@serverless-devs/core": "latest",
     "ali-oss": "^6.13.2",
     "lodash": "^4.17.21",
     "promise-retry": "^2.0.1"
@@ -23,7 +23,6 @@
     "rimraf": "^3.0.2",
     "ts-jest": "^26.2.0",
     "ts-loader": "^8.0.14",
-    "typedoc": "^0.20.35",
     "typescript": "^3.9.7"
   },
   "scripts": {
@@ -31,14 +30,12 @@
     "dev": "npx tsc -w -p tsconfig.json",
     "prebuild": "rm -rf node_modules && rm -rf package-lock.json && npm i && rimraf dist",
     "build": "npm run fix && npm run lint && npm run esbuild",
-    "postbuild": "npm run doc",
     "esbuild": "esbuild src/index.ts --bundle --log-level=error --minify --platform=node --format=cjs --target=node10.4 --external:@serverless-devs/core --outfile=dist/index.js",
     "test": "jest",
     "test:cov": "jest --coverage",
     "lint": "f2elint scan",
     "fix": "f2elint fix",
-    "typecheck": "npx tsc -p tsconfig.json --noEmit",
-    "doc": "npx typedoc src --json doc/doc.json --out doc"
+    "typecheck": "npx tsc -p tsconfig.json --noEmit"
   },
   "husky": {
     "hooks": {

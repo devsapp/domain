@@ -13,6 +13,7 @@ const DOMAIN_DB = {
   access: '',
   content: {
     domain: '',
+    weight: 3,
   },
 };
 
