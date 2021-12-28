@@ -43,6 +43,7 @@ export default class Component {
     this.client = new FC(profile.AccountID, {
       accessKeyID: profile.AccessKeyID,
       accessKeySecret: profile.AccessKeySecret,
+      securityToken: profile.SecurityToken,
       region: regionId,
       timeout: 600 * 1000,
     });
