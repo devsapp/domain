@@ -61,25 +61,19 @@ export default class Compoent extends Base {
     return domain;
   }
 
-  private async hanlderInputs(inputs: IInputs, command: string) {
+  private async hanlderInputs(inputs: IInputs, _command: string) {
     logger.debug(`inputs params: ${JSON.stringify(inputs.props)}`);
     const apts = { boolean: ['help'], alias: { help: 'h' } };
     const commandData: any = core.commandParse(inputs, apts);
     logger.debug(`Command data is: ${JSON.stringify(commandData)}`);
 
     if (commandData.data?.help) {
-      core.reportComponent('domain', { uid: '', command });
       return { help: true };
     }
-    let { credential } = inputs;
-    if (_.isEmpty(inputs.credential)) {
+    let credential = inputs.credentials;
+    if (_.isEmpty(inputs.credentials)) {
       credential = await core.getCredential(inputs?.project?.access);
     }
-
-    core.reportComponent('domain', {
-      uid: credential.AccountID,
-      command,
-    });
 
     return {
       props: _.mapValues(inputs.props || {}, (value) =>
