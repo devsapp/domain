@@ -48,7 +48,10 @@ export default class Component {
       timeout: 600 * 1000,
     });
 
-    await this.makeService({});
+    await this.makeService({
+      description:
+        'This service is used to check the validity of accounts when domain names are delivered',
+    });
 
     await this.makeFunction({
       functionName,
@@ -86,7 +89,8 @@ export default class Component {
     } catch (ex) {
       if (ex.code === 'FunctionNotFound') {
         // function code is `exports.handler = (req, resp, context) => resp.send(process.env.token || '');`;
-        const zipFile = 'UEsDBAoAAAAIABULiFLOAhlFSQAAAE0AAAAIAAAAaW5kZXguanMdyMEJwCAMBdBVclNBskCxuxT9UGiJNgnFg8MX+o4Pc3R14/OQdkOpUFQ8mRQ2MtUujumJyv4PG6TFob3CjCEve78gtBaFkLYPUEsBAh4DCgAAAAgAFQuIUs4CGUVJAAAATQAAAAgAAAAAAAAAAAAAALSBAAAAAGluZGV4LmpzUEsFBgAAAAABAAEANgAAAG8AAAAAAA==';
+        const zipFile =
+          'UEsDBAoAAAAIABULiFLOAhlFSQAAAE0AAAAIAAAAaW5kZXguanMdyMEJwCAMBdBVclNBskCxuxT9UGiJNgnFg8MX+o4Pc3R14/OQdkOpUFQ8mRQ2MtUujumJyv4PG6TFob3CjCEve78gtBaFkLYPUEsBAh4DCgAAAAgAFQuIUs4CGUVJAAAATQAAAAgAAAAAAAAAAAAAALSBAAAAAGluZGV4LmpzUEsFBgAAAAABAAEANgAAAG8AAAAAAA==';
         functionConfig.code = { zipFile };
         await this.client.createFunction(serviceName, functionConfig);
         return;
