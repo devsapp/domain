@@ -19,15 +19,14 @@ export default class AddJamstack {
       return await this.jamstackFc(params, credential);
     }
 
-    throw new Error('Domain configuration error, please refer to https://github.com/devsapp/domain');
+    throw new Error(
+      'Domain configuration error, please refer to https://github.com/devsapp/domain',
+    );
   }
 
   static async jamstackFc(params: IJamstack, credential: ICredentials) {
     const tokenRs = await api.token(params);
-    const {
-      Token: token,
-      Domain: domain = '',
-    } = tokenRs.Body;
+    const { Token: token, Domain: domain = '' } = tokenRs.Body;
 
     const vm = spinner('Deploy helper function.');
     try {
@@ -39,37 +38,34 @@ export default class AddJamstack {
       throw ex;
     }
 
-    const sources = [
-      { type: 'fc_domain', port: 80, content: params.customDomain },
-    ];
+    const sources = [{ type: 'fc_domain', port: 80, content: params.customDomain }];
     if (params.bucket) {
-      sources.push({ type: 'oss', port: 80, content: `${params.bucket}.oss-${params.region}.aliyuncs.com` });
+      sources.push({
+        type: 'oss',
+        port: 80,
+        content: `${params.bucket}.oss-${params.region}.aliyuncs.com`,
+      });
     }
     const domainParams: any = { ...params, token };
     domainParams.cname = await this.addCdnDomain(credential, domainParams, domain, sources);
 
     await api.domain(domainParams);
 
-    await Fc.remove(credential, params.region);
+    // await Fc.remove(credential, params.region);
     return domain;
   }
 
   static async jamstackOss(params: IJamstack, credential: ICredentials) {
     const tokenRs = await api.token(params);
     const { bucket, region, customDomain } = params;
-    const {
-      Token: token,
-      Domain: domain = '',
-    } = tokenRs.Body;
+    const { Token: token, Domain: domain = '' } = tokenRs.Body;
     const savePath = await Oss.saveFile(bucket, token);
 
     logger.debug('Put file to oss start...');
     await Oss.put(region, bucket, credential, savePath);
     logger.debug('Put file to oss end.');
 
-    const sources = [
-      { type: 'oss', port: 80, content: `${bucket}.oss-${region}.aliyuncs.com` },
-    ];
+    const sources = [{ type: 'oss', port: 80, content: `${bucket}.oss-${region}.aliyuncs.com` }];
     if (customDomain) {
       sources.push({ type: 'fc_domain', port: 80, content: params.customDomain });
     }

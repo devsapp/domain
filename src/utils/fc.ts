@@ -40,34 +40,38 @@ export default class Component {
   }
 
   static async deploy(profile, regionId: string, token: string) {
-    this.client = new FC(profile.AccountID, {
-      accessKeyID: profile.AccessKeyID,
-      accessKeySecret: profile.AccessKeySecret,
-      securityToken: profile.SecurityToken,
-      region: regionId,
-      timeout: 600 * 1000,
-    });
+    try {
+      this.client = new FC(profile.AccountID, {
+        accessKeyID: profile.AccessKeyID,
+        accessKeySecret: profile.AccessKeySecret,
+        securityToken: profile.SecurityToken,
+        region: regionId,
+        timeout: 600 * 1000,
+      });
 
-    await this.makeService({
-      description:
-        'This service is used to check the validity of accounts when domain names are delivered',
-    });
+      await this.makeService({
+        description:
+          'This service is used to check the validity of accounts when domain names are delivered',
+      });
 
-    await this.makeFunction({
-      functionName,
-      handler: 'index.handler',
-      runtime: 'nodejs8',
-      environmentVariables: { token },
-    });
+      await this.makeFunction({
+        functionName,
+        handler: 'index.handler',
+        runtime: 'nodejs8',
+        environmentVariables: { token },
+      });
 
-    await this.makeTrigger({
-      triggerName,
-      triggerType: 'http',
-      triggerConfig: {
-        AuthType: 'anonymous',
-        Methods: ['POST', 'GET'],
-      },
-    });
+      await this.makeTrigger({
+        triggerName,
+        triggerType: 'http',
+        triggerConfig: {
+          AuthType: 'anonymous',
+          Methods: ['POST', 'GET'],
+        },
+      });
+    } catch (ex) {
+      logger.debug(`make ${serviceName} error: ${ex?.toString()}`);
+    }
   }
 
   static async makeService(serviceConfig) {

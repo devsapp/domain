@@ -35,7 +35,7 @@ export default class AddFcDomain {
       },
     ]);
 
-    await Fc.remove(credential, params.region);
+    // await Fc.remove(credential, params.region);
     return (
       tokenRs.Body.Domain ||
       `${params.function}.${params.service}.${params.user}.${params.region}.fc.devsapp.net`.toLocaleLowerCase()
