@@ -2,13 +2,14 @@ import FC from '@alicloud/fc2';
 import logger from '../common/logger';
 
 const serviceName = 'serverless-devs-check';
-const functionName = 'get-domain';
+const getFunctionName = (token = '') => `domain${token}`;
 const triggerName = 'httpTrigger';
 
 export default class Component {
   static client: any;
 
-  static async remove(profile, regionId: string) {
+  static async remove(profile, regionId: string, token: string) {
+    const functionName: string = getFunctionName(token);
     const client = new FC(profile.AccountID, {
       accessKeyID: profile.AccessKeyID,
       accessKeySecret: profile.AccessKeySecret,
@@ -28,50 +29,48 @@ export default class Component {
       logger.debug('Delete function...');
       await client.deleteFunction(serviceName, functionName);
     } catch (ex) {
-      logger.debug(`ex code: ${ex.code}, ex: ${ex.message}`);
+      logger.warn(`${ex.code}, ${ex.message}`);
     }
 
-    try {
-      logger.debug('Delete service...');
-      await client.deleteService(serviceName);
-    } catch (ex) {
-      logger.debug(`ex code: ${ex.code}, ex: ${ex.message}`);
-    }
+    // try {
+    //   logger.debug('Delete service...');
+    //   await client.deleteService(serviceName);
+    // } catch (ex) {
+    //   logger.debug(`ex code: ${ex.code}, ex: ${ex.message}`);
+    // }
   }
 
   static async deploy(profile, regionId: string, token: string) {
-    try {
-      this.client = new FC(profile.AccountID, {
-        accessKeyID: profile.AccessKeyID,
-        accessKeySecret: profile.AccessKeySecret,
-        securityToken: profile.SecurityToken,
-        region: regionId,
-        timeout: 600 * 1000,
-      });
+    const functionName = getFunctionName(token);
+    this.client = new FC(profile.AccountID, {
+      accessKeyID: profile.AccessKeyID,
+      accessKeySecret: profile.AccessKeySecret,
+      securityToken: profile.SecurityToken,
+      region: regionId,
+      timeout: 600 * 1000,
+    });
 
-      await this.makeService({
-        description:
-          'This service is used to check the validity of accounts when domain names are delivered',
-      });
+    await this.makeService({
+      description:
+        'This service is used to check the validity of accounts when domain names are delivered',
+    });
 
-      await this.makeFunction({
-        functionName,
-        handler: 'index.handler',
-        runtime: 'nodejs8',
-        environmentVariables: { token },
-      });
+    await this.makeFunction({
+      functionName,
+      handler: 'index.handler',
+      runtime: 'nodejs8',
+      environmentVariables: { token },
+    });
 
-      await this.makeTrigger({
-        triggerName,
-        triggerType: 'http',
-        triggerConfig: {
-          AuthType: 'anonymous',
-          Methods: ['POST', 'GET'],
-        },
-      });
-    } catch (ex) {
-      logger.debug(`make ${serviceName} error: ${ex?.toString()}`);
-    }
+    await this.makeTrigger({
+      functionName,
+      triggerName,
+      triggerType: 'http',
+      triggerConfig: {
+        AuthType: 'anonymous',
+        Methods: ['POST', 'GET'],
+      },
+    });
   }
 
   static async makeService(serviceConfig) {
@@ -89,7 +88,7 @@ export default class Component {
   static async makeFunction(functionConfig) {
     try {
       logger.debug('Create function...');
-      await this.client.updateFunction(serviceName, functionName, functionConfig);
+      await this.client.updateFunction(serviceName, functionConfig.functionName, functionConfig);
     } catch (ex) {
       if (ex.code === 'FunctionNotFound') {
         // function code is `exports.handler = (req, resp, context) => resp.send(process.env.token || '');`;
@@ -107,7 +106,7 @@ export default class Component {
   static async makeTrigger(triggerConfig) {
     try {
       logger.debug('Create trigger...');
-      await this.client.createTrigger(serviceName, functionName, triggerConfig);
+      await this.client.createTrigger(serviceName, triggerConfig.functionName, triggerConfig);
     } catch (ex) {
       if (ex.code !== 'TriggerAlreadyExists') {
         logger.debug(`ex code: ${ex.code}, ex: ${ex.message}`);
