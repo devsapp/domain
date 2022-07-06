@@ -74,8 +74,16 @@ export default class Component {
   }
 
   static async makeService(serviceConfig) {
+    logger.debug('Create service...');
     try {
-      logger.debug('Create service...');
+      await this.client.getService(serviceName);
+      logger.debug('Has service, skip create');
+      return;
+    } catch (ex) {
+      logger.debug(`getService error message: ${ex?.toString()}`);
+    }
+
+    try {
       await this.client.createService(serviceName, serviceConfig);
     } catch (ex) {
       if (ex.code !== 'ServiceAlreadyExists') {
@@ -86,27 +94,42 @@ export default class Component {
   }
 
   static async makeFunction(functionConfig) {
+    logger.debug('Create function...');
+    const { functionName } = functionConfig;
+    // function code is `exports.handler = (req, resp, context) => resp.send(process.env.token || '');`;
+    functionConfig.code = {
+      zipFile: 'UEsDBAoAAAAIABULiFLOAhlFSQAAAE0AAAAIAAAAaW5kZXguanMdyMEJwCAMBdBVclNBskCxuxT9UGiJNgnFg8MX+o4Pc3R14/OQdkOpUFQ8mRQ2MtUujumJyv4PG6TFob3CjCEve78gtBaFkLYPUEsBAh4DCgAAAAgAFQuIUs4CGUVJAAAATQAAAAgAAAAAAAAAAAAAALSBAAAAAGluZGV4LmpzUEsFBgAAAAABAAEANgAAAG8AAAAAAA==',
+    };
     try {
-      logger.debug('Create function...');
+      await this.client.getFunction(serviceName, functionName);
+      logger.debug('Has function, start update');
       await this.client.updateFunction(serviceName, functionConfig.functionName, functionConfig);
+      return;
     } catch (ex) {
-      if (ex.code === 'FunctionNotFound') {
-        // function code is `exports.handler = (req, resp, context) => resp.send(process.env.token || '');`;
-        const zipFile =
-          'UEsDBAoAAAAIABULiFLOAhlFSQAAAE0AAAAIAAAAaW5kZXguanMdyMEJwCAMBdBVclNBskCxuxT9UGiJNgnFg8MX+o4Pc3R14/OQdkOpUFQ8mRQ2MtUujumJyv4PG6TFob3CjCEve78gtBaFkLYPUEsBAh4DCgAAAAgAFQuIUs4CGUVJAAAATQAAAAgAAAAAAAAAAAAAALSBAAAAAGluZGV4LmpzUEsFBgAAAAABAAEANgAAAG8AAAAAAA==';
-        functionConfig.code = { zipFile };
-        await this.client.createFunction(serviceName, functionConfig);
-        return;
-      }
-      logger.debug(`ex code: ${ex.code}, ex: ${ex.message}`);
-      throw ex;
+      logger.debug(`makeFunction error message: ${ex?.toString()}`);
     }
+
+    await this.client.createFunction(serviceName, functionConfig);
+    logger.debug('Created function success.');
   }
 
   static async makeTrigger(triggerConfig) {
+    logger.debug('Create trigger...');
+    const { functionName, triggerName } = triggerConfig;
     try {
-      logger.debug('Create trigger...');
-      await this.client.createTrigger(serviceName, triggerConfig.functionName, triggerConfig);
+      await this.client.getTrigger(serviceName, functionName, triggerName, {
+        'x-fc-enable-eventbridge-trigger': 'enable',
+      });
+
+      await this.client.updateTrigger(serviceName, functionName, triggerName, triggerConfig);
+      return;
+    } catch(ex) {
+      logger.debug(`makeTrigger error message: ${ex?.toString()}`);
+    }
+
+    try {
+      await this.client.createTrigger(serviceName, functionName, triggerConfig);
+      logger.debug('Created trigger success.');
     } catch (ex) {
       if (ex.code !== 'TriggerAlreadyExists') {
         logger.debug(`ex code: ${ex.code}, ex: ${ex.message}`);
