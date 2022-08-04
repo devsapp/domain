@@ -1,5 +1,5 @@
 import _ from 'lodash';
-import { lookup } from 'dns';
+import dns from 'dns';
 import { sleep } from '@serverless-devs/core';
 import logger from '../common/logger';
 
@@ -10,29 +10,32 @@ interface INslookupOptions {
   times?: number;
 }
 
-const default_nslookup_options = { retryTimes: 60, times: 0, timing: 5 };
+const default_nslookup_options = { retryTimes: 100, times: 0, timing: 3 };
 
-export async function nslookup(domain: string, options: INslookupOptions = { }) {
-  const payload = _.defaults(options, default_nslookup_options);
-  const { retryTimes, times, timing } = payload;
+async function lookup(domain: string) {
 
   return await new Promise((resolve, _reject) => {
-    lookup(domain, async (err, address, family) => {
+    dns.resolveCname(domain, async (err, address) => {
       if (err) {
         logger.debug(`dns check eror: ${err}`);
-        if (times > retryTimes) {
-          logger.debug('DNS resolution failed, please try again');
-          resolve(false);
-        } else {
-          await sleep(timing * 1000);
-          payload.times = times + 1;
-          logger.debug(`dns check eror, retry times ${payload.times}`);
-          await nslookup(domain, payload);
-        }
+        resolve(false);
       } else {
-        logger.debug(`address: ${address}\nfamily: ${family}`);
+        logger.debug(`address: ${address}`);
         resolve(true);
       }
     });
   });
+}
+
+export async function nslookup(domain: string, options: INslookupOptions = { }) {
+  const payload = _.defaults(options, default_nslookup_options);
+  const { retryTimes, times, timing } = payload;
+  const status = await lookup(domain);
+  if (status || times >= retryTimes) {
+    return;
+  }
+
+  await sleep(timing * 1000);
+  payload.times = times + 1;
+  await nslookup(domain, payload);
 }

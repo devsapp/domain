@@ -45,6 +45,8 @@ export default class AddFcDomain {
         },
       },
     ]);
+    logger.debug(`gen domain name is ${domain}`);
+
     return domain;
   }
 }
