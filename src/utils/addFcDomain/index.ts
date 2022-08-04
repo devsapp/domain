@@ -4,6 +4,7 @@ import Fc from '../fc';
 import * as api from '../api';
 import { IFCTOKEN } from '../../interface';
 import logger from '../../common/logger';
+import { nslookup } from '../nslookup';
 
 export default class AddFcDomain {
   static async domain(params: IFCTOKEN, credential): Promise<string> {
@@ -13,9 +14,10 @@ export default class AddFcDomain {
     }
     let tokenRs: any;
     let token: string;
+    let domain = '';
     await logger.task('Generated custom domain', [
       {
-        title: 'Get token....',
+        title: 'Get token...',
         task: async () => {
           tokenRs = await api.token(params);
           token = tokenRs.Body.Token;
@@ -28,17 +30,21 @@ export default class AddFcDomain {
         },
       },
       {
-        title: 'Get domain....',
+        title: 'Get domain...',
         task: async () => {
           await api.domain({ ...params, token });
+          await Fc.remove(credential, params.region, token);
+          domain = tokenRs.Body.Domain ||
+    `${params.function}.${params.service}.${params.user}.${params.region}.fc.devsapp.net`.toLocaleLowerCase();
         },
       },
+      {
+        title: 'Check DNS resolution...',
+        task: async () => {
+          await nslookup(domain);
+        },
+      }
     ]);
-
-    await Fc.remove(credential, params.region, token);
-    return (
-      tokenRs.Body.Domain ||
-      `${params.function}.${params.service}.${params.user}.${params.region}.fc.devsapp.net`.toLocaleLowerCase()
-    );
+    return domain;
   }
 }
