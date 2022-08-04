@@ -123,7 +123,7 @@ export default class Component {
 
       await this.client.updateTrigger(serviceName, functionName, triggerName, triggerConfig);
       return;
-    } catch(ex) {
+    } catch (ex) {
       logger.debug(`makeTrigger error message: ${ex?.toString()}`);
     }
 
