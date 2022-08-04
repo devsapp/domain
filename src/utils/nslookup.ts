@@ -10,7 +10,7 @@ interface INslookupOptions {
   times?: number;
 }
 
-const default_nslookup_options = { retryTimes: 20, times: 0, timing: 5 };
+const default_nslookup_options = { retryTimes: 36, times: 0, timing: 5 };
 
 export async function nslookup(domain: string, options: INslookupOptions = { }) {
   const payload = _.defaults(options, default_nslookup_options);
@@ -21,7 +21,7 @@ export async function nslookup(domain: string, options: INslookupOptions = { }) 
       if (err) {
         logger.debug(`dns check eror: ${err}`);
         if (times > retryTimes) {
-          reject('DNS resolution failed, please try again');
+          reject(new Error('DNS resolution failed, please try again'));
         } else {
           await sleep(timing * 1000);
           payload.times = times + 1;
