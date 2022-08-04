@@ -22,7 +22,7 @@ export async function nslookup(domain: string, options: INslookupOptions = { }) 
         logger.debug(`dns check eror: ${err}`);
         if (times > retryTimes) {
           logger.debug('DNS resolution failed, please try again');
-          resolve('');
+          resolve(false);
         } else {
           await sleep(timing * 1000);
           payload.times = times + 1;
@@ -31,7 +31,7 @@ export async function nslookup(domain: string, options: INslookupOptions = { }) 
         }
       } else {
         logger.debug(`address: ${address}\nfamily: ${family}`);
-        resolve('');
+        resolve(true);
       }
     });
   });
