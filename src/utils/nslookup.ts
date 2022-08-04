@@ -10,7 +10,7 @@ interface INslookupOptions {
   times?: number;
 }
 
-const default_nslookup_options = { retryTimes: 36, times: 0, timing: 5 };
+const default_nslookup_options = { retryTimes: 60, times: 0, timing: 5 };
 
 export async function nslookup(domain: string, options: INslookupOptions = { }) {
   const payload = _.defaults(options, default_nslookup_options);
