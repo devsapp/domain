@@ -43,7 +43,7 @@ export default class AddFcDomain {
         task: async () => {
           await nslookup(domain);
         },
-      }
+      },
     ]);
     return domain;
   }
