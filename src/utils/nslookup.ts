@@ -16,12 +16,13 @@ export async function nslookup(domain: string, options: INslookupOptions = { }) 
   const payload = _.defaults(options, default_nslookup_options);
   const { retryTimes, times, timing } = payload;
 
-  return await new Promise((resolve, reject) => {
+  return await new Promise((resolve, _reject) => {
     lookup(domain, async (err, address, family) => {
       if (err) {
         logger.debug(`dns check eror: ${err}`);
         if (times > retryTimes) {
-          reject(new Error('DNS resolution failed, please try again'));
+          logger.debug('DNS resolution failed, please try again');
+          resolve('');
         } else {
           await sleep(timing * 1000);
           payload.times = times + 1;
