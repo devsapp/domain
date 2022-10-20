@@ -1,6 +1,6 @@
 edition: 1.0.0          #  命令行YAML规范版本，遵循语义化版本（Semantic Versioning）规范
 name: domainApp         #  项目名称
-access: default  #  秘钥别名
+access: dankun  #  秘钥别名
 
 services:
   domain-test: #  服务名称
@@ -8,7 +8,8 @@ services:
     # component: devsapp/domain
     props: #  组件的属性值
       type: fc
-      user: 1899690531354629
+      user: 1740298130743624
       region: cn-shenzhen
       service: Defau_lt
       function: test
+      domain: test.defau-lt.1740298130743624.cn-shenzhen.fc.devsapp.net
