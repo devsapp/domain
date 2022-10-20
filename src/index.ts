@@ -9,7 +9,6 @@ import logger from './common/logger';
 
 export default class Compoent {
   async get(inputs: IInputs) {
-    // process.exit();
     const { props, credential, help } = await this.hanlderInputs(inputs, 'get');
 
     if (help) {

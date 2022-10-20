@@ -3,15 +3,13 @@
   "main": "./dist/index.js",
   "version": "0.0.23",
   "autoInstall": false,
-  "dependencies": {
+  "dependencies": { },
+  "devDependencies": {
     "@alicloud/fc2": "^2.2.2",
-    "@alicloud/pop-core": "^1.7.10",
     "@serverless-devs/core": "latest",
     "ali-oss": "^6.13.2",
     "lodash": "^4.17.21",
-    "promise-retry": "^2.0.1"
-  },
-  "devDependencies": {
+    "promise-retry": "^2.0.1",
     "@types/ali-oss": "^6.0.7",
     "@types/eslint": "^7.2.6",
     "@types/jest": "^26.0.10",
