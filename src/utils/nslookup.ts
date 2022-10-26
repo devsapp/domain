@@ -66,6 +66,7 @@ export default class Component {
       handler: 'index.handler',
       runtime: 'nodejs14',
       timeout: 600 * 5,
+      description: `check domain dns.\nupdate time: ${new Date()}`,
       code: {
         zipFile: getCodeBase64(),
       },
@@ -93,10 +94,6 @@ export default class Component {
           'X-Fc-Invocation-Code-Version': 'Latest',
         },
       );
-      // show domain debug logs
-      // const log = _.get(rs, "headers.'x-fc-log-result']", '');
-      // const decodedLog = Buffer.from(log, 'base64');
-      // logger.info(`invoke debug: ${decodedLog.toString()}`);
       return JSON.parse(_.get(rs, 'data', '{}'))?.status;
     } catch (ex) {
       logger.error(`checkout error: ${ex.message}`);

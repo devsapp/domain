@@ -3,7 +3,7 @@
   "main": "./dist/index.js",
   "version": "0.0.23",
   "autoInstall": false,
-  "dependencies": { },
+  "dependencies": {},
   "devDependencies": {
     "@alicloud/fc2": "^2.2.2",
     "@serverless-devs/core": "latest",
@@ -24,6 +24,8 @@
     "typescript": "^3.9.7"
   },
   "scripts": {
+    "preln": "rm -rf ~/.s/components/devsapp.cn/devsapp/domain/dist",
+    "ln": "ln -s $(pwd)/dist ~/.s/components/devsapp.cn/devsapp/domain/dist",
     "start": "npm run dev",
     "predev": "make package-zip",
     "dev": "npx tsc -w -p tsconfig.json",

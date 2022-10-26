@@ -34,7 +34,11 @@ exports.handler = async (event, _context, callback) => {
   const payload = {
     retryTimes: retryTimes || 60, times: 0, timing: timing || 5,
   };
-  const status = await nslookup(domain, payload);
+  if (!domain) {
+    callback(500, 'domain is empty');
+  }
+  const d = domain.includes('://') ? domain.split('://')[1] : domain;
+  const status = await nslookup(d, payload);
   console.log('status: ', status);
   callback(null, JSON.stringify({ status }));
 };
