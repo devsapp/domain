@@ -30,9 +30,9 @@ async function nslookup(domain, payload) {
 exports.handler = async (event, _context, callback) => {
   const eventObj = JSON.parse(event.toString());
   console.log('inputs:', eventObj);
-  const { domain, retryTimes } = eventObj;
+  const { domain, retryTimes, timing } = eventObj;
   const payload = {
-    retryTimes: retryTimes || 60, times: 0, timing: 3,
+    retryTimes: retryTimes || 60, times: 0, timing: timing || 5,
   };
   const status = await nslookup(domain, payload);
   console.log('status: ', status);
