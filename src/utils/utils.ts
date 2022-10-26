@@ -1,5 +1,4 @@
-import Pop from '@alicloud/pop-core';
-import { loadComponent } from '@serverless-devs/core';
+import { loadComponent, popCore as Pop } from '@serverless-devs/core';
 
 export const sleep = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
 

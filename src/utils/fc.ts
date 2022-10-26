@@ -58,7 +58,7 @@ export default class Component {
     await this.makeFunction({
       functionName,
       handler: 'index.handler',
-      runtime: 'nodejs8',
+      runtime: 'nodejs14',
       environmentVariables: { token },
     });
 
@@ -123,7 +123,7 @@ export default class Component {
 
       await this.client.updateTrigger(serviceName, functionName, triggerName, triggerConfig);
       return;
-    } catch(ex) {
+    } catch (ex: any) {
       logger.debug(`makeTrigger error message: ${ex?.toString()}`);
     }
 
