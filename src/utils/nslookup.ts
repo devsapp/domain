@@ -93,7 +93,7 @@ export default class Component {
         const rs = await this.client.invokeFunction(
           serviceName,
           functionName,
-          JSON.stringify({ domain, retryTimes: 5, timing: 3 }),
+          JSON.stringify({ domain, retryTimes: 3, timing: 3 }),
           {
             'X-Fc-Log-Type': 'Tail',
             'X-Fc-Invocation-Code-Version': 'Latest',
