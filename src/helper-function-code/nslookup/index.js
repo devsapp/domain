@@ -32,7 +32,7 @@ exports.handler = async (event, _context, callback) => {
   console.log('inputs:', eventObj);
   const { domain, retryTimes, timing } = eventObj;
   const payload = {
-    retryTimes: retryTimes || 60, times: 0, timing: timing || 5,
+    retryTimes: retryTimes || 5, times: 0, timing: timing || 3,
   };
   if (!domain) {
     callback(500, 'domain is empty');

@@ -1,5 +1,4 @@
 node_modules
-src
 doc
 .s
 LICENSE
@@ -21,8 +20,8 @@ package-lock.json
 
 README.md
 readme.md
-./examples
-./test
+examples
+test
 ./Makefile
 ./f2elint.config.js
 ./commitlint.config.js

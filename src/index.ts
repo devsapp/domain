@@ -65,8 +65,8 @@ export default class Compoent {
       credential = await core.getCredential(inputs?.project?.access);
     }
 
-    // await Nslookup.remove(credential, regionId);
-    return await Nslookup.deploy(credential, regionId, domain);
+    const nslookup = new Nslookup(credential, regionId);
+    return await nslookup.invoke(domain);
   }
 
   private async hanlderInputs(inputs: IInputs, command: string) {
