@@ -19,11 +19,13 @@ export default class Compoent {
 
     if (isFcToken(props)) {
       const domain = await AddFcDomain.domain(props, credential);
+      this.showTips();
       return domain;
     }
 
     if (isOssToken(props)) {
       const domain = await AddOssDomain.domain(props, credential);
+      this.showTips();
       return domain;
     }
 
@@ -41,6 +43,7 @@ export default class Compoent {
     }
     // @ts-ignore: .
     const domain = await AddJamstack.domain(props, credential);
+    this.showTips();
     return domain;
   }
 
@@ -88,5 +91,11 @@ export default class Compoent {
         value.toString().replace(/_/g, '-').toLocaleLowerCase()),
       credential,
     };
+  }
+
+  private showTips() {
+    logger.log(`
+注意：当前域名并非阿里云官方域名，由 CNCF Project Serverless Devs 社区提供，仅供测试使用。
+Note: The current domain name is not the official domain name of Alibaba Cloud. It is provided by the CNCF Project Serverless Devs community for testing purposes only`, 'yellow');
   }
 }
