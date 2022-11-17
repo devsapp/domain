@@ -3,7 +3,7 @@ import logger from '../common/logger';
 
 const serviceName = 'serverless-devs-check';
 const getFunctionName = (token = '') => `domain${token}`;
-const triggerName = 'httpTrigger';
+const TRIGGER_NAME = 'httpTrigger';
 
 export default class Component {
   static client: any;
@@ -20,7 +20,7 @@ export default class Component {
 
     try {
       logger.debug('Delete trigger...');
-      await client.deleteTrigger(serviceName, functionName, triggerName);
+      await client.deleteTrigger(serviceName, functionName, TRIGGER_NAME);
     } catch (ex) {
       logger.debug(`ex code: ${ex.code}, ex: ${ex.message}`);
     }
@@ -64,7 +64,7 @@ export default class Component {
 
     await this.makeTrigger({
       functionName,
-      triggerName,
+      triggerName: TRIGGER_NAME,
       triggerType: 'http',
       triggerConfig: {
         AuthType: 'anonymous',

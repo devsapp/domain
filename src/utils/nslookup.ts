@@ -48,10 +48,10 @@ export default class Component {
       logger.debug(`getService error message: ${ex?.toString()}`);
       try {
         await this.client.createService(serviceName, { description });
-      } catch (ex: any) {
-        if (ex.code !== 'ServiceAlreadyExists') {
-          logger.debug(`ex code: ${ex.code}, ex: ${ex.message}`);
-          throw ex;
+      } catch (e: any) {
+        if (e.code !== 'ServiceAlreadyExists') {
+          logger.debug(`ex code: ${e.code}, ex: ${e.message}`);
+          throw e;
         }
       }
     }
