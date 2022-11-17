@@ -1,7 +1,7 @@
 const dns = require('dns');
 
 async function lookup(domain) {
-  return await new Promise((resolve, _reject) => {
+  return await new Promise((resolve) => {
     dns.resolveCname(domain, async (err, address) => {
       if (err) {
         console.debug(`dns check eror: ${err}`);
