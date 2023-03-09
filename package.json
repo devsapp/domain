@@ -3,21 +3,22 @@
   "main": "./dist/index.js",
   "version": "0.0.23",
   "autoInstall": false,
-  "dependencies": {},
   "devDependencies": {
     "@alicloud/fc2": "^2.2.2",
     "@serverless-devs/core": "latest",
-    "ali-oss": "^6.13.2",
-    "lodash": "^4.17.21",
-    "promise-retry": "^2.0.1",
     "@types/ali-oss": "^6.0.7",
     "@types/eslint": "^7.2.6",
     "@types/jest": "^26.0.10",
     "@types/lodash": "^4.14.171",
     "@types/node": "^14.17.9",
+    "ali-oss": "^6.13.2",
     "esbuild": "^0.14.0",
     "f2elint": "^0.4.4",
     "jest": "^26.4.0",
+    "lodash": "^4.17.21",
+    "node-fetch": "^2.6.9",
+    "form-data": "^4.0.0",
+    "promise-retry": "^2.0.1",
     "rimraf": "^3.0.2",
     "ts-jest": "^26.2.0",
     "ts-loader": "^8.0.14",
@@ -51,5 +52,6 @@
   "jest": {
     "preset": "ts-jest",
     "testEnvironment": "node"
-  }
+  },
+  "dependencies": {}
 }

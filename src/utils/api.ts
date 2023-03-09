@@ -1,17 +1,27 @@
-import { request } from '@serverless-devs/core';
+import { lodash as _ } from '@serverless-devs/core';
+import fetch from 'node-fetch';
+import FormData from 'form-data';
 import { IOSSTOKEN, IFCTOKEN, IJamstack } from '../interface';
 import logger from '../common/logger';
 
 const DOMAIN = 'http://domain.devsapp.net';
-const HINT = {
-  loading: 'Get token....',
-  success: 'End of request',
-  error: 'Request failed',
-};
 function checkRs(rs: any) {
   if (rs.Status !== 'Success') {
     throw new Error(rs.Body);
   }
+}
+
+async function request(url, payload) {
+  if (!_.isEmpty(payload.body)) {
+    const formData = new FormData();
+    _.forIn(payload.body, (value, key) => {
+      formData.append(key, value);
+    });
+    payload.body = formData;
+  }
+
+  const res = await fetch(url, payload);
+  return (await res.json()).Response;
 }
 
 export async function token(params: IOSSTOKEN | IFCTOKEN | IJamstack) {
@@ -19,7 +29,6 @@ export async function token(params: IOSSTOKEN | IFCTOKEN | IJamstack) {
   const tokenRs = await request(`${DOMAIN}/token`, {
     method: 'post',
     body: params,
-    form: true,
   });
   logger.debug(`Get token response is: ${JSON.stringify(tokenRs)}`);
   checkRs(tokenRs);
@@ -31,7 +40,6 @@ export async function domain(params: any) {
   const dRs = await request(`${DOMAIN}/domain`, {
     method: 'post',
     body: params,
-    form: true,
   });
   logger.debug(`The request **/domain response is: ${JSON.stringify(dRs)}`);
   checkRs(dRs);
@@ -44,8 +52,11 @@ export async function verify(params: any) {
   const rs = await request(`${DOMAIN}/verify`, {
     method: 'post',
     body: params,
-    form: true,
-    hint: { ...HINT, loading: 'Request verify....' },
+    hint: {
+      success: 'End of request',
+      error: 'Request failed',
+      loading: 'Request verify....',
+    },
   });
 
   logger.debug(`The request **/verify response is: ${JSON.stringify(rs)}`);
