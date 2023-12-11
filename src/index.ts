@@ -95,7 +95,7 @@ export default class Compoent {
 
   private showTips() {
     logger.log(`
-注意：当前域名并非阿里云官方域名，由 CNCF Project Serverless Devs 社区提供，仅供测试使用。
-Note: The current domain name is not the official domain name of Alibaba Cloud. It is provided by the CNCF Project Serverless Devs community for testing purposes only`, 'yellow');
+注意：当前域名并非阿里云官方域名，由 CNCF Project Serverless Devs 社区提供，仅供测试使用，${'\x1b[1m'}有效期为 30 天${'\x1b[0m'}。
+Note: The current domain name is not the official domain name of Alibaba Cloud. It is provided by the CNCF Project Serverless Devs community for testing purposes only and has a validity period of 30 days.`, 'yellow');
   }
 }
