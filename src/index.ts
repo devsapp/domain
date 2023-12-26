@@ -94,8 +94,7 @@ export default class Compoent {
   }
 
   private showTips() {
-    logger.log(`
-注意：当前域名并非阿里云官方域名，由 CNCF Project Serverless Devs 社区提供，仅供测试使用，${'\x1b[1m'}有效期为 30 天${'\x1b[0m'}。
-Note: The current domain name is not the official domain name of Alibaba Cloud. It is provided by the CNCF Project Serverless Devs community for testing purposes only and has a validity period of 30 days.`, 'yellow');
+    logger.log(`注意：***.devsapp.net 域名是 CNCF SandBox 项目 Serverless Devs 社区所提供，仅供学习和测试使用，不可用于任何生产使用；社区会对该域名进行不定期地拨测，并在域名下发 30 天后进行回收，强烈建议您绑定自定义域名以获得更好的使用体验。
+Note: The ***.devsapp.net domain is provided by the CNCF Sandbox project Serverless Devs community for learning and testing purposes only. It is not intended for any production use. The community periodically monitors and recycles the domain after 30 days of usage. It is strongly recommended to bind a custom domain for a better user experience.`, 'yellow');
   }
 }
